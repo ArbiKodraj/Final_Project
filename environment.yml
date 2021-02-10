@@ -1,13 +1,15 @@
-name: student_project
+name: Project_EPP_ArbiKodraj
 
 dependencies:
+- python=3.7
 - numpy
 - pandas
 - jupyterlab
 - matplotlib
 - seaborn
 - scipy
-- statsmodels
+- scikit-learn
+- tensorflow
 - pip
 - pip:
 
