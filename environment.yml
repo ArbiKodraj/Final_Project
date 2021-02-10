@@ -1,17 +1,22 @@
 name: Project_EPP_ArbiKodraj
 
 dependencies:
-- python=3.7
-- numpy
+  # Python Version
+- python=3.7 
+  # Stats, math, computing, data manipulation
+- numpy     
+- scipy
 - pandas
-- jupyterlab
+  # Visualization
 - matplotlib
 - seaborn
-- scipy
+  # Machine Learning
 - scikit-learn
-- sklearn2pmml
 - tensorflow
+  # -
+- jupyterlab
 - pip
 - pip:
+  - sklearn2pmml
 
 
