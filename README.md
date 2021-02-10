@@ -18,7 +18,7 @@ The best way to access this notebook is by downloading it [here](https://github.
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project_EPP.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project_EPP)
+In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project_EPP.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project_EPP)[![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/actions)
 
 ## Notebook's Structure
 
@@ -30,6 +30,4 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 ## References
 
-
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/master/LICENSE)
-[![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/actions)
