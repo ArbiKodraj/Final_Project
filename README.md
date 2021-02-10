@@ -5,7 +5,7 @@
 
 The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. 
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed here(link of github notebook), online on github. Other ways to view this notebook are binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ArbiKodraj/microeconometrics-course-project-ArbiKodraj.git/master) or nbviewer <a href="https://nbviewer.jupyter.org/github/ArbiKodraj/microeconometrics-course-project-ArbiKodraj/blob/master/ReplicationProject.ipynb" 
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github. Other ways to view this notebook are binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ArbiKodraj/microeconometrics-course-project-ArbiKodraj.git/master) or nbviewer <a href="https://nbviewer.jupyter.org/github/ArbiKodraj/microeconometrics-course-project-ArbiKodraj/blob/master/ReplicationProject.ipynb" 
    target="_parent">
    <img align="center" 
       src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png" 
