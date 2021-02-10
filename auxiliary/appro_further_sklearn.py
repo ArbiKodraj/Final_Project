@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 from sklearn.metrics import mean_absolute_error 
 from sklearn.metrics import mean_squared_error
@@ -37,7 +38,7 @@ class Regressor:
                 num: number of table
     '''
     
-    def __init__(self, a, b, nodes, ts):
+    def __init__(self, a=-1, b=1, nodes=100, ts=.33):
         self.a = a
         self.b = b
         self.nodes = nodes
@@ -52,15 +53,15 @@ class Regressor:
     def prep_regr(self):
         
         dtr = DecisionTreeRegressor(random_state=0)
-        hist1 = dtr.fit(self.X_train, self.y_train)
+        hist1 = dtr.fit(self.X_train, self.y_train.ravel())
         self.pred1 = dtr.predict(self.X_test)
 
         neigh = KNeighborsRegressor(n_neighbors=1)
-        hist2 = neigh.fit(self.X_train, self.y_train)
+        hist2 = neigh.fit(self.X_train, self.y_train.ravel())
         self.pred2 = neigh.predict(self.X_test)
        
         svr = SVR(kernel='rbf', degree=20, gamma='scale',C=1.5,epsilon=0.1,verbose=False,max_iter=200)
-        hist3 = svr.fit(self.X_train,self.y_train)
+        hist3 = svr.fit(self.X_train,self.y_train.ravel())
         self.pred3 = svr.predict(self.X_test)
         
     def plot_pred(self, num):

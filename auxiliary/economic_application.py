@@ -12,7 +12,7 @@ from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
 
 from scipy.interpolate import interp1d
-from sklearn.linear_model import Ridge
+from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 
@@ -323,7 +323,7 @@ class AISupplyDemandApprox:
         
         for i, ax in enumerate([ax1, ax2]):
             for j, d in enumerate(degrees):
-                model = make_pipeline(PolynomialFeatures(d), Ridge())
+                model = make_pipeline(PolynomialFeatures(d), LinearRegression())
 
                 if i == 0:
                     model.fit(self.p_train, self.q_train)

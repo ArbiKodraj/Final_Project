@@ -28,8 +28,6 @@ h1 = lambda x: 1 / (x ** 2 + 1)
 
 
 def split_method(x, func, ts):
-
-    
     """ Split data in test and train in order to check approximation goodness
     
      Parameters
@@ -55,20 +53,17 @@ def change_data(method, x1, x2, y1, y2):
     
     if method == 'standardize':
         return scale(x1), scale(x2), scale(y1), scale(y2)
-    
     elif method == 'normalize':
         x1 /= np.max(x1)
         x2 /= np.max(x2)
         y1 /= np.max(y1)
         y2 /= np.max(y2)
         return x1, x2, y1, y2
-    
     else:
         return x1, x2, y1, y2
     
     
 def plot_train_test(x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num1, num2, method):
-    
     """ Plot Test and Train Data as well as final MPL Prediction
     
     Parameters
@@ -85,11 +80,8 @@ def plot_train_test(x_train, x_test, y_train, y_test, prediction, xlabel, ylabel
                         markersize=4, label='Train Data')
     approx_marker = mlines.Line2D([], [], color='red', marker='*', linestyle='None',
                         markersize=4, label='MLP Output')
-    
-    plt.figure(figsize=(12,5))
-    
+    plt.figure(figsize=(12,5))    
     if isinstance(prediction, np.ndarray) == False:
-        
         plt.plot(x_train, y_train, "o", ms = 4)
         plt.plot(x_test, y_test, "x", ms = 4)
         plt.xlabel(xlabel)
@@ -105,7 +97,6 @@ def plot_train_test(x_train, x_test, y_train, y_test, prediction, xlabel, ylabel
         plt.title(f'Figure {num1}: {method} Train and Test Data of $h(x)$')
         
     else: 
-
         plt.plot(x_train, y_train, "o", ms = 4)
         plt.plot(x_test, y_test, "x", ms = 4)
         plt.plot(x_test, prediction, "*", ms = 4, color = "r")
@@ -120,21 +111,20 @@ def plot_train_test(x_train, x_test, y_train, y_test, prediction, xlabel, ylabel
                    borderaxespad=0,
                    title_fontsize=12)
         plt.title(f'Figure {num2}: Approximation of Test Data of $h(x)$ using MPL and {method} Data')
-    
     plt.grid()
     plt.show()
     
     
-def mlp_approximation(layer_sizes, max_iter, x_train, x_test, y_train, y_test):
+def mlp_approximation(xtrain, xtest, ytrain, ytest, layer_sizes=(30, 40, 50, 30), max_iter=2000):
 
     """ Approximation using MLP Regressor
     
     Parameters
     ----
     
-        layer_sizes: number of neurons as tuple
-        max_iter:    number of epochs (how many times each data point will be used)
-        *train:      splitted data 
+        layer_sizes: (tubple) number of neurons
+        max_iter:    (int) number of epochs (how many times each data point will be used)
+        *train:      (float) splitted data 
     """
     
     mlp = MLPRegressor(
@@ -148,14 +138,13 @@ def mlp_approximation(layer_sizes, max_iter, x_train, x_test, y_train, y_test):
         ("regressor", mlp)  
         ])
    
-    mlp.fit(x_train, y_train)     # instead of mlp one can also use pipeline for StandardScaler
-        
-    pred = mlp.predict(x_test)    # instead of mlp one can also use pipeline for StandardScaler
+    mlp.fit(xtrain, ytrain)     # instead of mlp one can also use pipeline for StandardScaler
+    pred = mlp.predict(xtest)    # instead of mlp one can also use pipeline for StandardScaler
     
     return pred
 
 
-def prediction_report(N_iter, x_train, x_test, y_train, y_test, num, method):
+def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method='Unchanged'):
     
     """ Computes Error Terms for different iterations
     
@@ -164,32 +153,28 @@ def prediction_report(N_iter, x_train, x_test, y_train, y_test, num, method):
     
         N_iter : List of iteration, note that length of list must equal 5!!
         y_test : true values
+        num    : number of table
     """
     
-    predictions = []
+    if not isinstance(N_iter, list):
+        raise TypeError('N_iter object has to be list type!')
+    assert len(N_iter) == 3, 'Not correct length. Input of list N_iter has to have length of 3!'
     
-    assert len(N_iter) == 5, 'Not correct length. Input of list N_iter has to have length of 5!'
-    for n in N_iter:
-        predictions.append(mlp_approximation((30, 40, 50, 30), n, x_train, x_test, y_train, y_test))
+    predictions = [mlp_approximation(xtrain, xtest, ytrain, ytest, max_iter=n) for n in N_iter]
         
     i = 0 
     MAS, MSE, EVS, R2 = [], [], [], []
-    
     while i < len(N_iter):
-
-        MAS.append(mean_absolute_error(y_test, predictions[i]))
-        MSE.append(mean_squared_error(y_test, predictions[i]))
-        EVS.append(explained_variance_score(y_test, predictions[i]))
-        R2.append(r2_score(y_test, predictions[i]))
-        
+        MAS.append(mean_absolute_error(ytest, predictions[i]))
+        MSE.append(mean_squared_error(ytest, predictions[i]))
+        EVS.append(explained_variance_score(ytest, predictions[i]))
+        R2.append(r2_score(ytest, predictions[i]))  
         i = i + 1
-          
+  
     errors = np.transpose(pd.DataFrame([MAS, MSE, EVS, R2], 
                                        columns=[str(N_iter[0]) + " Iterations", 
                                                 str(N_iter[1]) + " Iterations",
-                                                str(N_iter[2]) + " Iterations",
-                                                str(N_iter[3]) + " Iterations",
-                                                str(N_iter[4]) + " Iterations"]))
+                                                str(N_iter[2]) + " Iterations"]))
     
     errors.columns = ["Absolute Mean Error", "Mean Squared Error", "Explained Variance Score", "$R^2$ Score"]
     return errors.style.set_caption(f'Table {num}: Accuracy of MPL Approximation of $h(x)$ with {method} Data')
