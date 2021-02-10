@@ -9,6 +9,7 @@ dependencies:
 - seaborn
 - scipy
 - scikit-learn
+- sklearn2pmml
 - tensorflow
 - pip
 - pip:
