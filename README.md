@@ -1,11 +1,10 @@
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-
 ---
 <font face="ITC Berkeley Oldstyle" size="3">Project for the course in Effective Programming Practices | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
 
 # Function Approximation via Machine Learning Methods
 
-The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. 
+The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github. Other ways to view this notebook are binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ArbiKodraj/microeconometrics-course-project-ArbiKodraj.git/master) or nbviewer <a href="https://nbviewer.jupyter.org/github/ArbiKodraj/microeconometrics-course-project-ArbiKodraj/blob/master/ReplicationProject.ipynb" 
    target="_parent">
