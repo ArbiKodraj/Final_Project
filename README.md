@@ -14,9 +14,8 @@ The best way to access this notebook is by downloading it [here](https://github.
       width="109" height="20">
 </a>, however these are not the preferred options, because when opening the notebook it can happen that some outputs are displayed incompletely.
 
-> **Course Instructor:** 
-Scientific Computing : [Philipp Eisenhauer](https://github.com/peisenha)
-Effective Programming Practices : [Hans-Martin Gaudecker](https://github.com/peisenha)
+> **Course Instructor Scientific Computing** : [Philipp Eisenhauer](https://github.com/peisenha)
+> **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/peisenha)
 
 ## Reproducibility
 
