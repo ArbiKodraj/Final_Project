@@ -1,20 +1,16 @@
 ---
-<font face="ITC Berkeley Oldstyle" size="3">Project for the course in Effective Programming Practices | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
+<font face="ITC Berkeley Oldstyle" size="3">Project for the course in Scientific Computing and Effective Programming Practices | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
 
 # Function Approximation via Machine Learning Methods
 
 The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. 
+[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-I decided to use [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github.
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github. Other ways to view this notebook are binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ArbiKodraj/microeconometrics-course-project-ArbiKodraj.git/master) or nbviewer <a href="https://nbviewer.jupyter.org/github/ArbiKodraj/microeconometrics-course-project-ArbiKodraj/blob/master/ReplicationProject.ipynb" 
-   target="_parent">
-   <img align="center" 
-      src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png" 
-      width="109" height="20">
-</a>, however these are not the preferred options, because when opening the notebook it can happen that some outputs are displayed incompletely.
+> **Course Instructor Scientific Computing** : [Philipp Eisenhauer](https://github.com/peisenha)
 
-> **Course Instructor:** [Hans-Martin Gaudecker](https://github.com/peisenha)
+> **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](link)
 
 ## Reproducibility
 
