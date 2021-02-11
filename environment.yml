@@ -19,8 +19,7 @@ dependencies:
 - scikit-learn=0.23.2
 - tensorflow
 
-  # -
-- yfinance
+  # Additional Packages
 - jupyterlab
 - requests
 - bs4
@@ -28,5 +27,6 @@ dependencies:
 
 - pip:
   - sklearn2pmml
+  - yfinance
 
 
