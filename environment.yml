@@ -20,7 +20,10 @@ dependencies:
 - tensorflow
 
   # -
+- yfinance
 - jupyterlab
+- requests
+- bs4
 - pip
 
 - pip:
