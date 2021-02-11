@@ -3,8 +3,8 @@
 
 # Function Approximation via Machine Learning Methods
 
-The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. 
-[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP.
+
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github.
 
