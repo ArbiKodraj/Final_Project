@@ -6,12 +6,7 @@
 The notebook FunctionApproximation.ipynb contains my work for the final project in EPP. 
 [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github. Other ways to view this notebook are binder [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/ArbiKodraj/microeconometrics-course-project-ArbiKodraj.git/master) or nbviewer <a href="https://nbviewer.jupyter.org/github/ArbiKodraj/microeconometrics-course-project-ArbiKodraj/blob/master/ReplicationProject.ipynb" 
-   target="_parent">
-   <img align="center" 
-      src="https://raw.githubusercontent.com/jupyter/design/master/logos/Badges/nbviewer_badge.png" 
-      width="109" height="20">
-</a>, however these are not the preferred options, because when opening the notebook it can happen that some outputs are displayed incompletely.
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github.
 
 > **Course Instructor Scientific Computing** : [Philipp Eisenhauer](https://github.com/peisenha)
 
