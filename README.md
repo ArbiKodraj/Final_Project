@@ -1,5 +1,5 @@
 ---
-<font face="ITC Berkeley Oldstyle" size="3">Project for the course in Effective Programming Practices | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
+<font face="ITC Berkeley Oldstyle" size="3">Project for the course in Scientific Computing and Effective Programming Practices | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
 
 # Function Approximation via Machine Learning Methods
 
@@ -14,7 +14,9 @@ The best way to access this notebook is by downloading it [here](https://github.
       width="109" height="20">
 </a>, however these are not the preferred options, because when opening the notebook it can happen that some outputs are displayed incompletely.
 
-> **Course Instructor:** [Hans-Martin Gaudecker](https://github.com/peisenha)
+> **Course Instructor:** 
+Scientific Computing : [Philipp Eisenhauer](https://github.com/peisenha)
+Effective Programming Practices : [Hans-Martin Gaudecker](https://github.com/peisenha)
 
 ## Reproducibility
 
