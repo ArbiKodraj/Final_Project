@@ -8,7 +8,7 @@ dependencies:
   # Packages for stats, math, 
   # scientific computing, data manipulation
 - numpy     
-- scipy==1.5.3
+- scipy
 - pandas
 - numba
 
