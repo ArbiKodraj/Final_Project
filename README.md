@@ -29,3 +29,24 @@ In order to ensure full reproducibility, I have set up a continous integration e
 ## References
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/master/LICENSE)
+
+---
+
+## TO DO LIST:
+
+**Important:**
+
+- 1. Improve Code Documentation (EPP as reference)
+- 2. Write Text and use plenty of References (focus on ML)
+- 3. Look for alternative displaying possibilities for the notebook from private repo (nbviewer?, ..)
+- 4. Invite remaining collaborators
+- 5. Think about additional to do's
+
+**Optional:**
+
+- 1. May use Sphinx for further Documentation
+- 2. Look, if you can speed up your code even more using numba or numpy (may have a look on PyPy for object oriented programming?)
+- 3. Finish last section (optimal policy for cake problem) - if not: remove 
+- 4. if possible, i.e., code's outcome kind of known : write tests - use pytest or unittest (especially interesting for last sections)
+
+
