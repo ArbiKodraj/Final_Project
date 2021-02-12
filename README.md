@@ -8,7 +8,7 @@ The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shiel
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github.
 
-> **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](link)
+> **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/hmgaudecker)
 
 > **Course Instructor Scientific Computing** : [Philipp Eisenhauer](https://github.com/peisenha)
 
