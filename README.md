@@ -1,5 +1,5 @@
 ---
-<font face="ITC Berkeley Oldstyle" size="3">Project for the course in Effective Programming Practices and Scientific Computing | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
+<font face="ITC Berkeley Oldstyle" size="3">Project for the courses Effective Programming Practices and Scientific Computing | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
 
 # Function Approximation via Machine Learning Methods
 
