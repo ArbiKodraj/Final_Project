@@ -29,6 +29,3 @@ dependencies:
 - pip:
   - sklearn2pmml
   - yfinance
-  - notebook==6.0.3
-
-
