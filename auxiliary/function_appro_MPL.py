@@ -170,7 +170,7 @@ def mlp_approximation(
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
 
     mlp.fit(
-        xtrain, ytrain
+        xtrain, ytrain.ravel()
     )  # instead of mlp one can also use pipeline for StandardScaler
     pred = mlp.predict(
         xtest
