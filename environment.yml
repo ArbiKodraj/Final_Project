@@ -21,7 +21,7 @@ dependencies:
 - tensorflow
 
   # Additional Packages
-- jupyter=6.0.3
+- jupyterlab=6.0.3
 - requests
 - bs4
 - pip
