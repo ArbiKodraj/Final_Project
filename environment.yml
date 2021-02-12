@@ -21,7 +21,7 @@ dependencies:
 - tensorflow
 
   # Additional Packages
-- jupyterlab=6.0.3
+- jupyterlab
 - requests
 - bs4
 - pip
@@ -29,5 +29,6 @@ dependencies:
 - pip:
   - sklearn2pmml
   - yfinance
+  - notebook=6.0.3
 
 
