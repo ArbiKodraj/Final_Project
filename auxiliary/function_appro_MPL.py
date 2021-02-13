@@ -150,7 +150,7 @@ def plot_train_test(
 
 
 def mlp_approximation(
-    xtrain, xtest, ytrain, ytest, layer_sizes=(30, 40, 50, 30), max_iter=2000
+    xtrain, xtest, ytrain, ytest, layer_sizes=(30, 40, 50, 30), max_iter=2000, solver="lbfgs"
 ):
 
     """Approximation using MLP Regressor
@@ -164,7 +164,7 @@ def mlp_approximation(
     """
 
     mlp = MLPRegressor(
-        hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver="lbfgs"
+        hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver
     )
     scaler = StandardScaler()
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
