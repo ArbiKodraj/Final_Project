@@ -124,7 +124,7 @@ def plot_train_test(
             borderaxespad=0,
             title_fontsize=12,
         )
-        plt.title(f"Figure {num1}: {method} Train and Test Data of $h(x)$")
+        plt.title(f"Figure {num1}: {method} Training and Testing Data of $h(x)$")
 
     else:
         plt.plot(x_train, y_train, "o", ms=3)
@@ -143,7 +143,7 @@ def plot_train_test(
             title_fontsize=12,
         )
         plt.title(
-            f"Figure {num2}: Approximation of Test Data of $h(x)$ using MPL and {method} Data"
+            f"Figure {num2}: Approximation of Testing Data of $h(x)$ using MLP and {method} Data"
         )
     plt.grid()
     plt.show()
@@ -170,7 +170,7 @@ def mlp_approximation(
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
 
     mlp.fit(
-        xtrain, ytrain.ravel()
+        xtrain, ytrain
     )  # instead of mlp one can also use pipeline for StandardScaler
     pred = mlp.predict(
         xtest
