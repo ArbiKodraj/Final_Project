@@ -170,7 +170,7 @@ def mlp_approximation(
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
 
     mlp.fit(
-        xtrain, ytrain
+        xtrain, ytrain.ravel()
     )  # instead of mlp one can also use pipeline for StandardScaler
     pred = mlp.predict(
         xtest
@@ -228,7 +228,7 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
         "$R^2$ Score",
     ]
     return errors.style.set_caption(
-        f"Table {num}: Accuracy of MPL Approximation of $h(x)$ with {method} Data"
+        f"Table {num}: Accuracy of MPL Approximation of $h(x)$ using {method} Training Data"
     )
 
 
