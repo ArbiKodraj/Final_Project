@@ -23,10 +23,10 @@ from sklearn.metrics import (
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark1
 
 
-def highlight_min(s):  # highlights the minimum in a Series yellow
-
-    is_max = s == s.min()
-    return ["background-color: yellow" if v else "" for v in is_max]
+def highlight_min(s):
+    # highlights the minimum in a Series s yellow
+    is_min = s == s.min()
+    return ["background-color: yellow" if v else "" for v in is_min]
 
 
 h = lambda x: 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x))  # Function Example
@@ -36,11 +36,16 @@ h1 = lambda x: 1 / (x ** 2 + 1)
 def split_method(x, func, ts):
     """Split data in test and train in order to check approximation goodness
 
-     Parameters
-    -----------
-        x:    x values as array
-        func: true function
-        ts:   test size - how much of the data shall be assigned to train data
+       Parameters
+       ----------
+           x:    (np.array) x values
+           func: (function) true function
+           ts:   (float) testing size = (1-alpha)
+                 how much of the data shall be assigned to train data
+
+       Returns
+       -------
+           (np.array) training and testing data
     """
 
     y = func(x)
@@ -55,7 +60,19 @@ def split_method(x, func, ts):
 
 
 def change_data(method, x1, x2, y1, y2):
+    """Normalize or standarize train and test data
 
+       Parameters
+       ----------
+           method: (str) standardize or normalize method
+           x1, x2: (np.arrays) training and testing data x
+           y1, y2: (np.arrays) training and testing data y
+
+       Returns
+       --------
+            (np.array) transformed train and test data
+    """
+    
     if method == "standardize":
         return scale(x1), scale(x2), scale(y1), scale(y2)
     elif method == "normalize":
@@ -69,16 +86,25 @@ def change_data(method, x1, x2, y1, y2):
 
 
 def plot_train_test(
-    x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num1, num2, method
+    x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
     """Plot Test and Train Data as well as final MPL Prediction
 
-    Parameters
-    -----------
-        *train and test data
-        prediction : final prediction of test data via MPL-Method
-        xlabel     : name of the x label (as sting)
-        ylabel     : name of the y label (as sting)
+       Parameters
+       -----------
+           x_train    : (np.array) x training data
+           x_test     : (np.array) x testing data
+           y_train    : (np.array) y training data
+           y_test     : (np.array) y testing data
+           prediction : (np.array) final prediction of test data via MPL-Method
+           xlabel     : (str) name of the x label
+           ylabel     : (str) name of the y label
+           num        : (float) number of figure
+           method     : (str) used method for data transformation
+
+       Returns
+       ---------
+           Plots training, testing data and (optional) prediction
     """
 
     train_marker = mlines.Line2D(
@@ -124,7 +150,7 @@ def plot_train_test(
             borderaxespad=0,
             title_fontsize=12,
         )
-        plt.title(f"Figure {num1}: {method} Training and Testing Data of $h(x)$")
+        plt.title(f"Figure {num}: {method} Training and Testing Data of $h(x)$")
 
     else:
         plt.plot(x_train, y_train, "o", ms=3)
@@ -143,29 +169,38 @@ def plot_train_test(
             title_fontsize=12,
         )
         plt.title(
-            f"Figure {num2}: Approximation of Testing Data of $h(x)$ using MLP and {method} Data"
+            f"Figure {num}: Approximation of Testing Data of $h(x)$ using MLP and {method} Data"
         )
     plt.grid()
     plt.show()
 
 
 def mlp_approximation(
-    xtrain, xtest, ytrain, ytest, layer_sizes=(30, 40, 50, 30), max_iter=2000, solver="lbfgs"
+    xtrain,
+    xtest,
+    ytrain,
+    ytest,
+    layer_sizes=(30, 40, 50, 30),
+    max_iter=2000,
+    solver="lbfgs",
 ):
 
     """Approximation using MLP Regressor
 
-    Parameters
-    ----
+       Parameters
+       ----------
+           layer_sizes: (tuple) number of neurons
+           max_iter:    (int) number of epochs (how many times each data point will be used)
+           solver:      (str) weight optimization, default = lbfgs (quasi newton method)
+           *train:      (np.arrays) training data x, y
+           *trest:      (np.arrays) testing data x, y
 
-        layer_sizes: (tubple) number of neurons
-        max_iter:    (int) number of epochs (how many times each data point will be used)
-        *train:      (float) splitted data
+       Returns
+       -------
+           (np.array) prediction of neural system represented by MLP Regression
     """
 
-    mlp = MLPRegressor(
-        hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver
-    )
+    mlp = MLPRegressor(hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver)
     scaler = StandardScaler()
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
 
@@ -183,12 +218,17 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
 
     """Computes Error Terms for different iterations
 
-    Parameters
-    ----------
+       Parameters
+       ----------
+           N_iter : (int) List of iteration, note that length of list must equal 5!!
+           *train : (np.arrays) training data x, y
+           *test  : (np.arrays) testing data x, y
+           num    : (float) number of table
+           method : (str) normalize or standardized, default = unchanged
 
-        N_iter : List of iteration, note that length of list must equal 5!!
-        y_test : true values
-        num    : number of table
+       Returns
+       -------
+           (pd.DataFrame) returns styled dataframe of prediction accuracy
     """
 
     if not isinstance(N_iter, list):
@@ -239,13 +279,16 @@ def get_data(path, iv, dv, ts):
 
     """Get Dataset and Train-Test Sample
 
-    Parameters
-    ----------
+       Parameters
+       ----------
+           path : (str) path of the dataset - as string
+           iv   : (str) independent variable - as string
+           dv   : (str) dependent variable - as string
+           ts   : (float) test size of train data
 
-        path : path of the dataset - as string
-        iv :   independent variable - as string
-        dv :   dependent variable - as string
-        ts :   test size of train data
+       Returns
+       -------
+           (np.arrays) training and testing data
     """
 
     df = pd.read_csv(path)
@@ -271,11 +314,14 @@ def smooth_fuction(x, y, num):
 
     """Plots the smooth 3D Function
 
-    Parameters
-    ----------
+       Parameters
+       ----------
+            x : (np.array) x values
+            y : (np.array) y values
 
-        x : x values
-        y : y values
+       Returns
+       --------
+           plots function z
     """
 
     X, Y = np.meshgrid(x, y)
@@ -296,44 +342,40 @@ class MLP3D:
 
     """Approximation of the 3D Function splitting into train and test data
 
-    Parameters
-    ----------
-        func : three dimensional function that shall be approximated
+       Parameters
+       ----------
+           func: three dimensional function that shall be approximated
 
-    Methods
-    ---------
-        train_test_method(ts) : splits data into train and test data
-            ts: test size
 
-        mpl_regr(self, hidden_layer, max_iter) : prepares models, fits data and predicts test data
-            hidden_layer: hidden layer of the model - as tuple
-            max_iter: how many iterations for the model
-
-        error(caption) : computes errors and some other quantitative measures
-            caption: caption of the error data frame - as string
-
-        plt_rslt(fs) : plots train, test and predicted data for 1600 Dots
-            fs: figure size of the plot - as tuple
+       Methods
+       -------
+           train_test_method: splits data into train and test data
+           mpl_regr         : prepares models, fits data and predicts test data
+           error            : computes errors and some other quantitative measures
+           plt_rslt         : plots train, test and predicted data for 1600 Dots
     """
 
-    def __init__(self, func, xy=[], zvals=[]):
+    def __init__(self, func):
+        """Initializes Object"""
 
         self.func = func
         self.x = [np.arange(-1, 1, n) for n in [0.25, 0.15, 0.1, 0.05, 0.02]]
-        
-        #self.x = x
-        #for n in [0.25, 0.15, 0.1, 0.05, 0.02]:
-            #x.append(np.arange(-1, 1, n))
 
-        self.xy = xy
+        self.xy = []
         for i in range(len(self.x)):
             self.xy.append([(j, k) for j in self.x[i] for k in self.x[i]])
 
-        self.zvals = zvals
+        self.zvals = []
         for j in range(len(self.xy)):
             self.zvals.append([z(p[0], p[1]) for p in self.xy[j]])
 
     def train_test_method(self, ts):
+        """Prepares training and testing data
+
+           Parameters
+           ----------
+               ts: (float) testing size
+        """
 
         self.x_train0, self.x_test0, self.y_train0, self.y_test0 = train_test_split(
             self.xy[0], self.zvals[0], test_size=ts
@@ -352,6 +394,13 @@ class MLP3D:
         )
 
     def mpl_regr(self, hidden_layer, max_iter=2000):
+        """Prepares MLP Regressor as neural network
+
+           Parameters
+           ----------
+               hidden_layer: (tuple) number of neurons in hidden layers
+               max_iter    : (int) number of backpropagations
+        """
 
         mlp0 = mlp1 = mlp2 = mlp3 = mlp = MLPRegressor(
             hidden_layer_sizes=hidden_layer,
@@ -373,6 +422,16 @@ class MLP3D:
         self.predictions = mlp.predict(self.x_test)
 
     def error(self, caption):
+        """Tables accuracy of prediction in terms of errors and explained variance
+
+           Parameters
+           ----------
+               caption: (str) caption of table
+
+           Returns
+           -------
+               (pd.DataFrame) styled accuracy dataframe of prediction
+        """
 
         columns = [
             "Mean Absolute Error",
@@ -410,7 +469,14 @@ class MLP3D:
 
         return rslt.style.set_caption(caption)
 
-    def pltres(self, fs, num):
+    def pltres(self, num, fs=(14, 7)):
+        """Plots training, testing and predicted data
+
+           Paramaters
+           ----------
+               num: (float) number of figure
+               fs : (tuple) size of figure, default = (14,7)
+        """
 
         fig = plt.figure(figsize=fs)
         ax = fig.gca(projection="3d")

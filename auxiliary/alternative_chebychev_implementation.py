@@ -12,28 +12,23 @@ f = lambda x: x * np.sin(x)
 
 
 class CCMethod:
-
     """Chebyshev(a, b, n, func)
 
-    Parameters:
-    -------------
-        a:    lower limit
-        b:    upper limit
-        n:    maximum degrees
-        func: function that shall be approximated
+       Parameters:
+       -----------
+           a   : (int) lower limit
+           b   : (int) upper limit
+           n   : (int) maximum degrees
+           func: function that shall be approximated
 
-
-    Method:
-    ---------
-        increase_degree : increases degree of approxiation by input
-            factor      : increasing factor
-
-        eval : yields the approximated function value.
-            x: evaluation point
+       Method:
+       -------
+           increase_degree: increases degree of approxiation by input
+           eval           : yields the approximated function value.
     """
 
     def __init__(self, a, b, n, func):
-
+        """Initialize object"""
         self.a = a
         self.b = b
         self.n = n
@@ -54,7 +49,16 @@ class CCMethod:
         ]
 
     def eval(self, x):
-
+        """Approximat function at specific point
+           
+           Paramaters
+           ----------
+               x: (float) evaluation point
+               
+           Returns
+           -------
+               (float) approximation at evaluation point for certain function
+        """
         assert (
             self.a <= x <= self.b
         ), "x is not in defined interval, choose x between a and b"  # x picked from interval
@@ -71,7 +75,15 @@ class CCMethod:
 
 
 def approximation_error(func, approx, figure, degree):
-
+    """Plots approximation error
+       
+       Parameters
+       ----------
+           func  : function
+           approx: (float )approximated value
+           figure: (float) figure number
+           degree: (int) degree of approximation
+    """
     a = -3  # self.a
     b = 4  # self.b + 1, just do use class interval! Did not want to extend or even change the method significantly
 
