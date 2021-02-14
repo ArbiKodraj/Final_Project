@@ -28,7 +28,7 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 ## References
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)]()
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project/blob/master/LICENSE)
 
 ---
 
