@@ -14,7 +14,7 @@ The best way to access this notebook is by downloading it [here](https://github.
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com)  which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)
+In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com)  which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
 
 ## Notebook's Structure
 
