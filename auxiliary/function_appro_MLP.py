@@ -316,13 +316,14 @@ class MLP3D:
             fs: figure size of the plot - as tuple
     """
 
-    def __init__(self, func, x=[], xy=[], zvals=[]):
+    def __init__(self, func, xy=[], zvals=[]):
 
         self.func = func
-
-        self.x = x
-        for n in [0.25, 0.15, 0.1, 0.05, 0.02]:
-            x.append(np.arange(-1, 1, n))
+        self.x = [np.arange(-1, 1, n) for n in [0.25, 0.15, 0.1, 0.05, 0.02]]
+        
+        #self.x = x
+        #for n in [0.25, 0.15, 0.1, 0.05, 0.02]:
+            #x.append(np.arange(-1, 1, n))
 
         self.xy = xy
         for i in range(len(self.x)):
@@ -350,7 +351,7 @@ class MLP3D:
             self.xy[3], self.zvals[3], test_size=ts
         )
 
-    def mpl_regr(self, hidden_layer, max_iter):
+    def mpl_regr(self, hidden_layer, max_iter=2000):
 
         mlp0 = mlp1 = mlp2 = mlp3 = mlp = MLPRegressor(
             hidden_layer_sizes=hidden_layer,
@@ -418,13 +419,13 @@ class MLP3D:
         x1_vals = np.array([p[0] for p in self.x_train])
         x2_vals = np.array([p[1] for p in self.x_train])
 
-        ax.scatter(x1_vals, x2_vals, self.y_train, label="Train Data", alpha=0.5)
+        ax.scatter(x1_vals, x2_vals, self.y_train, label="Training Data", alpha=0.5)
 
         # plot test data points
         x1_vals = np.array([p[0] for p in self.x_test])
         x2_vals = np.array([p[1] for p in self.x_test])
 
-        ax.scatter(x1_vals, x2_vals, self.y_test, label="Test Data")
+        ax.scatter(x1_vals, x2_vals, self.y_test, label="Testing Data")
 
         # plot approximation
         ax.scatter(
