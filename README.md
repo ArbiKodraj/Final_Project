@@ -6,7 +6,7 @@
 The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP.
 
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project_EPP) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project_EPP/blob/master/FunctionApproximation.ipynb), online on github.
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on github.
 
 > **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/hmgaudecker)
 
@@ -14,7 +14,7 @@ The best way to access this notebook is by downloading it [here](https://github.
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com)  which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project_EPP)
+In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com)  which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
 
 ## Notebook's Structure
 
@@ -24,11 +24,11 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - **4. Modern Machine Learning Methods:**  
 - **5. Further Approximation:**
 
-[![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/actions)
+[![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
 
 ## References
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project_EPP/master/LICENSE)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project/blob/master/LICENSE)
 
 ---
 
