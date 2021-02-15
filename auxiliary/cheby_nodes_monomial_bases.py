@@ -21,13 +21,35 @@ from auxiliary.scipy_implementation import ten_interp
 
 
 def cheb_nodes(a, b, n):
+    """Returns Chebychev nodes
+    
+       Parameters
+       ----------
+            a: (int) lower bound
+            b: (int) uppoder bound
+            n: (int) number of nodes
 
+        Returns
+        -------
+            (np.array) Chebychev nodes
+    """
     ccn = np.cos((n - np.arange(1, n + 1) + 0.5) * np.pi / n)
     return ccn
 
 
 def poly(a, b, n, x):
+    """Returns Chebychev Polynomial
 
+        Parameters
+        ----------
+            a: (int) lower bound
+            b: (int) uppoder bound
+            n: (int) number of nodes
+
+        Returns
+        -------
+            (np.array) Chebychev Polynomial
+    """
     z = 2 * (x - a) / (b - a) - 1
     T = 2 * z * np.cos(np.arccos(z) * (np.arange(0, n) - 1)) - np.cos(
         np.arccos(z) * (np.arange(0, n) - 2)
@@ -36,7 +58,17 @@ def poly(a, b, n, x):
 
 
 def ccaproximation(x, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9):
+    """ Returns Chebychev Approximation
 
+        Parameters
+        ----------
+            x : (float) approximation point
+            c*: (floats)weights
+        
+        Returns
+        ------- 
+            (np.array) Σ ci Ti                            
+    """
     T = poly(-1, 1, 10, x)
     weights = np.array([c0, c1, c2, c3, c4, c5, c6, c7, c8, c9])
     return sum(T * weights)
@@ -46,7 +78,14 @@ def ccaproximation(x, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9):
 
 
 def show_cheb_polyn(a, b, n):
+    """ Plots Chebychev polynomials
 
+        Parameters
+        ----------
+        a: (int) lower bound
+        b: (int) upper bound
+        m: (int) number of nodes    
+    """
     x = np.linspace(a, b, n)
 
     plt.figure(figsize=(12, 4))

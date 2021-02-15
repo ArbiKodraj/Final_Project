@@ -23,8 +23,9 @@ from tensorflow.keras.wrappers.scikit_learn import KerasRegressor
 # ---------------------------------------------------------------------- Functions & Styling
 
 
-def highlight_min(s):  # highlights the minimum in a Series yellow
-
+def highlight_min(s):  
+    """ highlights the minimum in a Series yellow
+    """
     is_max = s == s.min()
     return ["background-color: yellow" if v else "" for v in is_max]
 
@@ -60,29 +61,30 @@ class SeqMethod:
     return_data: returns all relevant data
     """
 
-    def __init__(self, func, nodes, epochs):
+    def __init__(self, func, nodes=300, epochs=1000):
         self.func = func
         self.nodes = nodes
         self.epochs = epochs
 
-    def seq_init(self, activator_in, activator_out):
+    def seq_init(self, activator_out,  activator_in="relu", n1_layer=20, n2_layer=18, n3_init=False, n3_layer=10):
         self.model = Sequential()
         self.model.add(
             Dense(
-                6, input_dim=1, activation=activator_in, kernel_initializer="he_uniform"
+                n1_layer, input_dim=1, activation=activator_in, kernel_initializer="he_uniform"
             )
-        )  # 50
+        )  
         self.model.add(
-            Dense(4, activation=activator_in, kernel_initializer="he_uniform")
-        )  # 40
-        self.model.add(
-            Dense(4, activation=activator_in, kernel_initializer="he_uniform")
-        )  # 30
+            Dense(n2_layer, activation=activator_in, kernel_initializer="he_uniform")
+        )  
+        if n3_init == True:
+            self.model.add(
+                Dense(n3_layer, activation=activator_in, kernel_initializer="he_uniform")
+            )  
         self.model.add(Dense(1, activation=activator_out))
-        # opt = Adam(learning_rate=1e-6)
         self.model.compile(optimizer="adam", loss="mae")
 
-    def predict_test(self, a, b, ts):
+    def predict_test(self, a=-1, b=1, ts=0.4):
+        
         X = np.linspace(a, b, self.nodes)
         y = self.func(X)
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
@@ -136,8 +138,8 @@ class _Outcome(SeqMethod):
         )
 
         plt.figure(figsize=(15, 5))
-        plt.plot(self.x_train, self.y_train, "o", ms=3, color="b", label="Train Data")
-        plt.plot(self.x_test, self.y_test, "v", ms=3, color="y", label="Test Data")
+        plt.plot(self.x_train, self.y_train, "o", ms=3, color="b", label="Training Data")
+        plt.plot(self.x_test, self.y_test, "v", ms=3, color="y", label="Testing Data")
         plt.plot(self.x_test, self.pred, "*", ms=3, color="r", label="Prediction")
         plt.xlabel("x")
         plt.title(f"Figure {num}: Approximation of missing Values")
@@ -211,15 +213,6 @@ def plt_side_by_side(
 
     figure, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
 
-    # for ax in [ax1, ax2]:
-    #    for a, b, c, d, e in zip([x_train1, x_train2], [y_train1, y_train2], [x_test1, x_test2], [y_test1, x_test2], [pred1, pred2]):
-    #        ax.plot(a, b, 'o', ms=3, color='b')
-    #        ax.plot(c, d, 'v', ms=3, color='y')
-    #        ax.plot(c, e, '*', ms=3, color='r')
-    #        ax.set_title(f'Figure {num1}: Approximation of ')
-    #        ax.legend(handles=[train_marker, test_marker, approx_marker])
-    #        ax.grid()
-
     ax1.plot(x_train1, y_train1, "o", ms=3, color="b")
     ax1.plot(x_test1, y_test1, "v", ms=3, color="y")
     ax1.plot(x_test1, pred1, "*", ms=3, color="r")
@@ -285,13 +278,12 @@ def gen_frame(true_list, pred_list, num):
 # ---------------------------------------------------------------------- Keras Regressor
 
 
-def baseline_model():
+def _baseline_model():
 
-    opt = Adam(learning_rate=0.0008)
-
+    opt = Adam(learning_rate=1e-4)
     model = Sequential()
-    model.add(Dense(6, input_dim=6, activation="relu", kernel_initializer="he_uniform"))
-    model.add(Dense(4, activation="relu", kernel_initializer="he_uniform"))
+    model.add(Dense(9, input_dim=6, activation="relu", kernel_initializer="he_uniform"))
+    model.add(Dense(6, activation="relu", kernel_initializer="he_uniform"))
     model.add(Dense(1, activation="relu", kernel_initializer="he_uniform"))
     model.compile(loss="mean_absolute_error", optimizer=opt)
 
@@ -321,14 +313,16 @@ class MultidimApprox:
         )
 
     def return_data(self):
+        """ Returns dataset as pd.DataFrame 
+        """
         return self.data
 
-    def estimator(self, epochs, bs, vs):
+    def estimator(self, bs=5, vs=.1, epoch=1000):
         estimator = KerasRegressor(
-            build_fn=baseline_model, batch_size=bs, verbose=False
+            build_fn=_baseline_model, batch_size=bs, verbose=False
         )
         self.hist = estimator.fit(
-            self.X_train, self.y_train, epochs=epochs, validation_split=vs
+            self.X_train, self.y_train, epochs=epoch, validation_split=vs
         )
         self.prediction = estimator.predict(self.X_test)
 
@@ -340,7 +334,6 @@ class MultidimApprox:
         ax1.set_ylim([0, 2.5])
         ax1.set_xlabel("Epoch")
         ax1.set_ylabel("Error")
-        ax1.set_xlim([0, 100])
         ax1.set_title(f"Figure {num}: Epoch-Loss Trade off", y=1.105)
         ax1.legend(
             title="Loss",
