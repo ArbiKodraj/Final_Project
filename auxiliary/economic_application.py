@@ -85,6 +85,7 @@ def supply(p):
 
 
 # ---------- Approximation using scipy ----------
+
 class PolynomialDS:
 
     """Object that approximate certain supply and demand functions via sicpy
@@ -453,13 +454,13 @@ class AISupplyDemandApprox:
     def reslts_as_frame(self, num=14):
         index_as_array_sup = [
             np.array(["Supply"] * 4),
-            np.array(["PolynomialFeatures"] * 2 + ["Unsupervised", "Supervised"]),
-            np.array(["2 Degrees", "6 Degrees", "KNN", "DT"]),
+            np.array(["Linear Regression"] * 2 + ["KNN Regression", "DTR"]),
+            np.array(["2 Degrees", "6 Degrees", "", ""]),
         ]
         index_as_array_dem = [
             np.array(["Demand"] * 4),
-            np.array(["PolynomialFeatures"] * 2 + ["Unsupervised", "Supervised"]),
-            np.array(["2 Degrees", "6 Degrees", "KNN", "DT"]),
+            np.array(["Linear Regression"] * 2 + ["KNN Regression", "DTR"]),
+            np.array(["2 Degrees", "6 Degrees", "", ""]),
         ]
         col = [
             "Mean Absolute Error",
