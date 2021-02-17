@@ -56,21 +56,21 @@ class Regressor:
             x, y, test_size=ts
         )
 
-    def prep_regr(self):
+    def prep_regr(self, splitter="best", depth=None, weight="uniform", k_neigh=1):
 
-        dtr = DecisionTreeRegressor()
+        dtr = DecisionTreeRegressor(max_depth=depth)
         hist1 = dtr.fit(self.X_train, self.y_train.ravel())
         self.pred1 = dtr.predict(self.X_test)
 
-        neigh = KNeighborsRegressor(n_neighbors=1)
+        neigh = KNeighborsRegressor(n_neighbors=k_neigh, weights=weight)
         hist2 = neigh.fit(self.X_train, self.y_train.ravel())
         self.pred2 = neigh.predict(self.X_test)
 
-    def plot_pred(self, num):
+    def plot_pred(self, num, fitting=None):
         plt.figure(figsize=(12, 5))
 
-        plt.plot(self.X_train, self.y_train, "o", ms=4, label="Train Data")
-        plt.plot(self.X_test, self.y_test, "o", ms=4, color="y", label="Test Data")
+        plt.plot(self.X_train, self.y_train, "o", ms=4, label="Training Data")
+        plt.plot(self.X_test, self.y_test, "o", ms=4, color="y", label="Testing Data")
         plt.plot(
             self.X_test,
             self.pred2,
@@ -99,11 +99,15 @@ class Regressor:
         )
         plt.title(
             f"Figure {num}: Approximation of discontinuous functions via KNN Regressor and DTR"
-        )
+            )
+        if fitting == "over":
+            plt.title(
+            f"Figure {num}: Over-fitted Approximation of discontinuous functions via KNN Regressor and DTR"
+            )
         plt.grid()
         plt.show()
 
-    def create_error_df(self, num):
+    def create_error_df(self, num, fitting=None):
         l = []
         for p in [self.pred1, self.pred2]:
             l.append(mean_absolute_error(p, self.y_test))
@@ -118,9 +122,13 @@ class Regressor:
                     "Explained Variance Score",
                     "$R^2$ Score",
                 ],
-                index=["KNN Regressor", "DTR"],
+                index=["DTR", "KNN Regressor"]
             )
-
-        return df.style.set_caption(
-            f"Table {num}: Approximation Accuracy ML Methods"
-        )
+        if fitting=="over":
+            return df.style.set_caption(
+                f"Table {num}: Approximation Accuracy ML Methods"
+            )
+        else:
+            return df.style.set_caption(
+                f"Table {num}: Approximation Accuracy ML Methods"
+            )
