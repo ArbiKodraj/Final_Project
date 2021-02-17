@@ -47,7 +47,7 @@ class Regressor:
         x = np.linspace(a, b, nodes).reshape(-1, 1)
         y = np.piecewise(
             x,
-            [x < 0, (x >= 0.2) & (x < 0.5), (x >= 0.5) & (x < 0.8), x >= 0.8],
+            [x < 0, (x >= 0.0) & (x < 0.5), (x >= 0.5) & (x < 0.8), x >= 0.8],
             [lambda x: -x + 5, 0, lambda x: x - 5, lambda x: np.exp(x)],
         ).reshape(-1, 1)
 
