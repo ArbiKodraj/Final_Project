@@ -1,18 +1,18 @@
 import numpy as np
 import pandas as pd
 import matplotlib as mpl
-
-# mpl.use('tkagg')
-
 import matplotlib.pyplot as plt
+
 from matplotlib.lines import Line2D
 from sklearn.model_selection import train_test_split
 from itertools import product
 
-from sklearn.metrics import mean_absolute_error
-from sklearn.metrics import mean_squared_error
-from sklearn.metrics import explained_variance_score
-from sklearn.metrics import r2_score
+from sklearn.metrics import (
+    mean_absolute_error,
+    mean_squared_error,
+    explained_variance_score,
+    r2_score,
+)
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Activation
