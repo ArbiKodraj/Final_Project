@@ -21,8 +21,10 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - **1. Introduction:**  
 - **2. Theory of Interpolation:** 
 - **3. Application of Interpolation**
-- **4. Modern Machine Learning Methods:**  
-- **5. Further Approximation:**
+- **4. Neural Networks as Modern Machine Learning Method:**  
+- **5. Further Machine Learning Methods:**
+- **6. Economical Application:**
+
 
 [![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
 

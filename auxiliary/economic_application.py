@@ -228,6 +228,7 @@ class PolynomialDS:
 
 
 # ---------- Approximation using ML ----------
+
 class AISupplyDemandApprox:
 
     """Approximated Supply and Demand via different Modern Machine Learning Methods
@@ -262,7 +263,7 @@ class AISupplyDemandApprox:
         num : (int) number of data frame
     """
 
-    def __init__(self, nodes, supply, demand, a=0, b=100, ts=0.33, rs=42):
+    def __init__(self, nodes, supply, demand, a=0, b=100, ts=0.4, rs=42):
         """Initializer of the AISupplyDemandApprox object"""
 
         assert a >= 0, "Price must be Non Negative!"
@@ -280,13 +281,13 @@ class AISupplyDemandApprox:
             p, qd, test_size=ts, random_state=rs
         )
 
-        self.p_train = p_train.reshape(-1, 1)  # reshape data
-        self.p_test = p_test.reshape(-1, 1)  # reshape data
-        self.q_train = q_train.reshape(-1, 1)  # reshape data
-        self.q_test = q_test.reshape(-1, 1)  # reshape data
+        self.p_train = p_train.reshape(-1, 1)       # reshape data
+        self.p_test = p_test.reshape(-1, 1)         # reshape data
+        self.q_train = q_train.reshape(-1, 1)       # reshape data
+        self.q_test = q_test.reshape(-1, 1)         # reshape data
 
-        nan_ind = np.argwhere(np.isnan(qd_train))  # select index of nan values
-        qd_train_mod = np.delete(qd_train, nan_ind)  # delete nan index value
+        nan_ind = np.argwhere(np.isnan(qd_train))   # select index of nan values
+        qd_train_mod = np.delete(qd_train, nan_ind) # delete nan index value
         pd_train_mod = np.delete(pd_train, nan_ind)
 
         self.pd_train = pd_train_mod.reshape(-1, 1)
@@ -299,15 +300,15 @@ class AISupplyDemandApprox:
 
     def __name__(self):
         """Name of the AISupplyDemandApprox object"""
-        return "Moder-ML Demand and Supply Interpolator"
+        return "Modern-ML Demand and Supply Interpolator"
 
     def plots(
         self,
         colors=["teal", "yellowgreen", "gold"],
-        label=["Train Values", "Test Values"] * 2,
+        label=["Training Values", "Testing Values"] * 2,
         markers=["x", "*", "v"],
-        n_neighbors=3,
-        degrees=[2, 6],
+        n_neighbors=4,
+        degrees=[3, 6],
         weight="distance",
         fs=(15, 10),
         num1=17.1,
@@ -315,6 +316,7 @@ class AISupplyDemandApprox:
         num3=17.3,
         num4=17.4,
     ):
+        self.degrees = degrees
 
         assert len(degrees) == 2, "List out of range!"
 
@@ -354,7 +356,7 @@ class AISupplyDemandApprox:
                     ptest_ordered = self.p_test.ravel()[indexs_to_order_by]
                     ax[i].plot(pred_ordered, ptest_ordered, color=colors[j], alpha=0.5)
                     ax[i].set_title(
-                        f"Figure {num1}: Polynomial Features Approximation Supply"
+                        f"Figure {num1}: Linear Regression Approximation Supply"
                     )
                     ax[i].grid(True)
                     ax[i].legend(loc="center right")
@@ -382,7 +384,7 @@ class AISupplyDemandApprox:
                         pred_ordered, ptest_ordered, color=colors[j], alpha=0.5
                     )
                     ax[i - 1].set_title(
-                        f"Figure {num3}: Polynomial Features Approximation Demand"
+                        f"Figure {num3}: Linear Regression Approximation Demand"
                     )
                     ax[i - 1].grid(True)
                     ax[i - 1].legend(loc="center right")
@@ -452,15 +454,16 @@ class AISupplyDemandApprox:
         plt.show()
 
     def reslts_as_frame(self, num=14):
+        d1, d2 = self.degrees[0], self.degrees[1]
         index_as_array_sup = [
             np.array(["Supply"] * 4),
             np.array(["Linear Regression"] * 2 + ["KNN Regression", "DTR"]),
-            np.array(["2 Degrees", "6 Degrees", "", ""]),
+            np.array([f"{d1} Degrees", f"{d2} Degrees", "", ""]),
         ]
         index_as_array_dem = [
             np.array(["Demand"] * 4),
             np.array(["Linear Regression"] * 2 + ["KNN Regression", "DTR"]),
-            np.array(["2 Degrees", "6 Degrees", "", ""]),
+            np.array([f"{d1} Degrees", f"{d2} Degrees", "", ""]),
         ]
         col = [
             "Mean Absolute Error",

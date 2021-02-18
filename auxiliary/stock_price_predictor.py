@@ -2,12 +2,12 @@ import pandas as pd
 import numpy as np
 import yfinance as yf
 import matplotlib.pyplot as plt
-
 import requests
-from bs4 import BeautifulSoup
 
+from bs4 import BeautifulSoup
 from numba import njit
 from datetime import datetime, timedelta
+
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor as knn
@@ -21,11 +21,11 @@ class StockPricePredictor(object):
        -----
            1)    0   1   2   ..  T  - time periode (pd.datetime)
                 P0  P1  P2  ..  PT  - stock price (float)
-           2)  randomly assignment to train and test
-           3)  predict test data and test predictions' precision
-           4)   0   1   2   ..  T  =>    T+n     T+2n  ..  future time periode
-               P0  P1  P2  ..  PT  =>  P_T+n   P_T+2n  ..  future stock price
-               predict future price
+           2)   randomly assignment to train and test
+           3)   predict test data and test predictions' precision
+           4)    0   1   2   ..  T  =>    T+n     T+2n  ..  future time periode
+                P0  P1  P2  ..  PT  =>  P_T+n   P_T+2n  ..  future stock price
+                predict future price
 
        Parameters
        ----------
@@ -121,7 +121,7 @@ class StockPricePredictor(object):
         y_pred = np.array(y_pred)
         self.rsme = mean_squared_error(self.y_test, y_pred, squared=False)
         assert y_pred.shape == X_test.shape
-        data = ["Train", "Test", "Prediction"]
+        data = ["Training", "Testing", "Prediction"]
         colors = ["y", "g", "r"]
         markers = ["o", "o", "x"]
         fig, axis = plt.subplots(1, 1, figsize=fs)
@@ -191,9 +191,9 @@ class StockPricePredictor(object):
 
     def _nn_model(
         self,
-        inputs_layers=1,
-        output_layers=1,
-        activation="identity",
+        h1_layer=12,
+        h2_layer=3,
+        activation="relu",
         solver="adam",
         iterations=5000,
         learning_rate=1e-4,
@@ -216,7 +216,7 @@ class StockPricePredictor(object):
                initiliazed mlp model
         """
         mlp = MLPRegressor(
-            hidden_layer_sizes=(inputs_layers, output_layers),
+            hidden_layer_sizes=(h1_layer, h2_layer),
             activation=activation,
             solver=solver,
             max_iter=iterations,
@@ -316,14 +316,14 @@ class NetworkPricePredictor(StockPricePredictor):
         assert len(X_test) == len(y_test), "Test data are not compatible!"
         if plot == True:
             plt.figure(figsize=(15, 7))
-            plt.plot(self.time_train, train, label="Train Data")
-            plt.plot(self.time_test, test, label="Test Data")
+            plt.plot(self.time_train, train, label="Training Data")
+            plt.plot(self.time_test, test, label="Testing Data")
             plt.xlabel("Time")
             plt.ylabel("Stock Price")
             plt.legend()
             plt.grid(True)
             plt.title(
-                f"Figure {num}: Visualization of Train and Test Data for MLP Regression"
+                f"Figure {num}: Visualization of Training and Testing Data for MLP Regression"
             )
             plt.show()
         elif plot == False:
@@ -334,7 +334,7 @@ class NetworkPricePredictor(StockPricePredictor):
                 np.array(y_test),
             )
 
-    def mlp_prediction(self, plot=True, num=18.5, **kwargs):
+    def mlp_prediction(self, plot=True, num=18.4, **kwargs):
         """ MLP Model Preperation """
         mlp = self._nn_model(**kwargs)
         X_train, X_test, y_train, y_test = self.assign_data(plot=False)
@@ -370,7 +370,7 @@ class NetworkPricePredictor(StockPricePredictor):
         mlp = self._nn_model(**kwargs)
         mlp.fit(np.array(train).reshape(-1, 1), np.array(test).reshape(-1, 1).ravel())
         prediction = mlp.predict(todays_price)
-        return print(f"Tomorrows Price will be : {prediction[0]}")
+        return print(f"Tomorrows Close Price will be : {prediction[0]:.2f}")
 
 
 @njit
