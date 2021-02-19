@@ -31,6 +31,46 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 ## References
 
+- <b>Athey, S., 2018.</b> The impact of machine learning on economics. In The economics of artificial intelligence: An agenda (pp. 507-547). University of Chicago Press.
+
+- <b>Brynjolfsson, E., Mitchell, T. and Rock, D., 2018, May.</b> What can machines learn, and what does it mean for occupations and the economy?. *In AEA Papers and Proceedings* (Vol. 108, pp. 43-47).
+
+- <b>Chaboud, A.P., Chiquoine, B., Hjalmarsson, E. and Vega, C., 2014.</b> Rise of the machines: Algorithmic trading in the foreign exchange market. *The Journal of Finance,* 69(5), pp.2045-2084.
+
+- <b>Cybenko, G., 1989.</b> Approximation by superpositions of a sigmoidal function. *Mathematics of control, signals and systems,* 2(4), pp.303-314.
+
+- <b>Gasca, M. and Sauer, T., 2000.</b> Polynomial interpolation in several variables. *Advances in Computational Mathematics,* 12(4), pp.377-410.
+
+- <b>Gasca, M. and Sauer, T., 2001.</b> On the history of multivariate polynomial interpolation. *In Numerical Analysis:* Historical Developments in the 20th Century (pp. 135-147). Elsevier.
+
+- <b>Goodfellow's (2016)</b>
+
+- <b>Heaton, J.B., Polson, N.G. and Witte, J.H., 2016.</b> Deep learning in finance. arXiv preprint arXiv:1602.06561.
+
+- <b>Herbich et al.'s (1999)</b>
+
+- <b>Hendershott, T., Jones, C.M. and Menkveld, A.J., 2011.</b> Does algorithmic trading improve liquidity?. *The Journal of finance,* 66(1), pp.1-33.
+
+- <b>Hopfield, J.J., 1982.</b> Neural networks and physical systems with emergent collective computational abilities. *Proceedings of the national academy of sciences,* 79(8), pp.2554-2558.
+
+- <b>Ketkar, N. and Santana, E., 2017.</b> Deep learning with python (Vol. 1). *Berkeley,* CA: Apress.
+
+- <b>Lin, H.W., Tegmark, M. and Rolnick, D., 2017.</b> Why does deep and cheap learning work so well?. *Journal of Statistical Physics,* 168(6), pp.1223-1247.
+
+- <b>Miranda, M.J. and Fackler, P.L., 2004.</b> Applied computational economics and finance. *MIT press.*
+
+- <b>Moocarme et al., 2020</b>
+
+- <b>Murphy, K.P., 2012.</b> Machine learning: a probabilistic perspective. *MIT press.*
+
+- <b>Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V. and Vanderplas, J., 2011.</b> Scikit-learn: Machine learning in Python. *the Journal of machine Learning research*, 12, pp.2825-2830.
+
+- <b>Ramalho, L., 2015.</b> Fluent python: Clear, concise, and effective programming. " *O'Reilly Media, Inc.*".
+
+- <b>Tegmark, M., 2017.</b> Life 3.0: Being human in the age of artificial intelligence. *Knopf.*
+
+- <b>Virtanen, P., Gommers, R., Oliphant, T.E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, W., Bright, J. and van der Walt, S.J., 2020.</b> SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature methods,* 17(3), pp.261-272.
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project/blob/master/LICENSE)
 
 ---
