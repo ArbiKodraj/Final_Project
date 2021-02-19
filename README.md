@@ -24,7 +24,7 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - **4. Neural Networks as Modern Machine Learning Method:**  
 - **5. Further Machine Learning Methods:**
 - **6. Economical Application:**
-- **6. Conclusion:**
+- **7. Conclusion:**
 
 
 [![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
