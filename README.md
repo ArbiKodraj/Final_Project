@@ -24,6 +24,7 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - **4. Neural Networks as Modern Machine Learning Method:**  
 - **5. Further Machine Learning Methods:**
 - **6. Economical Application:**
+- **6. Conclusion:**
 
 
 [![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
@@ -39,9 +40,9 @@ In order to ensure full reproducibility, I have set up a continous integration e
 **Important:**
 
 - 1. Improve Code Documentation (EPP as reference)
-- 2. Write Text and use plenty of References (focus on ML)
+- 2. Write Introduction and Conlusion, countercheck text several times
 - 3. Look for alternative displaying possibilities for the notebook from private repo (nbviewer?, ..)
-- 4. Invite remaining collaborators
+- 4. Invite remaining collaborators (done)
 - 5. Think about additional to do's
 
 **Optional:**

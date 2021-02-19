@@ -78,7 +78,7 @@ class StockPricePredictor(object):
         )
         return self.X_train, self.X_test, self.y_train, self.y_test
 
-    def plot_data(self, neigh=2, fs=(15, 7), variable="Close", num=18.1, **kwargs):
+    def plot_data(self, neigh=2, fs=(14, 6), variable="Close", num=18.1, **kwargs):
         """Prepares Model and Plots Data
 
            Parameters
@@ -242,7 +242,7 @@ class StockPricePredictor(object):
     def plot_pred_data(self, num=18.2, **kwargs):
         """ Plots whole Train Data and Future Prediction """
         train_time, train_price, rng, predict_price = self._predict_price_knn(**kwargs)
-        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(15, 7))
+        fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(14, 6))
         ax0.plot(train_time, train_price)
         ax1.plot(rng, predict_price)
         ax0.set_xlabel("Time")
@@ -315,7 +315,7 @@ class NetworkPricePredictor(StockPricePredictor):
         assert len(X_train) == len(y_train), "Train data are not compatible!"
         assert len(X_test) == len(y_test), "Test data are not compatible!"
         if plot == True:
-            plt.figure(figsize=(15, 7))
+            plt.figure(figsize=(14, 6))
             plt.plot(self.time_train, train, label="Training Data")
             plt.plot(self.time_test, test, label="Testing Data")
             plt.xlabel("Time")
@@ -340,7 +340,7 @@ class NetworkPricePredictor(StockPricePredictor):
         X_train, X_test, y_train, y_test = self.assign_data(plot=False)
         mlp.fit(X_train.reshape(-1, 1), y_train.reshape(-1, 1).ravel())
         prediction = mlp.predict(X_test.reshape(-1, 1))
-        plt.figure(figsize=(15, 7))
+        plt.figure(figsize=(14, 6))
         plt.plot(self.time_train[1:], y_train, label="Training Data", lw=2)
         plt.plot(self.time_test[1:], y_test, label="Testing Data", lw=2)
         plt.plot(self.time_test[1:], prediction, label="Prediction", lw=2)
