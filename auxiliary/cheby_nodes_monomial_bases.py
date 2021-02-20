@@ -9,12 +9,12 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import explained_variance_score
 from sklearn.metrics import r2_score
 
-from scipy_implementation import five_interp
-from scipy_implementation import six_interp
-from scipy_implementation import seven_interp
-from scipy_implementation import eight_interp
-from scipy_implementation import nine_interp
-from scipy_implementation import ten_interp
+from auxiliary.scipy_implementation import five_interp
+from auxiliary.scipy_implementation import six_interp
+from auxiliary.scipy_implementation import seven_interp
+from auxiliary.scipy_implementation import eight_interp
+from auxiliary.scipy_implementation import nine_interp
+from auxiliary.scipy_implementation import ten_interp
 
 
 # ---------------------------- Attempt Chebychev approximation via Chebychev interpolation, fails with curve fit method of scipy
