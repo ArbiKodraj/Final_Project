@@ -5,30 +5,27 @@ import pandas as pd
 from sklearn.metrics import mean_absolute_error
 
 
-f = lambda x: x * np.sin(x)
+f = lambda x: x * np.sin(x) # Benchmark function for the alternative Chebychev approximation
 
 
 # -----------------------------------------------------------------------------
 
 
 class CCMethod:
-    """Chebyshev(a, b, n, func)
+    """This class implements the Chebychev Approximation using Chebychev nodes. The 
+    object was not created by me. 
 
-       Parameters:
-       -----------
-           a   : (int) lower limit
-           b   : (int) upper limit
-           n   : (int) maximum degrees
-           func: function that shall be approximated
-
-       Method:
-       -------
-           increase_degree: increases degree of approxiation by input
-           eval           : yields the approximated function value.
+    :param a: Lower bound of interval
+    :type a: int
+    :param b: Upper bound of interval
+    :type b: int
+    :param func: Benchmark function
+    :type func: function
     """
 
     def __init__(self, a, b, n, func):
-        """Initialize object"""
+        """Constructor method
+        """
         self.a = a
         self.b = b
         self.n = n
@@ -36,7 +33,7 @@ class CCMethod:
 
         bma = 0.5 * (b - a)
         bpa = 0.5 * (b + a)
-
+        
         cheb_nodes = [
             np.cos(np.pi * (k + 0.5) / n) * bma + bpa for k in range(n)
         ]  # Formula of nodes
@@ -49,15 +46,12 @@ class CCMethod:
         ]
 
     def eval(self, x):
-        """Approximat function at specific point
+        """Yields the approximation value at a specific point
            
-           Paramaters
-           ----------
-               x: (float) evaluation point
-               
-           Returns
-           -------
-               (float) approximation at evaluation point for certain function
+        :param x: Evaluation point
+        :type x: float
+        :return: Approximation point benchmark function at evaluation point 
+        :rtype: float 
         """
         assert (
             self.a <= x <= self.b
@@ -75,14 +69,16 @@ class CCMethod:
 
 
 def approximation_error(func, approx, figure, degree):
-    """Plots approximation error
+    """Plots approximation error of the :class:`CCMethod` class
        
-       Parameters
-       ----------
-           func  : function
-           approx: (float )approximated value
-           figure: (float) figure number
-           degree: (int) degree of approximation
+    :param func: True function  
+    :type func: function
+    :param approx: Approximated function
+    :type func: function
+    :param figure: Figure number 
+    :type figure: float, optional
+    :param degree: Used approximation degree
+    :type degree: int
     """
     a = -3  # self.a
     b = 4  # self.b + 1, just do use class interval! Did not want to extend or even change the method significantly
@@ -112,12 +108,21 @@ def approximation_error(func, approx, figure, degree):
     )
 
 
-def data_frame_rslt(chep_approx, x, function):
+def data_frame_rslt(cheb_approx, x, function):
+    """Creates approximation accuracy as dataframe using the :class:`CCMethod` class
 
-    approx = [chep_approx.eval(n) for n in x]
+    :param cheb_approx: Chebychev approximation value
+    :type cheb_approx: function
+    :param x: Set of evaluation points
+    :type x: np.array
+    :param function: Benchmark function
+    :type function: function
+    :return: Approximation accuracy for different evaluation points
+    :rtype: pd.DataFrame
+    """
+    approx = [cheb_approx.eval(n) for n in x]
     real_values = function(x)
     error = abs(approx - real_values)
-
     result = pd.DataFrame(
         [approx, real_values, error],
         index=["Approximation", "Real Value", "Absolut Error Term"],
@@ -129,21 +134,18 @@ def data_frame_rslt(chep_approx, x, function):
 
 
 def error_for_diff_orders(orders, func, r, figure):
+    """Plots approximation error using the :class:`CCMethod` class for various 
+    evaluation points and degrees
 
-    """Plot the Error Term of multiple Approximations via Chebyshev Method
-
-     Parameters
-    -----------
-
-        orders: How many degrees shall the approximation have
-        func:   Which function is going to be approximated
-        r:      Range of approximation
+    :param orders: Set of degrees
+    :type orders: list
+    :param func: Benchmark function
+    :type func: function
+    :param r: Set of evaluation points
+    :type r: np.array, list
     """
-
     plt.figure(figsize=(12, 5))
-
     for d in orders:
-
         cheb_approx_weird_function = CCMethod(-10, 10, d, func)
         error_term = [func(x) - cheb_approx_weird_function.eval(x) for x in r]
         plt.plot(r, error_term, label="Degree: " + str(d))
@@ -157,6 +159,5 @@ def error_for_diff_orders(orders, func, r, figure):
         )
         plt.xlabel("x")
         plt.title(f"Figure {figure}: Approximation for different Degrees")
-
     plt.grid()
     plt.show()

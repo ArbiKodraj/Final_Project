@@ -3,43 +3,40 @@ import matplotlib.pyplot as plt
 
 
 class PlotNodes:
-    """Plots the Uniform and Chebychev Nodes
+    """Class that visualizes Uniform and Chebychev nodes
 
-       Prameters
-       ---------
-           n: (int) number of nodes
-           a: (int) lower bound
-           b: (int) upper bound
-
-       Methods
-       -------
-           uniform_nodes  : creates uniform nodes
-           chebychev_nodes: creates chebychev nodes
-           plot_nodes     : plot both nodes to compare
+        :param n: Number of nodes
+        :type n: int
+        :param a: lower bound of interval
+        :type a: int
+        :param b: upper bound of interval
+        :type b: int
     """
 
     def __init__(self, n, a, b):
-        """Initiliaze Object"""
+        """Constructor method
+        """
         self.n = n
         self.a = a
         self.b = b
 
     def uniform_nodes(self):
-        """Defines Uniform nodes"""
+        """Defines Uniform nodes
+        """
         self.uni_nodes = np.linspace(self.a, self.b, self.n)
 
     def chebychev_nodes(self):
-        """Defines Chebychev nodes"""
+        """Defines Chebychev nodes
+        """
         self.cheb_nodes = np.cos(
             (self.n - np.arange(1, self.n + 1) + 0.5) * np.pi / self.n
         )
 
     def plot_nodes(self, fs=(10, 6)):
-        """Plot nodes
+        """Plots Uniform and Chebychev nodes
         
-           Parameters
-           ----------
-               fs: (float) size of figure, by default=(10,6)
+           :param fs: size of figure, defaults to (10,6)
+           :type fs: tuple
         """
         i, j = [], []
         [i.append(1) for l in range(len(self.uni_nodes))]

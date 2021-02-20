@@ -79,17 +79,16 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 **Important:**
 
-- 1. Improve Code Documentation (EPP as reference)
-- 2. Write Introduction and Conlusion, countercheck text several times
+- 1. Improve Code Documentation (EPP as reference) - use Sphinx (function_appro_keras next)
+- 2. Countercheck text several times 
 - 3. Look for alternative displaying possibilities for the notebook from private repo (nbviewer?, ..)
 - 4. Invite remaining collaborators (done)
 - 5. Think about additional to do's
 
 **Optional:**
 
-- 1. May use Sphinx for further Documentation
-- 2. Look, if you can speed up your code even more using numba or numpy (may have a look on PyPy for object oriented programming?)
-- 3. Finish last section (optimal policy for cake problem) - if not: remove 
-- 4. if possible, i.e., code's outcome kind of known : write tests - use pytest or unittest (especially interesting for last sections)
+- 1. Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
+- 2. Finish last section (optimal policy for cake problem) - if not: remove => removed
+- 3. if possible, i.e., code's outcome kind of known : write tests - use pytest or unittest (especially interesting for last sections)
 
 

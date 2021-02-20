@@ -12,48 +12,32 @@ from sklearn.metrics import r2_score
 from matplotlib import gridspec
 
 
-k = lambda x: np.exp(-np.sin(x * np.pi))
-
+k = lambda x: np.exp(-np.sin(x * np.pi)) # Benchmark function for numper interpolation
+    
 
 # -------------------------------------------------------------------------------- 3.1.1 Benchmark : evenly spaced interpolation
 
 
 class PMethod:
+    """This object interplates a function using Uniform nodes and the numpy library.
+    Besides, this object uses monomial polnomials for the interpolation
+
+    :param a: Lower bound interval 
+    :type a: int
+    :param b: upper bound interval 
+    :type b: int
+    :param n: Number of nodes
+    :type n: int
+    :param degree: Degree of approximation
+    :type degree: int
+    :param func: Unknown function
+    :type func: function
+    """
+
+
     def __init__(self, a, b, n, degree, func):
-
+        """Constructor method
         """
-
-        Parameters
-        ----------
-            a      : lower bound
-            b      : upper bound
-            n      : number of nodes
-            degree : degree of the approximation
-            func   : function to approximate
-
-
-        Methods
-        ----------
-        naive_poly: numpy's implemented evenly spaced nodes interpolation with given parameters
-
-        simple_plot_approx: plots function, approximation and error
-            N  : How many nodes shall be evaluated
-            fs : size of the graph - as tuple
-
-        increasing_degree: increased defined degree input by input
-            inc_factor : increases degree by this factor
-
-        increasing_nodes: defines new 3 and 9 time larger set of observed nodes
-
-        naive_poly_inc_nodes: naive approximation for increased observed nodes
-
-        plot_appro_inc_nodes: plots the naive approximation with updated nodes
-            fs : size of the graph - as tuple
-
-        table_error: plots a data frame some errors and accuracy test of the approximation
-
-        """
-
         self.a = a
         self.b = b
         self.n = n
@@ -61,16 +45,22 @@ class PMethod:
         self.func = func
 
     def naive_poly(self):
+        """Evenly spaced node interpolation 
+        """
         x = np.linspace(self.a, self.b, self.n)
         self.poly = P.fit(x, self.func(x), self.degree)
 
     def simple_plot_appro(self, N, fs):
+        """Plots true function and approximation as well as approximation error
 
+        :param N: Number of interpolation nodes
+        :type N: int
+        :param fs: Figuresize
+        :type fs: tuple
+        """
         self.x = np.linspace(self.a, self.b, N)
-
         fig = plt.figure(figsize=fs)
         gs = gridspec.GridSpec(2, 1, height_ratios=[1.8, 1])
-
         ax0 = plt.subplot(gs[0])
         ax0.plot(self.x, self.func(self.x), label="Real Function")
         ax0.plot(self.x, self.poly(self.x), label="Approximation")
@@ -100,15 +90,23 @@ class PMethod:
         plt.tight_layout()
         plt.show()
 
-    def increasing_degree(self, inc_factor):
+    def increasing_degree(self, inc_factor=1):
+        """Increases approximation degree 
+        
+        :param inc_factor: Factor by which the degree will be decreases, defaults to 1
+        :type inc_factor: int
+        """
         self.degree = self.degree + inc_factor
 
     def increasing_nodes(self):
+        """Increases number of nodes
+        """
         self.na = self.n * 3
         self.nb = self.n * 9
 
     def naive_poly_inc_nodes(self):
-
+        """Applies interpolation using Uniform nodes 
+        """
         xa = np.linspace(self.a, self.b, self.na)
         xb = np.linspace(self.a, self.b, self.nb)
 
@@ -116,7 +114,11 @@ class PMethod:
         self.polyb = P.fit(xb, self.func(xb), self.degree)
 
     def plot_appro_inc_nodes(self, fs):
+        """Plots the naive approximation using updated Uniform nodes
 
+        :param fs: Figuresize
+        :type fs: tuple
+        """
         fig = plt.figure(figsize=fs)
         gs = gridspec.GridSpec(2, 1, height_ratios=[1.8, 1])
 
@@ -180,7 +182,11 @@ class PMethod:
         plt.show()
 
     def table_error(self):
+        """Returns dataframe of approximation accuracy for different numbers of nodes
 
+        :return: Approximation acuracy 
+        :rtype: pd.DataFrame
+        """
         mae = mean_absolute_error(self.poly(self.x), self.func(self.x))
         maea = mean_absolute_error(self.polya(self.x), self.func(self.x))
         maeb = mean_absolute_error(self.polyb(self.x), self.func(self.x))
@@ -240,8 +246,24 @@ class PMethod:
 
 
 class CMethod:
-    def __init__(self, a, b, n, degree, func):
+    """This object refers to the :class:`PMethod` class. Instead of using monomial
+    polynomials, it uses Chebychev polnomials for the interpolation of a function
 
+    :param a: Lower bound of interval
+    :type a: int
+    :param b: Upper bound of interval
+    :type b: int
+    :param n: Number of interpolation nodes
+    :type n: int
+    :param degree: Degree of approximation
+    :type degree: int
+    :param func: Unknown function
+    :type func: function
+    """
+    def __init__(self, a, b, n, degree, func):
+        """Constructor method. It uses the exact same arguments as the :class:`PMethod`
+        constructor method. This could also be achieved by inheritance 
+        """
         self.a = a
         self.b = b
         self.n = n
@@ -249,12 +271,24 @@ class CMethod:
         self.func = func
 
     def increase_degree(self, inc_factor):
+        """Increases number of degrees by certain factor 
+
+        :param inc_factor: Factor by which the degree is increased
+        :type inc_factor: int
+        """
         self.degree += inc_factor
 
     def extending_nodes(self, ext_factor):
+        """Multiplies number of nodes by certain factor 
+
+        :param ext_factor: Factor by which the degree is multiplied
+        :type ext_factor: int
+        """
         self.n *= ext_factor
 
     def cheb_poly(self):
+        """Applies Chebychev interpolation 
+        """
         xa = np.linspace(self.a, self.b, self.n)
         xb = np.linspace(self.a, self.b, 3 * self.n)
         xc = np.linspace(self.a, self.b, 9 * self.n)
@@ -264,7 +298,13 @@ class CMethod:
         self.polyc = C.fit(xc, self.func(xc), self.degree)
 
     def plot_cheb_int(self, fs, N):
+        """Plots true function and Chebychev interpolation as well as the approximation error 
 
+        :param fs: Figuresize
+        :type fs: tuple
+        :param N: Number of nodes final interpolation
+        :type N: int
+        """
         self.x = np.linspace(self.a, self.b, N)
 
         fig = plt.figure(figsize=fs)
@@ -330,7 +370,11 @@ class CMethod:
         plt.show()
 
     def table_error(self):
+        """Returns approximation accuracy
 
+        :return: Approximation accuracy
+        :rtype: pd.DataFrame
+        """
         maea = mean_absolute_error(self.polya(self.x), self.func(self.x))
         maeb = mean_absolute_error(self.polyb(self.x), self.func(self.x))
         maec = mean_absolute_error(self.polyc(self.x), self.func(self.x))

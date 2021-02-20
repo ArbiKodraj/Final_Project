@@ -23,10 +23,9 @@ from sklearn.pipeline import make_pipeline
 def demand(p):
     """Vectorized Function to determine demand
 
-    Parameter
-    ---------
-    p : (array) price vector for demand curve
-
+        :param p: Price vector for demand 
+        :type p: np.array
+        :raises ValueError: "p has to be an array!"
     """
     if not isinstance(p, np.ndarray):
         raise ValueError("Price vector has to be an array!")
@@ -47,10 +46,9 @@ def demand(p):
 def supply(p):
     """Vectorized Function to determine supply
 
-    Parameter
-    ---------
-    p : (array) price vector for demand curve
-
+        :param p: Price vector for supply 
+        :type p: np.array
+        :raises ValueError: "p has to be an array!"
     """
     if not isinstance(p, np.ndarray):
         raise ValueError("Price vector has to be an array!")
@@ -87,33 +85,27 @@ def supply(p):
 # ---------- Approximation using scipy ----------
 
 class PolynomialDS:
+    """Object that approximates supply and demand functions using sicpy
+        interpolate method
 
-    """Object that approximate certain supply and demand functions via sicpy
-        interpolate, includes dunder methods and assertion errors
-
-    Parameter
-    ---------
-    a      : lower bound of prices
-    b      : upper bound of prices
-    nodes  : known values (price, demand, supply)
-    demand : real demand function
-    supply : real supply function
-
-    Methods
-    --------
-    plt_approx - Plots approximation of demand and supply and nodes
-        ******
-        fs     : (tuple) figuresize
-        *num   : (float) number of figures
-
-    close_intersection - Computes the point where true as well as approximated demand and supply
-                         are closest to each other, interesection
-        ******
-        nodes  :  (int)  amount of nodes used for computation of intersection
+        :param a: Lower bound of prices
+        :type a: int
+        :param b: Upper bound of prices
+        :type b: int
+        :param nodes: Interpolation nodes for demand and supply
+        :type nodes: int
+        :param supply: Unknown supply function
+        :type supply: function
+        :param demand: Unknown demand function
+        :type demand: function
     """
 
     def __init__(self, a, b, nodes, demand, supply):
-        """Initializer of the PolynomialDS object"""
+        """Constructor method
+
+            :raises AssertionError: "a has to be non-negative"
+            :raises AssertionError: "b lies between a and 100"
+        """
         self.a = a
         self.b = b
         assert a >= 0, "Price cannot be negative!"
@@ -126,29 +118,51 @@ class PolynomialDS:
         self.qs = supply(self.p)
 
     def __len__(self):
-        """Amount of Nodes/known Points"""
+        """Returns number of interpolation nodes
+
+            :return: Number of known prices
+            :rtype: int
+        """
         return len(self.p)
 
     def __repr__(self):
-        """String representation of object"""
+        """String representation of object
+        """
         p = np.around(self.p, decimals=2)
         qd = np.around(self.qd, decimals=2)
         qs = np.around(self.qs, decimals=2)
         return f"{len(self)} known values for Demand and Supply:\n\nPrices={p} \n\nDemand={qd} \nSupply={qs}"
 
     def __call__(self, p):
-        """Returns approximated value of demand and supply for a given price"""
+        """Returns true and approximated value of demand and supply for a given price
+        
+            :param p: Evaluation price
+            :type p: float, optional    
+        """
         self.apprx_qd = interp1d(self.p, self.qd)
         self.apprx_qs = interp1d(self.p, self.qs)
 
         return f"-- Real value -- at price {p}: \n\nDemand = {self.demand(p)} \nSupply = {self.supply(p)} \n\n-- Approximated value -- at price {p}: \n\nDemand = {self.apprx_qd(p)} \nSupply = {self.apprx_qs(p)}"
 
     def __name__(self):
-        """Returns the name of the object"""
+        """Returns the name of the object
+        """
         return "Demand and Supply Interpolator"
 
     def plt_approx(self, fs=(14, 7), num1=16.1, num2=16.2, num3=16.3, num4=16.4):
+        """Plots Approximation and true supply as well as demand
 
+            :param fs: Figuresize, defaults to (14,7)
+            :type fs: tuple
+            :param num1: Number first figure, defaults to 16.1
+            :type num1: float, optional
+            :param num2: Number second figure, defaults to 16.2
+            :type num2: float, optional
+            :param num3: Number third figure, defaults to 16.3
+            :type num3: float, optional
+            :param num4: Number fourth figure, defaults to 16.4
+            :type num4: float, optional
+        """
         prices = np.linspace(self.a, self.b, self.nodes * 150)
         apprx_qd = self.apprx_qd(prices)
         apprx_qs = self.apprx_qs(prices)
@@ -201,7 +215,11 @@ class PolynomialDS:
         )
 
     def close_intersection(self, nodes=1000000):
+        """Returns true and approximated market equilibrium 
 
+            :param nodes: Number of interpolation nodes, defaults to 1000000
+            :type nodes: int
+        """
         prices = np.linspace(self.a, self.b, nodes)
 
         f = lambda p: self.demand(p) - self.supply(p)
@@ -230,46 +248,33 @@ class PolynomialDS:
 # ---------- Approximation using ML ----------
 
 class AISupplyDemandApprox:
+    """Object that approximates supply and demand using various ML methods
 
-    """Approximated Supply and Demand via different Modern Machine Learning Methods
-
-    Parameters
-    ----------
-
-    nodes  : Nodes of data (train and test)
-    supply : Supply function
-    demand : demand function
-    a      : lower bound, equals 0 by default
-    b      : upper bound, equals 100 by default
-    ts     : test size, 0.33 by default
-    rs     : random size, 42 by default
-
-    Methods
-    ---------
-
-    plots - Plots approximation results as well as train and test data
-        *******
-        colors      : (list)  colors of approximation as list
-        labels      : (list)  labels of train and test data
-        markers     : (list)  list of markers for approximation
-        n_neighbors : (int)   neighbors for KNN method
-        degrees     : (list)  degrees of sklearn poly method
-        weight      : (str)   weight of decision tree method
-        fs          : (tuple) figure size of plot
-        **num       : (float) number of figures
-
-    reslts_as_frame - Plots approximation's accuracy (error) as da data frame
-        *******
-        num : (int) number of data frame
+        :param nodes: Number of known nodes 
+        :type nodes: int
+        :param supply: Unknown supply function
+        :type supply: function
+        :param demand: Unknown demand function
+        :type demand: function
+        :param a: Lower bound of prices, defaults to 0
+        :type a: int
+        :param b: Upper bound of prices, defaults to 100
+        :type b: int
+        :param ts: Size of testing data, defaults to 0.4
+        :type ts: float
+        :param rs: Random state, defaults to 42
+        :type rs: function
     """
 
     def __init__(self, nodes, supply, demand, a=0, b=100, ts=0.4, rs=42):
-        """Initializer of the AISupplyDemandApprox object"""
+        """Constructor method
 
+            :raises AssertionError: a is non-negative
+            :raises AssertionError: pd_train includes nan values
+            :raises AssertionError: pd_test includes nan values
+        """
         assert a >= 0, "Price must be Non Negative!"
-        if not nodes < b:
-            raise ValueError("Nodes ouf of Range!")
-
+        
         p = np.linspace(a, b, nodes)
         q = supply(p)
         qd = demand(p)
@@ -299,7 +304,8 @@ class AISupplyDemandApprox:
         assert np.isnan(self.pd_test).any() == False, "There are nan Values!"
 
     def __name__(self):
-        """Name of the AISupplyDemandApprox object"""
+        """Returns name of AISupplyDemandApprox object
+        """
         return "Modern-ML Demand and Supply Interpolator"
 
     def plots(
@@ -316,8 +322,33 @@ class AISupplyDemandApprox:
         num3=17.3,
         num4=17.4,
     ):
-        self.degrees = degrees
+        """Plots approximation results as well as training and testing data
 
+            :param colors: Colors of approximation results, defaults to ['teal', 'yellowgreen', 'gold']
+            :type colors: list
+            :param label: Labels of training and testing data, defaults to ['Training Values', 'Testing Values'] * 2
+            :type label: list
+            :param markers: Markers of approximation, defaults to  ['x', '*', 'v']
+            :type markers: list
+            :param n_neighbors: Number of k-nearest neighbors, defaults to 4
+            :type n_neighbors: int
+            :param degrees: Number of degrees for Linear Regression, defaults to [3, 6]
+            :type degrees: list
+            :param weight: Weight of KNN Regression, , defaults to 'distance'
+            :type weight: str
+            :param fs: Figuresize, defaults to (15, 10)
+            :type fs: tuple
+            :param num1: Number of first Figure, defaults to 17.1
+            :type num1: float, optional
+            :param num2: Number of second Figure, defaults to 17.2
+            :type num2: float, optional
+            :param num3: Number of third Figure, defaults to 17.3
+            :type num3: float, optional
+            :param num4: Number of fourth Figure, defaults to 17.4
+            :type num4:
+            :raises AssertionError: length of degrees is out of range
+        """
+        self.degrees = degrees
         assert len(degrees) == 2, "List out of range!"
 
         qsup, psup = [self.q_train, self.q_test], [self.p_train, self.p_test]
@@ -454,6 +485,13 @@ class AISupplyDemandApprox:
         plt.show()
 
     def reslts_as_frame(self, num=14):
+        """Returns accuracy of approximation using ML
+
+            :param num: Number of dataframe, defaults to 14
+            :type num: int, optional
+            :return: Accuracy of approximation 
+            :rtype: pd.DataFrame
+        """
         d1, d2 = self.degrees[0], self.degrees[1]
         index_as_array_sup = [
             np.array(["Supply"] * 4),

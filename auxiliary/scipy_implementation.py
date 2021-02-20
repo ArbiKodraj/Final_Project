@@ -12,18 +12,24 @@ from sklearn.metrics import r2_score
 
 # --------------------------------------------------------------------------- Approximations
 
-g = lambda x: np.sin(0.5 * x) - 2 * np.cos(2 * x)
+g = lambda x: np.sin(0.5 * x) - 2 * np.cos(2 * x) # Benchmark function for scipy interpolation
 
 
 def five_interp(x, a0, a1, a2, a3, a4):
+    """Approximation degree = 5
+    """
     return a0 + a1 * x + a2 * (x ** 2) + a3 * (x ** 3) + a4 * (x ** 4)
 
 
 def six_interp(x, a0, a1, a2, a3, a4, a5):
+    """Approximation degree = 6
+    """
     return a0 + a1 * x + a2 * (x ** 2) + a3 * (x ** 3) + a4 * (x ** 4) + a5 * (x ** 5)
 
 
 def seven_interp(x, a0, a1, a2, a3, a4, a5, a6):
+    """Approximation degree = 7
+    """
     return (
         a0
         + a1 * x
@@ -36,6 +42,8 @@ def seven_interp(x, a0, a1, a2, a3, a4, a5, a6):
 
 
 def eight_interp(x, a0, a1, a2, a3, a4, a5, a6, a7):
+    """Approximation degree = 8
+    """
     return (
         a0
         + a1 * x
@@ -49,6 +57,8 @@ def eight_interp(x, a0, a1, a2, a3, a4, a5, a6, a7):
 
 
 def nine_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8):
+    """Approximation degree = 9
+    """
     return (
         a0
         + a1 * x
@@ -63,6 +73,8 @@ def nine_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8):
 
 
 def ten_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9):
+    """Approximation degree = 10
+    """
     return (
         a0
         + a1 * x
@@ -82,17 +94,18 @@ def ten_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9):
 
 class FCMethod:
 
-    """Applies the SciPy Curve Fit Method to naively approximate a function,
-        plots the interpolation and the real function for different nodes,
-        tables the approximation error and accuracy
+    """This object uses the scipy curve fit method to naively approximate a specific
+    function. It plots the interpolation and the real function for different nodes and
+    tables the approximation accuracy
 
-    Parameters
-    -----------
-        a     : lower bound
-        b     : upper bound
-        n     : number of nodes
-        func  : function that is approximated
-        degree: degree of function, must be between 5 and 10
+    :param a: Lower bound of interval
+    :type a: int
+    :param b: Upper bound of interval
+    :type b: int
+    :param n: Number of interpolation nodes
+    :type n: int
+    :param func: Benchmark function
+    :type func: function
 
     Methods
     -----------
@@ -112,7 +125,9 @@ class FCMethod:
     """
 
     def __init__(self, a, b, n, func, degree):
-
+        """Constructor method. It uses the exact same arguments as the :class:`PMethod`
+        constructor method. This could also be achieved by inheritance 
+        """
         self.a = a
         self.b = b
         self.n = n
@@ -120,14 +135,19 @@ class FCMethod:
         self.degree = degree
 
     def check_degree(self, increase):
+        """Increases approximation degree if degree lies between 5 and 10
 
+        :param increase: Increases approximation degree by one unit if True
+        :type increase: bool
+        """
         if increase == True and self.degree < 10:
             self.degree += 1
         elif self.degree < 5 or self.degree > 10:
             print("Degree must be between 5 and 10!")
 
     def choose_approx(self):
-
+        """Chooses approximation function by its degree
+        """
         if self.degree == 5:
             self.approx = five_interp
         elif self.degree == 6:
@@ -142,7 +162,9 @@ class FCMethod:
             self.approx = ten_interp
 
     def fit_curve(self):
-
+        """Implementation of scipy curve fit method. Uses least square method to find 
+        optimal weight. This yield to the interpolation 
+        """
         self.xa = np.linspace(self.a, self.b, self.n)
         self.xb = np.linspace(self.a, self.b, 3 * self.n)
         self.xc = np.linspace(self.a, self.b, 9 * self.n)
@@ -152,12 +174,20 @@ class FCMethod:
         self.poptc = curve_fit(self.approx, self.xc, self.func(self.xc))[0]
 
     def plot_naive_interp(self, N, fs, number_1, number_2):
+        """Plots true function and approximation as well as approximation error
 
+        :param N: Number of evaluation nodes
+        :type N: int
+        :param fs: Figuresize
+        :type fs: tuple
+        :param number_1: Number of first figure
+        :type number_1: float, optional
+        :param number_2: Number of second figure
+        :type number_2: float, optional
+        """
         self.x = np.linspace(self.a, self.b, N)
-
         fig = plt.figure(figsize=fs)
         gs = gridspec.GridSpec(2, 1, height_ratios=[1.8, 1])
-
         ax0 = plt.subplot(gs[0])
         ax0.plot(self.x, self.func(self.x), label="Real Function")
         ax0.plot(
@@ -230,7 +260,13 @@ class FCMethod:
         plt.show()
 
     def table_error(self, number):
+        """Returns approximation accuracy
 
+        :param number: Number of table
+        :type number: int
+        :return: Approximation accuracy
+        :rtype: pd.DataFrame
+        """
         mae = mean_absolute_error(self.approx(self.x, *self.popta), self.func(self.x))
         maea = mean_absolute_error(self.approx(self.x, *self.poptb), self.func(self.x))
         maeb = mean_absolute_error(self.approx(self.x, *self.poptc), self.func(self.x))

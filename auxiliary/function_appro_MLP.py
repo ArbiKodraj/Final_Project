@@ -23,35 +23,35 @@ from sklearn.metrics import (
 
 
 def highlight_min(s):
-    # highlights the minimum in a Series s yellow
+    """Colors the minimum in a Series 
+
+    :param s: Series
+    :type s: pd.Series
+    """
     is_min = s == s.min()
     return ["background-color: yellow" if v else "" for v in is_min]
 
 
-h = lambda x: 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x))  # Function Example
+h = lambda x: 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x))  # Benchmark function for MLP approximation
 h1 = lambda x: 1 / (x ** 2 + 1)
 
 
 def split_method(x, func, ts):
-    """Split data in test and train in order to check approximation goodness
+    """Randomly splits data in testing and training sets. Will then be used to
+    to check the approximation goodness
 
-       Parameters
-       ----------
-           x:    (np.array) x values
-           func: (function) true function
-           ts:   (float) testing size = (1-alpha)
-                 how much of the data shall be assigned to train data
-
-       Returns
-       -------
-           (np.array) training and testing data
+    :param x: x values 
+    :type x: np.array
+    :param func: Benchmark function
+    :type func: function 
+    :param ts: testing size = (1-alpha)
+    :type ts: float       
+    :return: Training and testing data
+    :rtype: np.array
     """
-
     y = func(x)
     y = y / y.max()
-
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=ts)
-
     x_train = x_train.reshape(-1, 1)
     x_test = x_test.reshape(-1, 1)
 
@@ -59,19 +59,21 @@ def split_method(x, func, ts):
 
 
 def change_data(method, x1, x2, y1, y2):
-    """Normalize or standarize train and test data
+    """Normalizes or standardizes training and testing data
 
-       Parameters
-       ----------
-           method: (str) standardize or normalize method
-           x1, x2: (np.arrays) training and testing data x
-           y1, y2: (np.arrays) training and testing data y
-
-       Returns
-       --------
-            (np.array) transformed train and test data
+    :param method: Method to change data
+    :type method: str
+    :param x1: Training data x
+    :type x1: np.array
+    :param x2: Testing data x
+    :type x2: np.array
+    :param y1: Training data y
+    :type y1: np.array
+    :param y2: Testing data y
+    :type y2: np.array
+    :return: Transformed training and testing data
+    :rtype: np.array
     """
-    
     if method == "standardize":
         return scale(x1), scale(x2), scale(y1), scale(y2)
     elif method == "normalize":
@@ -87,25 +89,27 @@ def change_data(method, x1, x2, y1, y2):
 def plot_train_test(
     x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
-    """Plot Test and Train Data as well as final MPL Prediction
+    """Plot tetsing and trianing data as well as MLP prediction
 
-       Parameters
-       -----------
-           x_train    : (np.array) x training data
-           x_test     : (np.array) x testing data
-           y_train    : (np.array) y training data
-           y_test     : (np.array) y testing data
-           prediction : (np.array) final prediction of test data via MPL-Method
-           xlabel     : (str) name of the x label
-           ylabel     : (str) name of the y label
-           num        : (float) number of figure
-           method     : (str) used method for data transformation
-
-       Returns
-       ---------
-           Plots training, testing data and (optional) prediction
+    :param x_train: Training data x
+    :type x_train: np.array
+    :param x_test: Testing data x
+    :type x_test: np.array
+    :param y_train: Training data y
+    :type y_train: np.array
+    :param y_test: Testing data y
+    :type y_test: np.array
+    :param prediction: Prediction of testing data using :func:`mlp_approximation` function
+    :type prediction: np.array
+    :param xlabel: Name of x label
+    :type xlabel: str
+    :param ylabel: Name of y label
+    :type ylabel: str
+    :param num: Figure number
+    :type num: float, optional
+    :param method: Data transformation method, use '' if no method was used
+    :type method: str
     """
-
     train_marker = mlines.Line2D(
         [],
         [],
@@ -183,22 +187,26 @@ def mlp_approximation(
     max_iter=2000,
     solver="lbfgs",
 ):
+    """Approximation of benchmark function using neural network as MLP regression.
 
-    """Approximation using MLP Regressor
-
-       Parameters
-       ----------
-           layer_sizes: (tuple) number of neurons
-           max_iter:    (int) number of epochs (how many times each data point will be used)
-           solver:      (str) weight optimization, default = lbfgs (quasi newton method)
-           *train:      (np.arrays) training data x, y
-           *trest:      (np.arrays) testing data x, y
-
-       Returns
-       -------
-           (np.array) prediction of neural system represented by MLP Regression
+    :param xtrain: Training data x
+    :type xtrain: np.array
+    :param xtest: Testing data x
+    :type xtest: np.array
+    :param ytrain: Training data y
+    :type ytrain: np.array
+    :param ytest: Testing data y
+    :type ytest: np.array
+    :param layer_sizes: Structure of hidden layers. Each entry 
+        corresponds to the number of neurons, defaults to (30, 40, 50, 30)
+    :type layer_sizes: tuple
+    :param max_iter: Number of iterations/backpropagations, defaults to 2000
+    :type max_iter: int
+    :param solver: Optimization rule of neural system, defaults to 'lbfgs'
+    :type solver: str
+    :return: Prediction of testing data as approximation of benchmark function
+    :rtype: np.array
     """
-
     mlp = MLPRegressor(hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver)
     scaler = StandardScaler()
     pipeline = PMMLPipeline([("scaler", scaler), ("regressor", mlp)])
@@ -214,24 +222,30 @@ def mlp_approximation(
 
 
 def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchanged"):
+    """Computes approximation accuracy for different iterations using the :func:`mlp_approximation`
+    as approximation tool
 
-    """Computes Error Terms for different iterations
-
-       Parameters
-       ----------
-           N_iter : (int) List of iteration, note that length of list must equal 5!!
-           *train : (np.arrays) training data x, y
-           *test  : (np.arrays) testing data x, y
-           num    : (float) number of table
-           method : (str) normalize or standardized, default = unchanged
-
-       Returns
-       -------
-           (pd.DataFrame) returns styled dataframe of prediction accuracy
+    :param N_iter: Set of various iterations. Length of set must equal five
+    :type N_iter: list, np.array
+    :param xtrain: Training data x
+    :type xtrain: np.array
+    :param xtest: Testing data x
+    :type xtest: np.array
+    :param ytrain: Training data y
+    :type ytrain: np.array
+    :param ytest: Testing data y
+    :type ytest: np.array
+    :param num: Number of dataframe
+    :type num: int, float
+    :param method: Used transformation method, defaults to 'unchanged'
+    :type method: str, optional
+    :raises TypeError: N_iter argument has to be list or array type
+    :raises AssertionError: Length of N_iter argument must equal three
+    :return: Returns styled dataframe of prediction accuracy
+    :rtype: pd.DataFrame
     """
-
-    if not isinstance(N_iter, list):
-        raise TypeError("N_iter object has to be list type!")
+    if not isinstance(N_iter, (list, np.ndarray)):
+        raise TypeError("N_iter argument has to be list or array type!")
     assert (
         len(N_iter) == 3
     ), "Not correct length. Input of list N_iter has to have length of 3!"
@@ -239,7 +253,6 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
     predictions = [
         mlp_approximation(xtrain, xtest, ytrain, ytest, max_iter=n) for n in N_iter
     ]
-
     i = 0
     MAS, MSE, EVS, R2 = [], [], [], []
     while i < len(N_iter):
@@ -275,28 +288,24 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
 
 
 def get_data(path, iv, dv, ts):
+    """Method to read dataset and split it to training and testing samples
 
-    """Get Dataset and Train-Test Sample
-
-       Parameters
-       ----------
-           path : (str) path of the dataset - as string
-           iv   : (str) independent variable - as string
-           dv   : (str) dependent variable - as string
-           ts   : (float) test size of train data
-
-       Returns
-       -------
-           (np.arrays) training and testing data
+    :param path: Dataset's path
+    :type path: str
+    :param iv: Target variable of dataset
+    :type iv: str
+    :param dv: Explaining variable 
+    :type dv: str
+    :param ts: Testing size = 1-alpha
+    :type ts: float
+    :return: Training and testing data
+    :rtype: np.array
     """
-
     df = pd.read_csv(path)
-
     x = df[iv]
     y = df[dv]
 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=ts)
-
     x_train = x_train.values.reshape(-1, 1)
     x_test = x_test.values.reshape(-1, 1)
 
@@ -306,21 +315,18 @@ def get_data(path, iv, dv, ts):
 # --------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark2 3DFunction
 
 
-z = lambda x, y: 0.2 * np.sin(5 * x) * np.cos(5 * y)  # 3D Function
+z = lambda x, y: 0.2 * np.sin(5 * x) * np.cos(5 * y)  # 3D Benchmark Function
 
 
 def smooth_fuction(x, y, num):
+    """Plots smooth 3D Benchmark Function
 
-    """Plots the smooth 3D Function
-
-       Parameters
-       ----------
-            x : (np.array) x values
-            y : (np.array) y values
-
-       Returns
-       --------
-           plots function z
+    :param x: x values
+    :type x: np.array
+    :param y: y values
+    :type y: np.array
+    :param num: Figure number
+    :type num: int, float
     """
 
     X, Y = np.meshgrid(x, y)
@@ -338,25 +344,16 @@ def smooth_fuction(x, y, num):
 
 
 class MLP3D:
+    """Approximation of the 3D benchmark function :func:`z` using training data. 
+    Approximation precision will be checked by comparing prediction with testing
+    data
 
-    """Approximation of the 3D Function splitting into train and test data
-
-       Parameters
-       ----------
-           func: three dimensional function that shall be approximated
-
-
-       Methods
-       -------
-           train_test_method: splits data into train and test data
-           mpl_regr         : prepares models, fits data and predicts test data
-           error            : computes errors and some other quantitative measures
-           plt_rslt         : plots train, test and predicted data for 1600 Dots
+    :param func: Three dimensional benchmark function 
+    :type func: function       
     """
-
     def __init__(self, func):
-        """Initializes Object"""
-
+        """Constructor method
+        """
         self.func = func
         self.x = [np.arange(-1, 1, n) for n in [0.25, 0.15, 0.1, 0.05, 0.02]]
 
@@ -369,11 +366,10 @@ class MLP3D:
             self.zvals.append([z(p[0], p[1]) for p in self.xy[j]])
 
     def train_test_method(self, ts):
-        """Prepares training and testing data
+        """Prepares training and testing data by randomly splitting them
 
-           Parameters
-           ----------
-               ts: (float) testing size
+        :param ts: Testing size = 1-alpha
+        :type ts: float
         """
 
         self.x_train0, self.x_test0, self.y_train0, self.y_test0 = train_test_split(
@@ -393,12 +389,12 @@ class MLP3D:
         )
 
     def mpl_regr(self, hidden_layer, max_iter=2000):
-        """Prepares MLP Regressor as neural network
+        """Prepares neural system as MLP regression and creates predictions
 
-           Parameters
-           ----------
-               hidden_layer: (tuple) number of neurons in hidden layers
-               max_iter    : (int) number of backpropagations
+        :param hidden_layer: Structure of neural system. Number of neurons in hidden layers
+        :type hidden_layer: tuple
+        :param max_iter: Number of iterations/backpropagations
+        :type max_iter: int
         """
 
         mlp0 = mlp1 = mlp2 = mlp3 = mlp = MLPRegressor(
@@ -421,15 +417,12 @@ class MLP3D:
         self.predictions = mlp.predict(self.x_test)
 
     def error(self, caption):
-        """Tables accuracy of prediction in terms of errors and explained variance
+        """Creates dataframe of prediction accuracy
 
-           Parameters
-           ----------
-               caption: (str) caption of table
-
-           Returns
-           -------
-               (pd.DataFrame) styled accuracy dataframe of prediction
+        :param caption: Caption of table
+        :type caption: str
+        :return: Styled accuracy dataframe of prediction
+        :rtype: pd.DataFrame
         """
 
         columns = [
@@ -469,29 +462,23 @@ class MLP3D:
         return rslt.style.set_caption(caption)
 
     def pltres(self, num, fs=(14, 7)):
-        """Plots training, testing and predicted data
+        """Plots training and testing data as well as predicted data
 
-           Paramaters
-           ----------
-               num: (float) number of figure
-               fs : (tuple) size of figure, default = (14,7)
+        :param num: Number of figure
+        :type num: int, float
+        :param fs: Figuresize, defaults to (14,7)
+        :type fs: tuple
         """
-
         fig = plt.figure(figsize=fs)
         ax = fig.gca(projection="3d")
-
         # plot train data points
         x1_vals = np.array([p[0] for p in self.x_train])
         x2_vals = np.array([p[1] for p in self.x_train])
-
         ax.scatter(x1_vals, x2_vals, self.y_train, label="Training Data", alpha=0.5)
-
         # plot test data points
         x1_vals = np.array([p[0] for p in self.x_test])
         x2_vals = np.array([p[1] for p in self.x_test])
-
         ax.scatter(x1_vals, x2_vals, self.y_test, label="Testing Data")
-
         # plot approximation
         ax.scatter(
             x1_vals,
@@ -501,7 +488,6 @@ class MLP3D:
             marker="x",
             label="Approximation",
         )
-
         # style Graph
         ax.set_xlabel("x")
         ax.set_xlabel("y")
