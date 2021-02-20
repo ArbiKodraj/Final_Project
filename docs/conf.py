@@ -39,6 +39,10 @@ templates_path = ['_templates']
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
+master_doc = 'index'
+
+modindex_common_prefix = ['src.']
+
 def skip(app, what, name, obj, would_skip, options):
     if name == "__init__" or name == "__call__" or name == "__repr__" or name == "__name__" or name == "__len__":
         return False
@@ -46,7 +50,6 @@ def skip(app, what, name, obj, would_skip, options):
 
 def setup(app):
     app.connect("autodoc-skip-member", skip)
-
 
 # -- Options for HTML output -------------------------------------------------
 
