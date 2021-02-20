@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Documentation of the final project for EPP and Scientific Computing!
-====================================================================
+Documentation Final Project for EPP and Scientific Computing!
+================================================================
 
 .. toctree::
    :maxdepth: 2
