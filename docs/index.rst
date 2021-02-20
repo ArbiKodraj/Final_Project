@@ -3,12 +3,13 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to test_doc's documentation!
-====================================
+Documentation of the final project for EPP and Scientific Computing!
+====================================================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
    modules
 
 
