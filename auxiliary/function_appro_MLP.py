@@ -18,36 +18,53 @@ from sklearn.metrics import (
     r2_score,
 )
 
-
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark1
 
-
 def highlight_min(s):
-    """Colors the minimum in a Series 
+    """Colors the minimum in a Series.
 
-    :param s: Series
-    :type s: pd.Series
+    Args:
+        s (pd.Series): Series.
+
+    Returns:
+        pd.Series: Colored series
     """
     is_min = s == s.min()
     return ["background-color: yellow" if v else "" for v in is_min]
 
+def h(x):
+    """``Benchmark function.``
 
-h = lambda x: 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x))  # Benchmark function for MLP approximation
-h1 = lambda x: 1 / (x ** 2 + 1)
+    Args:
+        x (int, float): Input.
 
+    Returns:
+        float: Output. :math:`5 sin(π x) - e^{sin(5πx)}`
+    """
+    return 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x)) 
+
+def h1(x):
+    """``Benchmark function.``
+
+    Args:
+        x (int, float): Input.
+
+    Returns:
+        float: Output. :math:`\\frac{1}{x^2 + 1}`
+    """
+    return 1 / (x ** 2 + 1)
 
 def split_method(x, func, ts):
     """Randomly splits data in testing and training sets. Will then be used to
-    to check the approximation goodness
+    to check the approximation goodness.
 
-    :param x: x values 
-    :type x: np.array
-    :param func: Benchmark function
-    :type func: function 
-    :param ts: testing size = (1-alpha)
-    :type ts: float       
-    :return: Training and testing data
-    :rtype: np.array
+    Args:
+        x (np.array): x values 
+        func (function): Benchmark function.
+        ts (tuple): Testing size = (1-alpha)
+
+    Returns:
+        np.array: Training and testing data.
     """
     y = func(x)
     y = y / y.max()
@@ -57,22 +74,18 @@ def split_method(x, func, ts):
 
     return x_train, x_test, y_train, y_test
 
-
 def change_data(method, x1, x2, y1, y2):
-    """Normalizes or standardizes training and testing data
+    """Normalizes or standardizes training and testing data.
 
-    :param method: Method to change data
-    :type method: str
-    :param x1: Training data x
-    :type x1: np.array
-    :param x2: Testing data x
-    :type x2: np.array
-    :param y1: Training data y
-    :type y1: np.array
-    :param y2: Testing data y
-    :type y2: np.array
-    :return: Transformed training and testing data
-    :rtype: np.array
+    Args:
+        method (str): Method to change data.
+        x1 (np.array): Training data x.
+        x2 (np.array): Testing data x.
+        y1 (np.array): Training data y.
+        y2 (np.array): Testing data y.
+
+    Returns:
+        np.array: Transformed training and testing data.
     """
     if method == "standardize":
         return scale(x1), scale(x2), scale(y1), scale(y2)
@@ -85,30 +98,22 @@ def change_data(method, x1, x2, y1, y2):
     else:
         return x1, x2, y1, y2
 
-
 def plot_train_test(
     x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
-    """Plot tetsing and trianing data as well as MLP prediction
+    """Plot tetsing and trianing data as well as MLP prediction.
 
-    :param x_train: Training data x
-    :type x_train: np.array
-    :param x_test: Testing data x
-    :type x_test: np.array
-    :param y_train: Training data y
-    :type y_train: np.array
-    :param y_test: Testing data y
-    :type y_test: np.array
-    :param prediction: Prediction of testing data using :func:`mlp_approximation` function
-    :type prediction: np.array
-    :param xlabel: Name of x label
-    :type xlabel: str
-    :param ylabel: Name of y label
-    :type ylabel: str
-    :param num: Figure number
-    :type num: float, optional
-    :param method: Data transformation method, use '' if no method was used
-    :type method: str
+    Args:
+        x_train (np.array): Training data x.
+        x_test (np.array): Testing data x.
+        y_train (np.array): Training data y.
+        y_test (np.array): Testing data y.
+        prediction (np.array): Prediction of testing data using 
+            :func:`mlp_approximation` function.
+        xlabel (str): Name of x label.
+        ylabel (str): Name of y label.
+        num (int, float): Figure number.
+        method (str): Data transformation method, use '' if no method was used.
     """
     train_marker = mlines.Line2D(
         [],
@@ -177,7 +182,6 @@ def plot_train_test(
     plt.grid()
     plt.show()
 
-
 def mlp_approximation(
     xtrain,
     xtest,
@@ -189,23 +193,20 @@ def mlp_approximation(
 ):
     """Approximation of benchmark function using neural network as MLP regression.
 
-    :param xtrain: Training data x
-    :type xtrain: np.array
-    :param xtest: Testing data x
-    :type xtest: np.array
-    :param ytrain: Training data y
-    :type ytrain: np.array
-    :param ytest: Testing data y
-    :type ytest: np.array
-    :param layer_sizes: Structure of hidden layers. Each entry 
-        corresponds to the number of neurons, defaults to (30, 40, 50, 30)
-    :type layer_sizes: tuple
-    :param max_iter: Number of iterations/backpropagations, defaults to 2000
-    :type max_iter: int
-    :param solver: Optimization rule of neural system, defaults to 'lbfgs'
-    :type solver: str
-    :return: Prediction of testing data as approximation of benchmark function
-    :rtype: np.array
+    Args:
+        xtrain (np.array): Training data x.
+        xtest (np.array): Testing data x.
+        ytrain (np.array): Training data y.
+        ytest (np.array): Testing data y.
+        layer_sizes (tuple, optional): Structure of hidden layers. Each entry 
+            corresponds to the number of neurons. Defaults to (30, 40, 50, 30).
+        max_iter (int, optional): Number of iterations/backpropagations. 
+            Defaults to 2000.
+        solver (str, optional): Optimization rule of neural system. 
+            Defaults to "lbfgs".
+
+    Returns:
+        [type]: [description]
     """
     mlp = MLPRegressor(hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver)
     scaler = StandardScaler()
@@ -220,29 +221,27 @@ def mlp_approximation(
 
     return pred
 
-
 def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchanged"):
     """Computes approximation accuracy for different iterations using the :func:`mlp_approximation`
-    as approximation tool
+    as approximation tool.
 
-    :param N_iter: Set of various iterations. Length of set must equal five
-    :type N_iter: list, np.array
-    :param xtrain: Training data x
-    :type xtrain: np.array
-    :param xtest: Testing data x
-    :type xtest: np.array
-    :param ytrain: Training data y
-    :type ytrain: np.array
-    :param ytest: Testing data y
-    :type ytest: np.array
-    :param num: Number of dataframe
-    :type num: int, float
-    :param method: Used transformation method, defaults to 'unchanged'
-    :type method: str, optional
-    :raises TypeError: N_iter argument has to be list or array type
-    :raises AssertionError: Length of N_iter argument must equal three
-    :return: Returns styled dataframe of prediction accuracy
-    :rtype: pd.DataFrame
+    Args:
+        N_iter (np.array): Set of various iterations. Length of set must 
+            equal five.
+        xtrain (np.array): Training data x.
+        xtest (np.array): Testing data x.
+        ytrain (np.array): Training data y.
+        ytest (np.array): Testing data y.
+        num (int): Number of dataframe.
+        method (str, optional): Used transformation method. Defaults to 
+            "Unchanged".
+
+    Raises:
+        TypeError: N_iter argument has to be list or an array.
+        AssertionError: Length of N_iter argument must equal three.
+
+    Returns:
+        pd.DataFrame: Returns styled dataframe of prediction accuracy.
     """
     if not isinstance(N_iter, (list, np.ndarray)):
         raise TypeError("N_iter argument has to be list or array type!")
@@ -283,23 +282,19 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
         f"Table {num}: Accuracy of MPL Approximation of $h(x)$ using {method} Training Data"
     )
 
-
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Dataset
 
-
 def get_data(path, iv, dv, ts):
-    """Method to read dataset and split it to training and testing samples
+    """Method to read dataset and split it to training and testing samples.
 
-    :param path: Dataset's path
-    :type path: str
-    :param iv: Target variable of dataset
-    :type iv: str
-    :param dv: Explaining variable 
-    :type dv: str
-    :param ts: Testing size = 1-alpha
-    :type ts: float
-    :return: Training and testing data
-    :rtype: np.array
+    Args:
+        path (str): Dataset's path.
+        iv (str): Target variable of dataset.
+        dv (str): Explaining variable .
+        ts (float): Testing size = 1-alpha.
+
+    Returns:
+        np.array: Training and testing data.
     """
     df = pd.read_csv(path)
     x = df[iv]
@@ -311,24 +306,28 @@ def get_data(path, iv, dv, ts):
 
     return x_train, x_test, y_train, y_test
 
-
 # --------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark2 3DFunction
 
+def z(x, y):
+    """3D Benchmark function.
 
-z = lambda x, y: 0.2 * np.sin(5 * x) * np.cos(5 * y)  # 3D Benchmark Function
+    Args:
+        x (int, float): First input.
+        y (int, float): Second input.
 
+    Returns:
+        float: Output.
+    """
+    return 0.2 * np.sin(5 * x) * np.cos(5 * y)
 
 def smooth_fuction(x, y, num):
-    """Plots smooth 3D Benchmark Function
+    """Plots smooth 3D Benchmark Function.
 
-    :param x: x values
-    :type x: np.array
-    :param y: y values
-    :type y: np.array
-    :param num: Figure number
-    :type num: int, float
+    Args:
+        x (np.array): x values.
+        y (np.array): y values.
+        num (int, float): Figure number.
     """
-
     X, Y = np.meshgrid(x, y)
     Z = 0.2 * np.sin(5 * X) * np.cos(5 * Y)
 
@@ -342,17 +341,16 @@ def smooth_fuction(x, y, num):
     plt.title(f"Figure {num}: Function $z(x, y)$ in the interval [-1, 1]")
     plt.show()
 
-
 class MLP3D:
     """Approximation of the 3D benchmark function :func:`z` using training data. 
     Approximation precision will be checked by comparing prediction with testing
-    data
-
-    :param func: Three dimensional benchmark function 
-    :type func: function       
+    data.
+    
+    Args:
+        func (function): 3D Benchmark function.       
     """
     def __init__(self, func):
-        """Constructor method
+        """Constructor method.
         """
         self.func = func
         self.x = [np.arange(-1, 1, n) for n in [0.25, 0.15, 0.1, 0.05, 0.02]]
@@ -366,12 +364,11 @@ class MLP3D:
             self.zvals.append([z(p[0], p[1]) for p in self.xy[j]])
 
     def train_test_method(self, ts):
-        """Prepares training and testing data by randomly splitting them
+        """Prepares training and testing data by randomly splitting them.
 
-        :param ts: Testing size = 1-alpha
-        :type ts: float
+        Args:
+            ts (float): Testing size = 1-alpha.
         """
-
         self.x_train0, self.x_test0, self.y_train0, self.y_test0 = train_test_split(
             self.xy[0], self.zvals[0], test_size=ts
         )
@@ -389,20 +386,17 @@ class MLP3D:
         )
 
     def mpl_regr(self, hidden_layer, max_iter=2000):
-        """Prepares neural system as MLP regression and creates predictions
+        """Prepares neural system as MLP regression and creates predictions.
 
-        :param hidden_layer: Structure of neural system. Number of neurons in hidden layers
-        :type hidden_layer: tuple
-        :param max_iter: Number of iterations/backpropagations
-        :type max_iter: int
+        Args:
+            hidden_layer (tuple): Structure of neural system. Number of neurons in hidden layers.
+            max_iter (int, optional): Number of iterations/backpropagations. Defaults to 2000.
         """
-
         mlp0 = mlp1 = mlp2 = mlp3 = mlp = MLPRegressor(
             hidden_layer_sizes=hidden_layer,
             max_iter=max_iter,
             tol=0,
         )
-        # train
         mlp0.fit(self.x_train0, self.y_train0)
         mlp1.fit(self.x_train1, self.y_train1)
         mlp2.fit(self.x_train2, self.y_train2)
@@ -417,14 +411,14 @@ class MLP3D:
         self.predictions = mlp.predict(self.x_test)
 
     def error(self, caption):
-        """Creates dataframe of prediction accuracy
+        """Creates dataframe of prediction accuracy.
 
-        :param caption: Caption of table
-        :type caption: str
-        :return: Styled accuracy dataframe of prediction
-        :rtype: pd.DataFrame
+        Args:
+            caption (str): Caption of table.
+
+        Returns:
+            pd.DataFrame: Styled accuracy dataframe of prediction.
         """
-
         columns = [
             "Mean Absolute Error",
             "Mean Squared Error",
@@ -462,12 +456,11 @@ class MLP3D:
         return rslt.style.set_caption(caption)
 
     def pltres(self, num, fs=(14, 7)):
-        """Plots training and testing data as well as predicted data
+        """Plots 3D training, testing and predicted data.
 
-        :param num: Number of figure
-        :type num: int, float
-        :param fs: Figuresize, defaults to (14,7)
-        :type fs: tuple
+        Args:
+            num (int): Number of figure.
+            fs (tuple, optional): Figuresize. Defaults to (14, 7).
         """
         fig = plt.figure(figsize=fs)
         ax = fig.gca(projection="3d")

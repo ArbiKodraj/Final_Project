@@ -9,7 +9,7 @@ Documentation Final Project for EPP and Scientific Computing!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+   
    modules
 
 

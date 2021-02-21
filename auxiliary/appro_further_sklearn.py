@@ -12,23 +12,18 @@ from sklearn.metrics import (
     r2_score,
 )
 
-
 class Regressor:
-    """This class approximates a discontinuous function using ML KNN Regression,
-    DTR and Linear Regression with various degrees
-    
-    :param a: Lower bound of interpolation interval, defaults to -1
-    :type a: int
-    :param b: Upper bound of interpolation interval, defaults to 1
-    :type b: int
-    :param nodes: Number of interpolation nodes, defaults to 100
-    :type nodes: int
-    :param ts: Size of testing data, defaults to 0.33
-    :type a: float
+    """This class approximates a discontinuous function using ML ``KNN Regression``,
+    DTR and Linear Regression with various degrees.
+
+    Args:
+        a (int, optional): Lower bound of interpolation interval. Defaults to -1.
+        b (int, optional): Upper bound of interpolation interval. Defaults to 1.
+        nodes (int, optional): Number of interpolation nodes. Defaults to 100.
+        ts (float, optional): Size of testing data. Defaults to 0.33.
     """
- 
     def __init__(self, a=-1, b=1, nodes=100, ts=0.33):
-        """Constructor method
+        """Constructor method.
         """
         self.a = a
         self.b = b
@@ -47,14 +42,12 @@ class Regressor:
         )
 
     def prep_regr(self, depth=None, weight="uniform", k_neigh=1):
-        """Prepares further ML Methods 
+        """Prepares further ML methods.
 
-        :param depth: Deepness of DTR, defaults to None
-        :type depth: int
-        :param weight: Weights of KNN Regression, defaults to "uniform"
-        :type weight: int
-        :param k_neigh: K-Neighbors of KNN Regression, defaults to 1
-        :type k_neigh: int
+        Args:
+            depth (int, optional): Deepness of DTR. Defaults to None.
+            weight (str, optional): Weights of KNN Regression. Defaults to "uniform".
+            k_neigh (int, optional): K-Neighbors of KNN Regression. Defaults to 1.
         """
         dtr = DecisionTreeRegressor(max_depth=depth)
         hist1 = dtr.fit(self.X_train, self.y_train.ravel())
@@ -65,12 +58,11 @@ class Regressor:
         self.pred2 = neigh.predict(self.X_test)
 
     def plot_pred(self, num, fitting=None):
-        """Plots Training, Testing and predicted Data
+        """Plots training, testing and predicted data.
 
-        :param num: Number of figure
-        :type num: float, optional
-        :param fitting: Overfitting methods, default to None
-        :type fitting: str
+        Args:
+            num (int, float): Number of figure.
+            fitting (str, optional): Overfitting methods. Defaults to None.
         """
         plt.figure(figsize=(12, 5))
         plt.plot(self.X_train, self.y_train, "o", ms=4, label="Training Data")
@@ -112,16 +104,15 @@ class Regressor:
         plt.show()
 
     def create_error_df(self, num, fitting=None):
-        """Creates summary of prediction accuracy as table
+        """Creates summary of prediction accuracy as table.
 
-        :param num: Number of table
-        :type num: float, optional
-        :param fitting: Overfitting methods, default to None
-        :type fitting: str
+        Args:
+            num (int, float): Number of table.
+            fitting (str, optional): Overfitting methods. Defaults to None.
 
-        :return: A dataframe of the prediction accuracy
-        :rtype: pd.DataFrame
-        """  
+        Returns:
+            pd.DataFrame: Prediction accuracy.
+        """
         l = []
         for p in [self.pred1, self.pred2]:
             l.append(mean_absolute_error(p, self.y_test))

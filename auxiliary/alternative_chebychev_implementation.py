@@ -4,27 +4,31 @@ import pandas as pd
 
 from sklearn.metrics import mean_absolute_error
 
+def f(x):
+    """``Benchmark function.``
 
-f = lambda x: x * np.sin(x) # Benchmark function for the alternative Chebychev approximation
+    Args:
+        x (int, float): Input.
 
+    Returns:
+        float: Output. :math:`x sin(x)`
+    """
+    return x * np.sin(x)
 
 # -----------------------------------------------------------------------------
 
-
 class CCMethod:
-    """This class implements the Chebychev Approximation using Chebychev nodes. The 
+    """This class implements the Chebychev Approximation using Chebychev nodes. This 
     object was not created by me. 
 
-    :param a: Lower bound of interval
-    :type a: int
-    :param b: Upper bound of interval
-    :type b: int
-    :param func: Benchmark function
-    :type func: function
+    Args:
+        a (int): Lower bound of interval.
+        b (int): Upper bound of interval.
+        n (int): Number of interpolation nodes.
+        func (function): Benchmark function.
     """
-
     def __init__(self, a, b, n, func):
-        """Constructor method
+        """Constructor method.
         """
         self.a = a
         self.b = b
@@ -36,7 +40,7 @@ class CCMethod:
         
         cheb_nodes = [
             np.cos(np.pi * (k + 0.5) / n) * bma + bpa for k in range(n)
-        ]  # Formula of nodes
+        ] # Formula of nodes
 
         f = list(map(func, cheb_nodes))  # y values of nodes
         self.c = [
@@ -46,12 +50,13 @@ class CCMethod:
         ]
 
     def eval(self, x):
-        """Yields the approximation value at a specific point
-           
-        :param x: Evaluation point
-        :type x: float
-        :return: Approximation point benchmark function at evaluation point 
-        :rtype: float 
+        """Yields the approximation value at a specific point.
+
+        Args:
+            x (int, float): Evaluation point.
+
+        Returns:
+            float: Approximation point benchmark function at evaluation point.
         """
         assert (
             self.a <= x <= self.b
@@ -67,18 +72,14 @@ class CCMethod:
             (d, dd) = (z2 * d - dd + cj, d)
         return z * d - dd + 0.5 * self.c[0]  # Last step is different
 
-
 def approximation_error(func, approx, figure, degree):
-    """Plots approximation error of the :class:`CCMethod` class
-       
-    :param func: True function  
-    :type func: function
-    :param approx: Approximated function
-    :type func: function
-    :param figure: Figure number 
-    :type figure: float, optional
-    :param degree: Used approximation degree
-    :type degree: int
+    """Plots approximation error of the :class:`CCMethod` class.
+
+    Args:
+        func (function): True benchmark function. 
+        approx (function): Approximated function.
+        figure (int, float): Figure number.
+        degree (int): Used approximation degree.
     """
     a = -3  # self.a
     b = 4  # self.b + 1, just do use class interval! Did not want to extend or even change the method significantly
@@ -107,18 +108,16 @@ def approximation_error(func, approx, figure, degree):
         f"The maximal error of the Chebyshev interplation equals: {max(error_term):.5f}"
     )
 
-
 def data_frame_rslt(cheb_approx, x, function):
-    """Creates approximation accuracy as dataframe using the :class:`CCMethod` class
+    """Creates approximation accuracy as dataframe using the :class:`CCMethod` class.
 
-    :param cheb_approx: Chebychev approximation value
-    :type cheb_approx: function
-    :param x: Set of evaluation points
-    :type x: np.array
-    :param function: Benchmark function
-    :type function: function
-    :return: Approximation accuracy for different evaluation points
-    :rtype: pd.DataFrame
+    Args:
+        cheb_approx (function): Chebychev approximation value.
+        x (np.array): Set of evaluation points.
+        function (function): Benchmark function.
+
+    Returns:
+        pd.DataFrame: Approximation accuracy for different evaluation points.
     """
     approx = [cheb_approx.eval(n) for n in x]
     real_values = function(x)
@@ -132,17 +131,15 @@ def data_frame_rslt(cheb_approx, x, function):
         "Table 6: Absolut Error of Interpolation for different values"
     )  # Style DataFrame
 
-
 def error_for_diff_orders(orders, func, r, figure):
     """Plots approximation error using the :class:`CCMethod` class for various 
-    evaluation points and degrees
+    evaluation points and degrees.
 
-    :param orders: Set of degrees
-    :type orders: list
-    :param func: Benchmark function
-    :type func: function
-    :param r: Set of evaluation points
-    :type r: np.array, list
+    Args:
+        orders (list): List of various degrees.
+        func (function): Benchmark function.
+        r (list, np.array): Set of evaluation points.
+        figure (int, float): Number of figure.
     """
     plt.figure(figsize=(12, 5))
     for d in orders:

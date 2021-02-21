@@ -2,8 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from numpy.polynomial import Polynomial as P  # Naive Approximation
-from numpy.polynomial import Chebyshev as C  # Chebychev Approximation
+from numpy.polynomial import Polynomial as P 
+from numpy.polynomial import Chebyshev as C  
 
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
@@ -11,32 +11,35 @@ from sklearn.metrics import explained_variance_score
 from sklearn.metrics import r2_score
 from matplotlib import gridspec
 
+def k(x):
+    """``Benchmark function``.
 
-k = lambda x: np.exp(-np.sin(x * np.pi)) # Benchmark function for numper interpolation
-    
+    Args:
+        x (int, float): Input.
+
+    Returns:
+        float: Output. :math:`-sin(x\\pi)`
+    """
+    return np.exp(-np.sin(x * np.pi))   
 
 # -------------------------------------------------------------------------------- 3.1.1 Benchmark : evenly spaced interpolation
 
-
 class PMethod:
     """This object interplates a function using Uniform nodes and the numpy library.
-    Besides, this object uses monomial polnomials for the interpolation
+    as well as monomial polnomials, i.e.,
 
-    :param a: Lower bound interval 
-    :type a: int
-    :param b: upper bound interval 
-    :type b: int
-    :param n: Number of nodes
-    :type n: int
-    :param degree: Degree of approximation
-    :type degree: int
-    :param func: Unknown function
-    :type func: function
+    .. math::
+        x_i = a + \\frac{i-1}{n-1} (b-a) \\forall i = 1,2,..,n
+
+    Args:
+        a (int): Lower bound interval.
+        b (int): Upper bound interval.
+        n (int): Number of nodes.
+        degree (int): Degree of Approximation.
+        func (function): Benchmark function.
     """
-
-
     def __init__(self, a, b, n, degree, func):
-        """Constructor method
+        """Constructor method.
         """
         self.a = a
         self.b = b
@@ -45,18 +48,17 @@ class PMethod:
         self.func = func
 
     def naive_poly(self):
-        """Evenly spaced node interpolation 
+        """Evenly spaced node interpolation.
         """
         x = np.linspace(self.a, self.b, self.n)
         self.poly = P.fit(x, self.func(x), self.degree)
 
-    def simple_plot_appro(self, N, fs):
-        """Plots true function and approximation as well as approximation error
+    def simple_plot_appro(self, N, fs):  
+        """Plots benchmark function, approximation as well as approximation error.
 
-        :param N: Number of interpolation nodes
-        :type N: int
-        :param fs: Figuresize
-        :type fs: tuple
+        Args:
+            N (int): Number of interpolation nodes.
+            fs (tuple): Figuresize.
         """
         self.x = np.linspace(self.a, self.b, N)
         fig = plt.figure(figsize=fs)
@@ -91,21 +93,22 @@ class PMethod:
         plt.show()
 
     def increasing_degree(self, inc_factor=1):
-        """Increases approximation degree 
-        
-        :param inc_factor: Factor by which the degree will be decreases, defaults to 1
-        :type inc_factor: int
+        """Increases approximation degree.
+
+        Args:
+            inc_factor (int, optional): Factor by which the degree will be decreases. 
+                Defaults to 1.
         """
         self.degree = self.degree + inc_factor
 
     def increasing_nodes(self):
-        """Increases number of nodes
+        """Increases number of nodes.
         """
         self.na = self.n * 3
         self.nb = self.n * 9
 
     def naive_poly_inc_nodes(self):
-        """Applies interpolation using Uniform nodes 
+        """Applies interpolation using Uniform nodes. 
         """
         xa = np.linspace(self.a, self.b, self.na)
         xb = np.linspace(self.a, self.b, self.nb)
@@ -114,10 +117,10 @@ class PMethod:
         self.polyb = P.fit(xb, self.func(xb), self.degree)
 
     def plot_appro_inc_nodes(self, fs):
-        """Plots the naive approximation using updated Uniform nodes
+        """Plots the naive approximation using updated Uniform nodes.
 
-        :param fs: Figuresize
-        :type fs: tuple
+        Args:
+            fs (tuple): Figuresize.
         """
         fig = plt.figure(figsize=fs)
         gs = gridspec.GridSpec(2, 1, height_ratios=[1.8, 1])
@@ -146,7 +149,6 @@ class PMethod:
         )
 
         plt.setp(ax0.get_xticklabels(), visible=False)
-
         ax1 = plt.subplot(gs[1], sharex=ax0)
         ax1.plot(
             self.x,
@@ -182,10 +184,10 @@ class PMethod:
         plt.show()
 
     def table_error(self):
-        """Returns dataframe of approximation accuracy for different numbers of nodes
+        """Returns dataframe of approximation accuracy for different numbers of nodes.
 
-        :return: Approximation acuracy 
-        :rtype: pd.DataFrame
+        Returns:
+            pd.DataFrame: Approximation accuracy.
         """
         mae = mean_absolute_error(self.poly(self.x), self.func(self.x))
         maea = mean_absolute_error(self.polya(self.x), self.func(self.x))
@@ -241,53 +243,42 @@ class PMethod:
         )
         return rslt
 
-
 # -------------------------------------------------------------------------------- 3.1.2 Benchmark : chebychev interpolation
 
-
 class CMethod:
-    """This object refers to the :class:`PMethod` class. Instead of using monomial
-    polynomials, it uses Chebychev polnomials for the interpolation of a function
+    """This object refers to the :class:`PMethod` class. Instead of using *monomial*
+    polynomials, it uses *Chebychev* polnomials for the interpolation of a function
 
-    :param a: Lower bound of interval
-    :type a: int
-    :param b: Upper bound of interval
-    :type b: int
-    :param n: Number of interpolation nodes
-    :type n: int
-    :param degree: Degree of approximation
-    :type degree: int
-    :param func: Unknown function
-    :type func: function
+    Args:
+        a (int): Lower bound of interval.
+        b (int): Upper bound of interval.
+        n (int): Number of interpolation nodes.
+        degree (int): Degree of approximation.
+        func (function): Unknown function.
     """
     def __init__(self, a, b, n, degree, func):
         """Constructor method. It uses the exact same arguments as the :class:`PMethod`
-        constructor method. This could also be achieved by inheritance 
+        constructor method. This could also be achieved by ``inheritance``.
         """
-        self.a = a
-        self.b = b
-        self.n = n
-        self.degree = degree
-        self.func = func
 
     def increase_degree(self, inc_factor):
-        """Increases number of degrees by certain factor 
+        """Increases number of degrees by certain factor.
 
-        :param inc_factor: Factor by which the degree is increased
-        :type inc_factor: int
+        Args:
+            inc_factor (int): Factor by which the degree is increased.
         """
         self.degree += inc_factor
 
     def extending_nodes(self, ext_factor):
-        """Multiplies number of nodes by certain factor 
+        """Multiplies number of nodes by certain factor. 
 
-        :param ext_factor: Factor by which the degree is multiplied
-        :type ext_factor: int
+        Args:
+            ext_factor (int): Factor by which the degree is multiplied.
         """
         self.n *= ext_factor
 
     def cheb_poly(self):
-        """Applies Chebychev interpolation 
+        """Applies Chebychev interpolation.  
         """
         xa = np.linspace(self.a, self.b, self.n)
         xb = np.linspace(self.a, self.b, 3 * self.n)
@@ -298,12 +289,11 @@ class CMethod:
         self.polyc = C.fit(xc, self.func(xc), self.degree)
 
     def plot_cheb_int(self, fs, N):
-        """Plots true function and Chebychev interpolation as well as the approximation error 
+        """Plots Chebychev interpolation for different nodes.
 
-        :param fs: Figuresize
-        :type fs: tuple
-        :param N: Number of nodes final interpolation
-        :type N: int
+        Args:
+            fs (tuple): Figuresize.
+            N (int): Number of nodes final interpolation.
         """
         self.x = np.linspace(self.a, self.b, N)
 
@@ -370,10 +360,10 @@ class CMethod:
         plt.show()
 
     def table_error(self):
-        """Returns approximation accuracy
+        """Returns approximation accuracy as styled dataframe.
 
-        :return: Approximation accuracy
-        :rtype: pd.DataFrame
+        Returns:
+            pd.DataFrame: Approximation accuracy.
         """
         maea = mean_absolute_error(self.polya(self.x), self.func(self.x))
         maeb = mean_absolute_error(self.polyb(self.x), self.func(self.x))

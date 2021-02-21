@@ -13,61 +13,50 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor as knn
 from sklearn.neural_network import MLPRegressor
 
+class StockPricePredictor:
+    """This object estimates missing stock prices using training data. Besides,
+    it predicts furture stock prices using the whole stock price history of a
+    company. To do so, it makes use of KNN Regression. The mathematical formulation 
+    is given below, where f is to be approximated.
 
-class StockPricePredictor(object):
-    """Object that predicts Stock Price using KNN Regressor and MLP Regressor
+    .. math::
+        P_t = f(t) + \\epsilon_t,
 
-       Idea
-       -----
-           1)    0   1   2   ..  T  - time periode (pd.datetime)
-                P0  P1  P2  ..  PT  - stock price (float)
-           2)   randomly assignment to train and test
-           3)   predict test data and test predictions' precision
-           4)    0   1   2   ..  T  =>    T+n     T+2n  ..  future time periode
-                P0  P1  P2  ..  PT  =>  P_T+n   P_T+2n  ..  future stock price
-                predict future price
+    Args:
+        ticker (str): Ticker symbol of stock.
 
-       Parameters
-       ----------
-           ticker: (str) represents the Ticker Symbol of the stock
-
-       Methods
-       --------
-           _data_prep        : Splits Data into Test and Train
-           plot_data         : plots train, test and predicted data
-           knn_accuracy      : returns accuracy of prediction using test data
-           _full_train_data  : Prepares Train Data for future Prediction using whole price history
-           _predict_price_knn: predicts future stock price for certain days and periods
-           predict_price_knn : returns the peviously defined predicted price
-           _nn_model         : prepares the MLP Regressor Object
-           nn_accuracy       : tests accuracy of MLP prediction
-           plot_pred_data    : plots train and predicted data
+    Raises:
+        TypeError: Ticker symbol must be passed as a string.
     """
-
+    
     def __init__(self, ticker):
-        """ Initiliaze Object """
+        """Constructor method.
+        """
         if not isinstance(ticker, str):
             raise TypeError("Ticker Symbol must be a String Type!")
         self.ticker = ticker
         self.stock = yf.Ticker(ticker)
 
     def __repr__(self):
-        """ Representation of object using stocks history """
+        """Representation method of object as stock history.
+        """
         self.history = pd.DataFrame(self.stock.history(period="max"))
         return repr(self.history)
 
     def _data_prep(self, variable="Close", **kwargs):
-        """Prepares Train and Test Data
+        """Prepares training and testing data by assigning stock price history
+        randomly.
 
-           Parameters
-           ----------
-               variable : (str) price to look at (Open, High, Low, Close)
-                           by default = Close
-                **kwargs: further arguments for train test split method
+        Args:
+            variable (str, optional): Price to look at (Open, High, Low, Close). 
+                Defaults to "Close".
+            **kwargs: Further arguments for ``train_test_split`` method.
 
-            Returns
-            --------
-                train and test data (pd.Series)
+        Raises:
+            TypeError: Argument variable must be a string.
+
+        Returns:
+            pd.Series: Training and testing data.
         """
         if not isinstance(variable, str):
             raise TypeError("Variable must be a String Type!")
@@ -79,20 +68,15 @@ class StockPricePredictor(object):
         return self.X_train, self.X_test, self.y_train, self.y_test
 
     def plot_data(self, neigh=2, fs=(14, 6), variable="Close", num=18.1, **kwargs):
-        """Prepares Model and Plots Data
+        """Prepares KNN regression model and plots data.
 
-           Parameters
-           ----------
-               neigh   : (int) number of neighbors, by default = 2
-               fs      : (tuple) figure sizre, by default (14, 8)
-               variable: (str) price to look at (Open, High, Low, Close)
-                          by default = Close
-               **kwargs: further arguments for train test split method
-
-           Returns
-           ----------
-               plot of train and test data
-               (float) prepares model and make prediction accuracy self variable
+        Args:
+            neigh (int, optional): k-nearest neighbors. Defaults to 2.
+            fs (tuple, optional): Figuresize. Defaults to (14, 6).
+            variable (str, optional): Price to look at (Open, High, Low, Close). 
+                Defaults to "Close".
+            num (float, optional): Number of Figure. Defaults to 18.1.
+            **kwargs: Further arguments for ``train_test_split`` method.
         """
         X_train, X_test, y_train, y_test = self._data_prep(variable="Close", **kwargs)
         X_train, X_test, y_train, y_test = (
@@ -140,33 +124,37 @@ class StockPricePredictor(object):
         plt.show()
 
     def knn_accuracy(self):
-        """ Returns Accuracy of Test Data Prediction """
-        return print(f"Accuracy of KNN Regressor in terms of RSME: {self.rsme}")
-
+        """Returns accuracy of testing data prediction.
+        """
+        return print(f'Accuracy of KNN Regressor in terms of RSME: {self.rsme}')
+ 
     def _full_train_data(self, variable="Close"):
-        """Prepares Train Data for future Prediction using whole price history
+        """Prepares training data for future prediction using whole price history.
 
-           Returns
-           -------
-               (np.array) train and test data using whole price and time data
+        Args:
+            variable (str, optional): Price to look at (Open, High, Low, Close). 
+                Defaults to "Close".
+
+        Returns:
+            np.array: Training and testing data using whole price and time data.
         """
         train_price = self.history[variable]
         train_time = self.history.index
         return train_price.values.reshape(-1, 1), train_time.values.reshape(-1, 1)
 
     def _predict_price_knn(self, weight="distance", neigh=2, days=3, periods=30):
-        """Predicts Future Price of Stock
+        """Predicts future stock price.
 
-           Parameters
-           ----------
-               weight : (str) weight of knn regression, by default = distance
-               neigh  : (int) number of neighbors of knn regression, by default = 2
-               days   : (int) number of future days, by default = 3
-               periods: (int) how many periods to consider within 3 days, by default = 30
+        Args:
+            weight (str, optional): Weight of knn regression. Defaults to "distance".
+            neigh (int, optional): Number of k-nearest neighbors of regression models. 
+                Defaults to 2.
+            days (int, optional): Number of future days. Defaults to 3.
+            periods (int, optional): periods to consider within selected days. 
+                Defaults to 30.
 
-           Returns
-           --------
-               (np.arrays) train, test and predicted data
+        Returns:
+            np.array: Training, testing and predicted data.
         """
         train_price, train_time = self._full_train_data()
         predict_model = knn(
@@ -185,7 +173,15 @@ class StockPricePredictor(object):
         return train_time, train_price, rng, predict_price
 
     def predict_price_knn(self, **kwargs):
-        """ Returns Prediction of KNN Regression """
+        """Returns prediction of KNN regression.
+
+        Args:
+            **kwargs: Further arguments for train_test_split method. Refers
+                to :func:`_predict_price_knn` method.
+
+        Returns:
+            float: Predicted price.
+        """
         train_time, train_price, rng, predict_price = self._predict_price_knn(**kwargs)
         return print(predict_price.ravel())
 
@@ -198,22 +194,19 @@ class StockPricePredictor(object):
         iterations=5000,
         learning_rate=1e-4,
     ):
-        """Prepares MLP Method
+        """Prepares MLP method. Particular interesting for the :class:`NetworkPricePredictor`
+        class. 
 
-           Parameters
-           ----------
-               inputs_layers: (int) number of inputs features, by default = 1
-               n_layer      : (int) number of layers, by default = 3
-               output_layers: (int) number of ouputs, by default = 1
-               running_var  : (int) adding variable for layers in hidden layer, by default = 0
-               activation   : (str) method used for activating the network, by default = identity
-               solver       : (str) used optimizer, by default = adam
-               iterations   : (int) number of iterations, by default = 5000
-               learning_rate: (int) by default = 1e-4
+        Args:
+            h1_layer (int, optional): Number of neurons in first hidden layer. Defaults to 12.
+            h2_layer (int, optional): Number of neurons in second hidden layer. Defaults to 3.
+            activation (str, optional): Method used for network activation. Defaults to "relu".
+            solver (str, optional): Used optimizer. Defaults to "adam".
+            iterations (int, optional): Number of iterations. Defaults to 5000.
+            learning_rate (float, optional): Learning rate of method. Defaults to 1e-4.
 
-           Returns
-           --------
-               initiliazed mlp model
+        Returns:
+            function: Trained MLP model.
         """
         mlp = MLPRegressor(
             hidden_layer_sizes=(h1_layer, h2_layer),
@@ -225,7 +218,15 @@ class StockPricePredictor(object):
         return mlp
 
     def nn_accuracy(self, **kwargs):
-        """ Tests Accuracy of MLP Prediction and returns result """
+        """Returns accuracy of MLP prediction.
+
+        Args: 
+            **kwargs: Arguments for MLP method. Refers to :func:`_nn_model` for 
+                neural system
+
+        Returns:
+            print: Accuracy of prediction in terms of Root Squared Mean Error.
+        """
         mlp = self._nn_model(**kwargs)
         X_train = np.array(
             pd.to_datetime(pd.Series(self.X_train.ravel())).map(datetime.toordinal)
@@ -236,11 +237,17 @@ class StockPricePredictor(object):
         mlp.fit(X_train.reshape(-1, 1), self.y_train.reshape(-1, 1).ravel())
         pred = mlp.predict(X_test.reshape(-1, 1))
         return print(
-            f"Accuracy of MLP Regressor in terms of RSME: {mean_squared_error(self.y_test, pred, squared=False)}"
+            f'Accuracy of MLP Regressor in terms of RSME: {mean_squared_error(self.y_test, pred, squared=False)}'
         )
 
     def plot_pred_data(self, num=18.2, **kwargs):
-        """ Plots whole Train Data and Future Prediction """
+        """Plots whole training data and future prediction.
+
+        Args:
+            num (float, optional): Figure number. Defaults to 18.2.
+            **kwargs: Further arguments for ``train_test_split`` method. Refers
+                to :func:`_predict_price_knn`
+        """
         train_time, train_price, rng, predict_price = self._predict_price_knn(**kwargs)
         fig, (ax0, ax1) = plt.subplots(1, 2, figsize=(14, 6))
         ax0.plot(train_time, train_price)
@@ -255,47 +262,41 @@ class StockPricePredictor(object):
         ax1.set_title(f"Figure {num + .1}: KNN Future Stock Prediction")
         plt.show()
 
-
 class NetworkPricePredictor(StockPricePredictor):
-    """Object that predicts Stock Price using MLP regressor and Keras neuronal network
-       Makes use of Recrussive equation with one period, i.e.,
-           > P_t+1 = a_t*P_t + e_t
+    """Object that predicts stock price using the ``MLP regressor``. Instead of just using 
+    time and price as presented in the :class:`StockPricePredictor` class, this object works 
+    recrussive. It identifies patterns by using today's price :math:`P_t` as independent variable 
+    and tomorrows price :math:`P_{t+1}` as dependent variable. It aims to approximate 
+    :math:`\\xi{(P_t)}`, where: 
 
-        Idea
-        ----
-            1)  train data X -    P_0, P_1, P_2, .., P_k-1 (np.array)
-                train data y -    P_1, P_2, P_3, .., P_k   (np.array)
-                test data X  -    P_k, P_k+1,   .., P_T-1  (np.array)
-                test data y  -    P_k+1, P_k+2, .., P_T    (np.array)
-            2)  fit model with train data and predict test data X
-                check accuracy of prediction
-            3)  train data X -  P_0, P_1, .., P_T-1
-                train data y -  P_1, P_2, .., P_T
-            4)  predict P_T+1 (y) using P_T (X)
+    .. math::
+        P_{t+1} = \\xi{(P_t)} + \\epsilon_{t+1}
 
-        Parameters
-        ----------
-            ticker: (str) represents the Ticker Symbol of the stock
-
-        Methods
-        -------
-            _split_data      : splits data to trest and train
-            assign_data      : plots train test data and returns them as arrays
-            mlp_prediction   : prepares mlp regression model
-            _whole_data      : returns price of history
-            future_prediction: predicts future stock prices
+    Args:
+        StockPricePredictor (object): Prepares neural system.
+        ticker (str): Ticker symbol of the stock
     """
-
     def __init__(self, ticker):
-        """ Initiliaze Object, inheritance """
+        """Constructur method. Inheritance of :class:`StockPricePredictor`.
+        """
         super().__init__(ticker)
 
     def __name__(self):
-        """ Returns name of the object """
+        """Returns name of the object.
+        """
         return print("Neuronal Network Object for Stock Prediction")
 
     def _split_data(self, train=0.9, price="Close"):
-        """ Splits data into Training and Testing Data """
+        """Splits dataset as stock histroy randomly into training and testing data.
+
+        Args:
+            train (float, optional): Size of training data = α. Defaults to 0.9.
+            price (str, optional): Price to look at (Open, High, Low, Close). 
+                Defaults to "Close".
+
+        Returns:
+            np.array: Training and testing data.
+        """
         info = pd.DataFrame(self.stock.history(period="max"))
         n_train = int(len(info) * train)
         price = info[price]
@@ -307,7 +308,21 @@ class NetworkPricePredictor(StockPricePredictor):
         return train, test
 
     def assign_data(self, plot=True, num=18.3):
-        """ Plots Train and Test Data or Returns them as arrays """
+        """Plots training and testing data. Returns them as arrays, if plot argument False.
+
+        Args:
+            plot (bool, optional): Plots data if True. Returns training and testing data
+                if False. Defaults to True.
+            num (float, optional): Number of figure. Defaults to 18.3.
+
+        Raises:
+            TypeError:  Argument plot has to be bool.
+            AssertionError: Length of training data must be equal.
+            AssertionError: Length of testing data must be equal.
+
+        Returns:
+            np.array: Training and testing data if plot argument False.
+        """
         if not isinstance(plot, bool):
             raise TypeError("Plot argument has to be boolean!")
         train, test = self._split_data()
@@ -334,8 +349,16 @@ class NetworkPricePredictor(StockPricePredictor):
                 np.array(y_test),
             )
 
-    def mlp_prediction(self, plot=True, num=18.4, **kwargs):
-        """ MLP Model Preperation """
+    def mlp_prediction(self, num=18.4, **kwargs):
+        """MLP model initialization.
+
+        Args:
+            num (float, optional): Number of figure. Defaults to 18.4.
+            **kwargs: Arguments for neural network.
+
+        Returns:
+            print: Root Mean Squared Error of prediction.
+        """
         mlp = self._nn_model(**kwargs)
         X_train, X_test, y_train, y_test = self.assign_data(plot=False)
         mlp.fit(X_train.reshape(-1, 1), y_train.reshape(-1, 1).ravel())
@@ -355,14 +378,33 @@ class NetworkPricePredictor(StockPricePredictor):
         )
 
     def _whole_data(self, price="Close"):
-        """ Returns whole data for training the method """
+        """Returns whole price history training data for future price prediction.
+
+        Args:
+            price (str, optional): Price to look at (Open, High, Low, Close). 
+                Defaults to "Close".
+
+        Returns:
+            pd.Series: Price vector.
+        """
         info = pd.DataFrame(self.stock.history(period="max"))
         prices = info[price].values
         self.time = info.index
         return prices
 
     def future_prediction(self, todays_price, **kwargs):
-        """ Predicts P_t+1 (tomorrows close price) by P_t (todays close price) """
+        """Predicts future price (tomorrows close price) by todays close price.
+
+        Args:
+            todays_price (np.array): Current stock price. Crawled by :func:`get_actual_price_stock`.
+            **kwargs: Arguments for neural network.
+
+        Raises:
+            TypeError: Argument todays_price must be an array.
+
+        Returns:
+            np.array: Tomorrows predicted (close) price.
+        """
         prices = self._whole_data()
         if not isinstance(prices, np.ndarray):
             raise TypeError("Variable prices must be an array!")
@@ -372,20 +414,20 @@ class NetworkPricePredictor(StockPricePredictor):
         prediction = mlp.predict(todays_price)
         return print(f"Tomorrows Close Price will be : {prediction[0]:.2f}")
 
-
 @njit
 def _assign_data(train, test):
-    """Recursive Sequence : P_t+1 = a P_t + e
-       for Train and Test Data
+    """Prepares recursive sequence for training and testing data.
+    Constructs two vectors, :math:`P_{t+1}` and :math:`P_t`.
+    
+    .. math::
+        P_{t+1} = \\xi{(P_t)} + \\epsilon_{t+1}
 
-       Parameters
-       ----------
-           train: (np.array) train data
-           test : (np.array) test data
+    Args:
+        train (np.array): Training data.
+        test (np.array): Testing data.
 
-       Returns
-       -------
-           (ls) P_t and P_t+1 for test and train data
+    Returns:
+        list: Training data :math:`P_t` and testing data :math:`P_{t+1}`.
     """
     X_train = []
     X_test = []
@@ -401,19 +443,16 @@ def _assign_data(train, test):
         y_test.append(test[h + 1])
     return X_train, X_test, y_train, y_test
 
-
 @njit
 def _assignment_for_future_prediction(data):
-    """Recursive Sequence : P_t+1 = a_t P_t + e
-       for whole Data
+    """Prepares recursive Sequence for whole data.
+    Uses the same logic as :func:`_assign_data`.
 
-       Parameters
-       ----------
-           data: (np.array) data set
+    Args:
+        data (pd.DataFrame): Stock price history.
 
-       Returns
-       -------
-           (ls) P_t and P_t+1
+    Returns:
+        list: Training data as two vectors.
     """
     x = []
     y = []
@@ -422,18 +461,14 @@ def _assignment_for_future_prediction(data):
         y.append(data[i + 1])
     return x, y
 
-
 def get_actual_price_stock(link):
-    """Returns close price of specific stock
+    """Returns close price of specific stock.
 
-       Paramaters
-       ----------
-           link: (str) Stock can be selected via link
-                  For this, use Yahoo Finance and lock for the stock
-                  you would like to predict
-       Returns
-       --------
-           (np.array) current stock price
+    Args:
+        link (str): Yahoo finance link of the interesting stock.
+
+    Returns:
+        np.array: Current stock price.
     """
     crawler = requests.get(link)
     hist = BeautifulSoup(crawler.text, "html.parser")

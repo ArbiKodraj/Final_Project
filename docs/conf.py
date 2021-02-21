@@ -9,18 +9,14 @@
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
-#
 import os
 import sys
 sys.path.insert(0, os.path.abspath('../auxiliary'))
 
-
 # -- Project information -----------------------------------------------------
-
 project = 'Function Approximation via Modern Machine Learning Methods'
 copyright = '2021, Arbi Kodraj'
 author = 'Arbi Kodraj'
-
 
 # -- General configuration ---------------------------------------------------
 
@@ -29,35 +25,36 @@ author = 'Arbi Kodraj'
 # ones.
 extensions = [
     'sphinx.ext.autodoc',
-    'recommonmark'
+    'recommonmark',
+    'sphinx.ext.napoleon'
 ]
+autodoc_default_options = {   
+    "members": True,     
+    "undoc-members": True,     
+    "private-members": True,
+    "napoleon_include_special_with_doc": True,
+    "napoleon_include_init_with_doc": True,
+    "napoleon_include_private_with_doc": True
+}
 
-# Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
-
-# List of patterns, relative to source directory, that match files and
-# directories to ignore when looking for source files.
-# This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = ['build', 'Thumbs.db', '.DS_Store']
-
 master_doc = 'index'
-
 modindex_common_prefix = ['src.']
 
 def skip(app, what, name, obj, would_skip, options):
-    if name == "__init__" or name == "__call__" or name == "__repr__" or name == "__name__" or name == "__len__":
+    if name == "__init__":
         return False
     return would_skip
-
 def setup(app):
     app.connect("autodoc-skip-member", skip)
 
-# -- Options for HTML output -------------------------------------------------
 
+# -- Options for HTML output -------------------------------------------------
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-#
 html_theme = 'sphinx_rtd_theme'
+
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
