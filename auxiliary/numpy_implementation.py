@@ -260,12 +260,18 @@ class CMethod:
         """Constructor method. It uses the exact same arguments as the :class:`PMethod`
         constructor method. This could also be achieved by ``inheritance``.
         """
+        self.a = a
+        self.b = b
+        self.n = n
+        self.degree = degree
+        self.func = func
 
     def increase_degree(self, inc_factor=1):
         """Increases number of degrees by certain factor.
 
         Args:
             inc_factor (int): Factor by which the degree is increased.
+                Default to 1.
         """
         self.degree += inc_factor
 
