@@ -261,7 +261,7 @@ class CMethod:
         constructor method. This could also be achieved by ``inheritance``.
         """
 
-    def increase_degree(self, inc_factor):
+    def increase_degree(self, inc_factor=1):
         """Increases number of degrees by certain factor.
 
         Args:
