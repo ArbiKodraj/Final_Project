@@ -3,18 +3,27 @@
 
 # Function Approximation via Machine Learning Methods
 
+<p style='text-align: justify;'>
 The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP. It deals with different approximation methods for functions that differ in their complexity. The core methods originate from machine learning. This project aims to convince the audience that modern machine learning methods are as good a tool for approximating mathematical functions (for some functions even significantly better) as conventional methods and that the audience should, therefore, consider using them for approximation-related problems.  
+</p>
 
+<p style='text-align: justify;'>
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub. 
+</p>
 
+<p style='text-align: justify;'>
 For the documentation of my code, I mainly use <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> because of their clarity, but in some places, I use <a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a>. I also use Sphinx to convert my code into an HTML file, which requires the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repo is private, I could not access <a href="https://pages.github.com">GitHub pages</a> and <a href="https://readthedocs.com/dashboard/">readthedocs</a> for hosting the HTML file. Therefore, the documentation has to be opened locally. For this, I recommend copying the repo after the git initialization. As soon as the repo has been localized, the corresponding file can be found in the following directory:
+</p>
 
 > <mark>./docs/build/html/index.html</mark>
 
+<p style='text-align: justify;'>
 After the project's release, I will set up a <a href="https://readthedocs.com/dashboard/">readthedocs</a> website and make the code documentation available here.
-
+</p>
+<p style='text-align: justify;'>
 Furthermore, I prepared tests for the last section using the <a href="https://docs.python.org/3/library/unittest.html#unittest
 ">Unittest library</a> involved in Python. I decided to use Unittest because it seems to be very usable for object-oriented programming. The tests can be found in the test folder. For the testing execution, I recommend using Pycharm or Visual Studio Code.
+</p>
 
 > **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/hmgaudecker)
 
@@ -22,8 +31,9 @@ Furthermore, I prepared tests for the last section using the <a href="https://do
 
 ## Reproducibility
 
+<p style='text-align: justify;'>
 In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
-
+</p>
 
 
 ## Notebook's Structure
