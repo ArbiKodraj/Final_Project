@@ -3,10 +3,20 @@
 
 # Function Approximation via Machine Learning Methods
 
-The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP.
+The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP. It deals with different approximation methods for functions that differ in their complexity. The core methods originate from machine learning. This project aims to convince the audience that modern machine learning methods are as good a tool for approximating mathematical functions (for some functions even significantly better) as conventional methods and that the audience should, therefore, consider using them for approximation-related problems.  
 
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on github.
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on Github. 
+
+https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
+
+For the documentation of my code, I mainly used <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> because of their clarity, but in some places, I used <a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a>. I also use Sphinx to convert my code into an HTML file, which required the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repo is private, I could not access Github Pages and readthedocs.org for hosting the HTML file. Therefore the documentation has to be opened locally. For this, I recommend copying the repo after the git initialization. As soon as the repo has been localized, the corresponding file can be found in the following directory:
+
+<span style="background-color: #AEB9BA">./docs/build/html/index.html</span>
+
+After the project's release, I will set up a readthedocs.org website and make it available here.
+
+Furthermore, I prepared tests for the last section using the Unittest library involved in Python. I decided to use Unittest because it seems to be very usable for object-oriented programming. The tests can be found in the test folder. For the testing execution, I recommend using Pycharm or Visual Studio Code.
 
 > **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/hmgaudecker)
 
@@ -14,7 +24,9 @@ The best way to access this notebook is by downloading it [here](https://github.
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com)  which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
+In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
+
+
 
 ## Notebook's Structure
 
@@ -25,7 +37,6 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - **5. Further Machine Learning Methods:**
 - **6. Economical Application:**
 - **7. Conclusion:**
-
 
 [![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
 
@@ -79,16 +90,16 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 **Important:**
 
-- 1. Improve Code Documentation (EPP as reference) - use Sphinx (function_appro_keras next)
-- 2. Countercheck text several times 
-- 3. Look for alternative displaying possibilities for the notebook from private repo (nbviewer?, ..)
-- 4. Invite remaining collaborators (done)
-- 5. Think about additional to do's
+- [x] Improve Code Documentation (EPP as reference) - use Sphinx 
+- [x] Countercheck text several times 
+- [ ] Look for alternative displaying possibilities for the notebook from private repo (did not find any)
+- [x] Invite remaining collaborators
+- [ ] Think about additional to do's
 
 **Optional:**
 
-- 1. Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
-- 2. Finish last section (optimal policy for cake problem) - if not: remove => removed
-- 3. if possible, i.e., code's outcome kind of known : write tests - use pytest or unittest (especially interesting for last sections)
+- [ ] Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
+- [x] Finish last section (optimal policy for cake problem) - if not: remove => removed
+- [x] If possible, i.e., code's outcome kind of known : write tests - use pytest or unittest
 
 
