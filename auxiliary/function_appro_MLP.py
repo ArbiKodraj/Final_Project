@@ -55,13 +55,13 @@ def h1(x):
     return 1 / (x ** 2 + 1)
 
 def split_method(x, func, ts):
-    """Randomly splits data in testing and training sets. Will then be used to
-    to check the approximation goodness.
+    """Randomly splits data in testing and training sets. The data
+    will then be used to check the approximation goodness.
 
     Args:
         x (np.array): x values 
         func (function): Benchmark function.
-        ts (tuple): Testing size = (1-alpha)
+        ts (tuple): Testing size = :math:`1-\\alpha`
 
     Returns:
         np.array: Training and testing data.
@@ -101,7 +101,7 @@ def change_data(method, x1, x2, y1, y2):
 def plot_train_test(
     x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
-    """Plot tetsing and trianing data as well as MLP prediction.
+    """Plots testing and training data as well as MLP prediction.
 
     Args:
         x_train (np.array): Training data x.
@@ -191,7 +191,8 @@ def mlp_approximation(
     max_iter=2000,
     solver="lbfgs",
 ):
-    """Approximation of benchmark function using neural network as MLP regression.
+    """Approximate benchmark function :func:`h(x)` using neural network as 
+    MLP regression.
 
     Args:
         xtrain (np.array): Training data x.
@@ -206,7 +207,7 @@ def mlp_approximation(
             Defaults to "lbfgs".
 
     Returns:
-        [type]: [description]
+        np.array: Predicted data.
     """
     mlp = MLPRegressor(hidden_layer_sizes=layer_sizes, max_iter=max_iter, solver=solver)
     scaler = StandardScaler()
@@ -285,7 +286,8 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Dataset
 
 def get_data(path, iv, dv, ts):
-    """Method to read dataset and split it to training and testing samples.
+    """Method that reads dataset and splits it into training and 
+    testing samples.
 
     Args:
         path (str): Dataset's path.
@@ -309,14 +311,14 @@ def get_data(path, iv, dv, ts):
 # --------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark2 3DFunction
 
 def z(x, y):
-    """3D Benchmark function.
+    """``3D Benchmark function.``
 
     Args:
         x (int, float): First input.
         y (int, float): Second input.
 
     Returns:
-        float: Output.
+        float: Output. :math:`0.2 sin(5x) + cos(5y)`
     """
     return 0.2 * np.sin(5 * x) * np.cos(5 * y)
 
@@ -342,7 +344,7 @@ def smooth_fuction(x, y, num):
     plt.show()
 
 class MLP3D:
-    """Approximation of the 3D benchmark function :func:`z` using training data. 
+    """Approximation of the 3D benchmark function :func:`z(x,y)` using training data. 
     Approximation precision will be checked by comparing prediction with testing
     data.
     

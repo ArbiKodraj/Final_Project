@@ -233,7 +233,7 @@ def plt_side_by_side(
         x_train3 (np.array): Training data x of third benchmark function.
         y_train3 (np.array): Training data y of third benchmark function.
         x_test3 (np.array): Testing data x of third benchmark function.
-        y_test3 (np.array Testing data y of third benchmark function.
+        y_test3 (np.array): Testing data y of third benchmark function.
         pred3 (np.array): Predicted data of third benchmark function.
     """
     train_marker = Line2D(

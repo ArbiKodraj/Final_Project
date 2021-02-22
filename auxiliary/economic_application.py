@@ -33,7 +33,7 @@ def demand(p):
     Returns:
         np.array: Returns demand quantity.
     """
-    if not isinstance(p, np.ndarray):
+    if not isinstance(p, (np.ndarray)):
         raise TypeError("Price vector has to be an array!")
     r = np.random.rand() * 2
     n = abs(np.random.randn()) * 2
@@ -44,7 +44,7 @@ def demand(p):
         + 3 / (1 + np.exp(p - 25 + r))
     )
     q[q > 20] = np.nan
-    assert type(q) == type(p), "Type of output does not equals type of input!"
+    assert type(q) == type(p), "Type of output does not equal type of input!"
     return q
 
 def supply(p):
@@ -61,7 +61,7 @@ def supply(p):
         np.array: Returns supply quantity.
     """
     if not isinstance(p, np.ndarray):
-        raise ValueError("Price vector has to be an array!")
+        raise TypeError("Price vector has to be an array!")
     q = np.zeros(p.shape)
     for i, c in enumerate(p):
         if (c > 0) and (c < 10):
@@ -296,8 +296,8 @@ class AISupplyDemandApprox:
         self.qd_train = qd_train_mod.reshape(-1, 1)
         self.qd_test = qd_test.reshape(-1, 1)
 
-        assert np.isnan(self.pd_train).any() == False, "There are nan Values!"
-        assert np.isnan(self.pd_test).any() == False, "There are nan Values!"
+        assert np.isnan(self.pd_train).all() == False, "There are nan Values!"
+        assert np.isnan(self.pd_test).all() == False, "There are nan Values!"
 
     def __name__(self):
         """Returns name of AISupplyDemandApprox object.
@@ -323,7 +323,7 @@ class AISupplyDemandApprox:
         Args:
             colors (list, optional): Colors of approximation results. Defaults 
                 to ["teal", "yellowgreen", "gold"].
-            label ([type], optional): Labels of training and testing data. 
+            label (list, optional): Labels of training and testing data. 
                 Defaults to ["Training Values", "Testing Values"]*2.
             markers (list, optional): Markers of approximation. Defaults 
                 to ["x", "*", "v"].
@@ -342,7 +342,6 @@ class AISupplyDemandApprox:
         """
         self.degrees = degrees
         assert len(degrees) == 2, "List out of range!"
-
         qsup, psup = [self.q_train, self.q_test], [self.p_train, self.p_test]
         qdem, pdem = [self.qd_train, self.qd_test], [self.pd_train, self.pd_test]
         fig, (ax1, ax2) = plt.subplots(2, 2, figsize=fs)
@@ -520,5 +519,6 @@ class AISupplyDemandApprox:
         return data.style.set_caption(
             f"Table {num}: Accuracy Approximation Demand and Supply using Modern ML-Methods"
         )
+
 
 
