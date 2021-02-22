@@ -8,11 +8,9 @@ The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shiel
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on Github. 
 
-https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html
-
 For the documentation of my code, I mainly used <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> because of their clarity, but in some places, I used <a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html">reStructuredText</a>. I also use Sphinx to convert my code into an HTML file, which required the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repo is private, I could not access Github Pages and readthedocs.org for hosting the HTML file. Therefore the documentation has to be opened locally. For this, I recommend copying the repo after the git initialization. As soon as the repo has been localized, the corresponding file can be found in the following directory:
 
-<span style="background-color: #AEB9BA">./docs/build/html/index.html</span>
+> <mark>./docs/build/html/index.html</mark>
 
 After the project's release, I will set up a readthedocs.org website and make it available here.
 
