@@ -3,7 +3,7 @@ name: Project_ArbiKodraj
 dependencies:
 
   # Python Version
-- python=3.7 
+- python=3.7.6
 
   # Packages for stats, math, 
   # scientific computing, data manipulation

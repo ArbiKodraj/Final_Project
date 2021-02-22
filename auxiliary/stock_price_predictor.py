@@ -28,7 +28,6 @@ class StockPricePredictor:
     Raises:
         TypeError: Ticker symbol must be passed as a string.
     """
-    
     def __init__(self, ticker):
         """Constructor method.
         """
@@ -56,7 +55,8 @@ class StockPricePredictor:
             TypeError: Argument variable must be a string.
 
         Returns:
-            pd.Series: Training and testing data.
+            pd.DatetimeIndex: Training data.
+            pd.Serie: Testing data.
         """
         if not isinstance(variable, str):
             raise TypeError("Variable must be a String Type!")
@@ -154,7 +154,7 @@ class StockPricePredictor:
                 Defaults to 30.
 
         Returns:
-            np.array: Training, testing and predicted data.
+            np.array, pd.DatetimeIndex: Training, testing and predicted data.
         """
         train_price, train_time = self._full_train_data()
         predict_model = knn(
@@ -205,9 +205,19 @@ class StockPricePredictor:
             iterations (int, optional): Number of iterations. Defaults to 5000.
             learning_rate (float, optional): Learning rate of method. Defaults to 1e-4.
 
+        Raises:
+            AssertionError: 'Arguments h1_layer, h2_layer and iterations must be integers.'
+            ValueError: Argument learning rate must be greater than zero and smaller than one.'
+            ValueError: Arguments h1_layer, h2_layer and iterations must be non-negative.'
+
         Returns:
             function: Trained MLP model.
         """
+        assert all(isinstance(item, int) for item in [h1_layer, h2_layer, iterations]), 'Arguments h1_layer, h2_layer and iterations must be integers!'
+        if not (learning_rate < 1 and learning_rate > 0):
+            raise ValueError('Learning rate must be greater than zero and smaller than one!') 
+        if not (h1_layer > 0 and h2_layer > 0 and iterations > 0):
+            raise ValueError('Arguments h1_layer, h2_layer and iterations must be non-negative!')
         mlp = MLPRegressor(
             hidden_layer_sizes=(h1_layer, h2_layer),
             activation=activation,
@@ -478,3 +488,9 @@ def get_actual_price_stock(link):
         .text
     )
     return np.array(price)
+
+
+
+
+
+

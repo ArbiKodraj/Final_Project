@@ -9,7 +9,12 @@ from economic_application import PolynomialDS
 from economic_application import AISupplyDemandApprox
 
 class Test_demand_supply(unittest.TestCase):
-
+    """This object aims to test the demand and supply function. 
+    It is created by subclassing :class:`unittest.TestCase.`.
+    
+    Args:
+        unittest (object):  Base class, which may be used to create new test cases.
+    """
     def test_demand(self):
         """Tests demand function.
         """
@@ -33,9 +38,13 @@ class Test_demand_supply(unittest.TestCase):
             )
 
 class Test_polynomial(unittest.TestCase):
+    """This object aims to test the :class:`PolynomialDS` object. 
 
+    Args:
+        unittest (object):  Base class, which may be used to create new test cases.
+    """
     def test_construction(self):
-        """Test constructor.
+        """Tests constructor.
         """
         self.assertRaises(
             AssertionError, PolynomialDS, -1, 10, 10, demand, supply
@@ -53,7 +62,11 @@ class Test_polynomial(unittest.TestCase):
             )
     
 class Test_AI(unittest.TestCase):
+    """This object aims to test the :class:`AISupplyDemandApprox` object.
 
+    Args:
+        unittest (object):  Base class, which may be used to create new test cases.
+    """
     def test_construction(self):
         """Tests object construction.
         """
