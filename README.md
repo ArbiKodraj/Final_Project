@@ -3,7 +3,7 @@
 
 # Function Approximation via Machine Learning Methods
 
-The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP. It deals with different approximation methods for functions that differ in their complexity. The core methods originate from machine learning. This project aims to convince the audience that modern machine learning methods are as good a tool for approximating mathematical functions (for some functions even significantly better) as conventional methods and that the audience should, therefore, consider using them for approximation-related problems.  
+The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for Scientific Computing and EPP. It deals with different approximation methods for functions that differ in their complexity. The core methods originate from machine learning. The core methods originate from machine learning. This project aims to convince the audience that modern machine learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better). Therefore, the audience should consider using them for approximation-related problems.  
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub. 
 
@@ -54,11 +54,9 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 - <b>Gasca, M. and Sauer, T., 2001.</b> On the history of multivariate polynomial interpolation. *In Numerical Analysis:* Historical Developments in the 20th Century (pp. 135-147). Elsevier.
 
-- <b>Goodfellow's (2016)</b>
+- <b>Goodfellow, I., Bengio, Y., Courville, A. and Bengio, Y., 2016.</b>  Deep learning (Vol. 1, No. 2). Cambridge: MIT press.
 
 - <b>Heaton, J.B., Polson, N.G. and Witte, J.H., 2016.</b> Deep learning in finance. arXiv preprint arXiv:1602.06561.
-
-- <b>Herbich et al.'s (1999)</b>
 
 - <b>Hendershott, T., Jones, C.M. and Menkveld, A.J., 2011.</b> Does algorithmic trading improve liquidity?. *The Journal of finance,* 66(1), pp.1-33.
 
@@ -70,7 +68,7 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 - <b>Miranda, M.J. and Fackler, P.L., 2004.</b> Applied computational economics and finance. *MIT press.*
 
-- <b>Moocarme et al., 2020</b>
+- <b>Moocarme, M., Abdolahnejad M. and Bhagwat, R., 2020.</b> The Deep Learning with Keras Workshop: An Interactive Approach to Understanding Deep Learning with Keras, 2nd Edition. 
 
 - <b>Murphy, K.P., 2012.</b> Machine learning: a probabilistic perspective. *MIT press.*
 
@@ -92,13 +90,16 @@ In order to ensure full reproducibility, I have set up a continous integration e
 
 - [x] Improve Code Documentation (EPP as reference) - use Sphinx 
 - [x] Countercheck text several times 
-- [ ] Look for alternative displaying possibilities for the notebook from private repo (did not find any)
+- [x] Look for alternative displaying possibilities for the notebook from private repo (did not find any)
 - [x] Invite remaining collaborators
+- [x] Use Grammerly to check the text
+- [x] Add additional Keras part
+- [ ] Notebook's structure
 - [ ] Think about additional to do's
 
 **Optional:**
 
-- [ ] Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
+- [x] Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
 - [x] Finish last section (optimal policy for cake problem) - if not: remove => removed
 - [x] If possible, i.e., code's outcome kind of known : write tests - use pytest or unittest
 
