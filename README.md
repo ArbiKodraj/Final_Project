@@ -95,7 +95,7 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - [x] Use Grammerly to check the text
 - [x] Add additional Keras part
 - [ ] Notebook's structure
-- [ ] Think about additional to do's
+- [x] Think about additional to do's
 
 **Optional:**
 
