@@ -13,6 +13,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsRegressor as knn
 from sklearn.neural_network import MLPRegressor
 
+
 class StockPricePredictor:
     """This object estimates missing stock prices using training data. Besides,
     it predicts furture stock prices using the whole stock price history of a
@@ -28,6 +29,7 @@ class StockPricePredictor:
     Raises:
         TypeError: Ticker symbol must be passed as a string.
     """
+
     def __init__(self, ticker):
         """Constructor method.
         """
@@ -86,7 +88,7 @@ class StockPricePredictor:
             y_test.values.reshape(-1, 1),
         )
         assert (X_train.shape == y_train.shape) and (
-            X_test.shape == y_test.shape
+                X_test.shape == y_test.shape
         ), "Shapes are not correct!"
         self.mod = knn(
             n_neighbors=neigh,
@@ -110,10 +112,10 @@ class StockPricePredictor:
         markers = ["o", "o", "x"]
         fig, axis = plt.subplots(1, 1, figsize=fs)
         for i, (train, test) in enumerate(
-            zip(
-                [self.X_train, self.X_test, self.X_test],
-                [self.y_train, self.y_test, y_pred],
-            )
+                zip(
+                    [self.X_train, self.X_test, self.X_test],
+                    [self.y_train, self.y_test, y_pred],
+                )
         ):
             axis.plot(train, test, markers[i], label=data[i], color=colors[i], ms=2)
             axis.grid(True)
@@ -127,7 +129,7 @@ class StockPricePredictor:
         """Returns accuracy of testing data prediction.
         """
         return print(f'Accuracy of KNN Regressor in terms of RSME: {self.rsme}')
- 
+
     def _full_train_data(self, variable="Close"):
         """Prepares training data for future prediction using whole price history.
 
@@ -185,14 +187,14 @@ class StockPricePredictor:
         train_time, train_price, rng, predict_price = self._predict_price_knn(**kwargs)
         return print(predict_price.ravel())
 
+    @staticmethod
     def _nn_model(
-        self,
-        h1_layer=12,
-        h2_layer=3,
-        activation="relu",
-        solver="adam",
-        iterations=5000,
-        learning_rate=1e-4,
+            h1_layer=12,
+            h2_layer=3,
+            activation="relu",
+            solver="adam",
+            iterations=5000,
+            learning_rate=1e-4,
     ):
         """Prepares MLP method. Particular interesting for the :class:`NetworkPricePredictor`
         class. 
@@ -213,9 +215,10 @@ class StockPricePredictor:
         Returns:
             function: Trained MLP model.
         """
-        assert all(isinstance(item, int) for item in [h1_layer, h2_layer, iterations]), 'Arguments h1_layer, h2_layer and iterations must be integers!'
-        if not (learning_rate < 1 and learning_rate > 0):
-            raise ValueError('Learning rate must be greater than zero and smaller than one!') 
+        assert all(isinstance(item, int) for item in
+                   [h1_layer, h2_layer, iterations]), 'Arguments h1_layer, h2_layer and iterations must be integers!'
+        if not (1 > learning_rate > 0):
+            raise ValueError('Learning rate must be greater than zero and smaller than one!')
         if not (h1_layer > 0 and h2_layer > 0 and iterations > 0):
             raise ValueError('Arguments h1_layer, h2_layer and iterations must be non-negative!')
         mlp = MLPRegressor(
@@ -272,6 +275,7 @@ class StockPricePredictor:
         ax1.set_title(f"Figure {num + .1}: KNN Future Stock Prediction")
         plt.show()
 
+
 class NetworkPricePredictor(StockPricePredictor):
     """Object that predicts stock price using the ``MLP regressor``. Instead of just using 
     time and price as presented in the :class:`StockPricePredictor` class, this object works 
@@ -286,12 +290,14 @@ class NetworkPricePredictor(StockPricePredictor):
         StockPricePredictor (object): Prepares neural system.
         ticker (str): Ticker symbol of the stock
     """
+
     def __init__(self, ticker):
         """Constructur method. Inheritance of :class:`StockPricePredictor`.
         """
         super().__init__(ticker)
 
-    def __name__(self):
+    @staticmethod
+    def __name__():
         """Returns name of the object.
         """
         return print("Neuronal Network Object for Stock Prediction")
@@ -424,6 +430,7 @@ class NetworkPricePredictor(StockPricePredictor):
         prediction = mlp.predict(todays_price)
         return print(f"Tomorrows Close Price will be : {prediction[0]:.2f}")
 
+
 @njit
 def _assign_data(train, test):
     """Prepares recursive sequence for training and testing data.
@@ -453,6 +460,7 @@ def _assign_data(train, test):
         y_test.append(test[h + 1])
     return X_train, X_test, y_train, y_test
 
+
 @njit
 def _assignment_for_future_prediction(data):
     """Prepares recursive Sequence for whole data.
@@ -471,6 +479,7 @@ def _assignment_for_future_prediction(data):
         y.append(data[i + 1])
     return x, y
 
+
 def get_actual_price_stock(link):
     """Returns close price of specific stock.
 
@@ -484,13 +493,7 @@ def get_actual_price_stock(link):
     hist = BeautifulSoup(crawler.text, "html.parser")
     price = float(
         hist.find_all("div", {"class": "D(ib) Va(m) Maw(65%) Ov(h)"})[0]
-        .find("span")
-        .text
+            .find("span")
+            .text
     )
     return np.array(price)
-
-
-
-
-
-

@@ -123,7 +123,7 @@ class SeqMethod:
         self.model.add(
             Dense(n2_layer, activation=activator_in, kernel_initializer="he_uniform")
         )
-        if n3_init == True:
+        if n3_init:
             self.model.add(
                 Dense(
                     n3_layer, activation=activator_in, kernel_initializer="he_uniform"
@@ -492,7 +492,7 @@ class MultidimApprox:
         plt.show()
 
 
-# additional keras implementation
+# ----------------------------------------------------------------------  Additional Keras implementation
 
 
 def benchmark_function(x):
@@ -501,7 +501,23 @@ def benchmark_function(x):
 
 
 class SeqApprox:
+    """Object that approximates :func:`benchmark_function`
+    for a wider range. Makes use of Keras Sequential Object.
+
+        Args:
+            func (function): Benchmark function.
+            a (int, optional): Lower bound of interval. Defaults to 1.
+            b (int, optional): Upper bound of interval. Defaults to 15.
+            nodes (int, optional): Number of nodes. Defaults to 500.
+            ts (float, optional): Testings size 1-α. Defaults to 0.4.
+
+        Raises:
+            ValueError: Interval must be strict positive, i.e., :math:`0 < a < b`
+        """
+
     def __init__(self, func, a=1, b=15, nodes=500, ts=0.4):
+        """Constructor method.
+        """
         if not (a > 0 and b > a):
             raise ValueError("Let interval be strict positive!")
         x = np.linspace(a, b, nodes)
@@ -512,6 +528,19 @@ class SeqApprox:
 
     @staticmethod
     def _benchmark_model(layers=None, activations=None, optimizer="adam"):
+        """Staticmethod that prepares the Sequential model.
+
+        Args:
+            layers (list, optional): Neuron number of each leayer except of input layer. Defaults to None.
+            activations (list, optional): Used acitvation functions for defined layers. Defaults to None.
+            optimizer (str, optional): Optimizer of model. Defaults to "adam".
+
+        Raises:
+            AssertionError: Length of layers and activations must be equal.
+
+        Returns:
+            function: Prepared Sequential model.
+        """
         if activations is None:
             activations = ["relu", "relu", "sigmoid", "linear"]
         if layers is None:
@@ -540,6 +569,12 @@ class SeqApprox:
         return model
 
     def plot_data(self, *arg, **kwargs):
+        """Plots training and testing data.
+
+        Raises:
+            TypeError: Prediction must be an array (given by default).
+            AssertionError: Size of testing data and prediction must be equal.
+        """
         model = self._benchmark_model(*arg)
         self.hist = model.fit(self.x_train, self.y_train, **kwargs)
         prediction = model.predict(self.x_test)
@@ -564,6 +599,8 @@ class SeqApprox:
         plt.show()
 
     def plot_history(self):
+        """Plots history (MSE by Epochs) of model.
+        """
         plt.figure(figsize=(12, 5))
         plt.plot(self.hist.history["loss"], label="Mean Squared Error")
         plt.title("Figure 13.5: Approximation Error by Epochs")

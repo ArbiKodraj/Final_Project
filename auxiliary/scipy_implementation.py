@@ -10,6 +10,7 @@ from sklearn.metrics import mean_squared_error
 from sklearn.metrics import explained_variance_score
 from sklearn.metrics import r2_score
 
+
 # --------------------------------------------------------------------------- Approximations
 
 def g(x):
@@ -23,73 +24,80 @@ def g(x):
     """
     return np.sin(0.5 * x) - 2 * np.cos(2 * x)
 
+
 def five_interp(x, a0, a1, a2, a3, a4):
     """``Approximation degree = 5``
     """
     return a0 + a1 * x + a2 * (x ** 2) + a3 * (x ** 3) + a4 * (x ** 4)
+
 
 def six_interp(x, a0, a1, a2, a3, a4, a5):
     """``Approximation degree = 6``
     """
     return a0 + a1 * x + a2 * (x ** 2) + a3 * (x ** 3) + a4 * (x ** 4) + a5 * (x ** 5)
 
+
 def seven_interp(x, a0, a1, a2, a3, a4, a5, a6):
     """``Approximation degree = 7``
     """
     return (
-        a0
-        + a1 * x
-        + a2 * (x ** 2)
-        + a3 * (x ** 3)
-        + a4 * (x ** 4)
-        + a5 * (x ** 5)
-        + a6 * (x ** 6)
+            a0
+            + a1 * x
+            + a2 * (x ** 2)
+            + a3 * (x ** 3)
+            + a4 * (x ** 4)
+            + a5 * (x ** 5)
+            + a6 * (x ** 6)
     )
+
 
 def eight_interp(x, a0, a1, a2, a3, a4, a5, a6, a7):
     """``Approximation degree = 8``
     """
     return (
-        a0
-        + a1 * x
-        + a2 * (x ** 2)
-        + a3 * (x ** 3)
-        + a4 * (x ** 4)
-        + a5 * (x ** 5)
-        + a6 * (x ** 6)
-        + a7 * (x ** 7)
+            a0
+            + a1 * x
+            + a2 * (x ** 2)
+            + a3 * (x ** 3)
+            + a4 * (x ** 4)
+            + a5 * (x ** 5)
+            + a6 * (x ** 6)
+            + a7 * (x ** 7)
     )
+
 
 def nine_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8):
     """``Approximation degree = 9``
     """
     return (
-        a0
-        + a1 * x
-        + a2 * (x ** 2)
-        + a3 * (x ** 3)
-        + a4 * (x ** 4)
-        + a5 * (x ** 5)
-        + a6 * (x ** 6)
-        + a7 * (x ** 7)
-        + a8 * (x ** 8)
+            a0
+            + a1 * x
+            + a2 * (x ** 2)
+            + a3 * (x ** 3)
+            + a4 * (x ** 4)
+            + a5 * (x ** 5)
+            + a6 * (x ** 6)
+            + a7 * (x ** 7)
+            + a8 * (x ** 8)
     )
+
 
 def ten_interp(x, a0, a1, a2, a3, a4, a5, a6, a7, a8, a9):
     """``Approximation degree = 10``
     """
     return (
-        a0
-        + a1 * x
-        + a2 * (x ** 2)
-        + a3 * (x ** 3)
-        + a4 * (x ** 4)
-        + a5 * (x ** 5)
-        + a6 * (x ** 6)
-        + a7 * (x ** 7)
-        + a8 * (x ** 8)
-        + a9 * (x ** 9)
+            a0
+            + a1 * x
+            + a2 * (x ** 2)
+            + a3 * (x ** 3)
+            + a4 * (x ** 4)
+            + a5 * (x ** 5)
+            + a6 * (x ** 6)
+            + a7 * (x ** 7)
+            + a8 * (x ** 8)
+            + a9 * (x ** 9)
     )
+
 
 # --------------------------------------------------------------------------- 3.2.1 Benchmark Exercise: Naive Approximation SciPy
 
@@ -105,6 +113,7 @@ class FCMethod:
         func (function): Benchmark function.
         degree (int): Degree of approximation.
     """
+
     def __init__(self, a, b, n, func, degree):
         """Constructor method. It uses the exact same arguments as the :class:`PMethod`
         constructor method. This could be achieved by inheritance as well.
@@ -307,7 +316,3 @@ class FCMethod:
         return rslt
 
 
-
-
-        """[summary]
-        """

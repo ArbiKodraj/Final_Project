@@ -75,7 +75,7 @@ class Test_AI(unittest.TestCase):
     def test_name(self):
         """Tests object's name."""
         obj = AISupplyDemandApprox(200, supply, demand)
-        self.assertIsInstance(obj.__name__(), str)
+        self.assertIsInstance(__name__(), str)
 
     def test_plot(self):
         """Tests plot method."""

@@ -18,6 +18,7 @@ from sklearn.metrics import (
     r2_score,
 )
 
+
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark1
 
 def highlight_min(s):
@@ -32,6 +33,7 @@ def highlight_min(s):
     is_min = s == s.min()
     return ["background-color: yellow" if v else "" for v in is_min]
 
+
 def h(x):
     """``Benchmark function.``
 
@@ -41,7 +43,8 @@ def h(x):
     Returns:
         float: Output. :math:`5 sin(π x) - e^{sin(5πx)}`
     """
-    return 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x)) 
+    return 5 * np.sin(np.pi * x) - np.exp(np.sin(5 * np.pi * x))
+
 
 def h1(x):
     """``Benchmark function.``
@@ -53,6 +56,7 @@ def h1(x):
         float: Output. :math:`\\frac{1}{x^2 + 1}`
     """
     return 1 / (x ** 2 + 1)
+
 
 def split_method(x, func, ts):
     """Randomly splits data in testing and training sets. The data
@@ -73,6 +77,7 @@ def split_method(x, func, ts):
     x_test = x_test.reshape(-1, 1)
 
     return x_train, x_test, y_train, y_test
+
 
 def change_data(method, x1, x2, y1, y2):
     """Normalizes or standardizes training and testing data.
@@ -98,8 +103,9 @@ def change_data(method, x1, x2, y1, y2):
     else:
         return x1, x2, y1, y2
 
+
 def plot_train_test(
-    x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
+        x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
     """Plots testing and training data as well as MLP prediction.
 
@@ -182,14 +188,15 @@ def plot_train_test(
     plt.grid()
     plt.show()
 
+
 def mlp_approximation(
-    xtrain,
-    xtest,
-    ytrain,
-    ytest,
-    layer_sizes=(30, 40, 50, 30),
-    max_iter=2000,
-    solver="lbfgs",
+        xtrain,
+        xtest,
+        ytrain,
+        ytest,
+        layer_sizes=(30, 40, 50, 30),
+        max_iter=2000,
+        solver="lbfgs",
 ):
     """Approximate benchmark function :func:`h(x)` using neural network as 
     MLP regression.
@@ -222,6 +229,7 @@ def mlp_approximation(
 
     return pred
 
+
 def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchanged"):
     """Computes approximation accuracy for different iterations using the :func:`mlp_approximation`
     as approximation tool.
@@ -247,7 +255,7 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
     if not isinstance(N_iter, (list, np.ndarray)):
         raise TypeError("N_iter argument has to be list or array type!")
     assert (
-        len(N_iter) == 3
+            len(N_iter) == 3
     ), "Not correct length. Input of list N_iter has to have length of 3!"
 
     predictions = [
@@ -283,6 +291,7 @@ def prediction_report(N_iter, xtrain, xtest, ytrain, ytest, num, method="Unchang
         f"Table {num}: Accuracy of MPL Approximation of $h(x)$ using {method} Training Data"
     )
 
+
 # ------------------------------------------------------------------------------------------- 3.1 MPL Regression, Dataset
 
 def get_data(path, iv, dv, ts):
@@ -308,6 +317,7 @@ def get_data(path, iv, dv, ts):
 
     return x_train, x_test, y_train, y_test
 
+
 # --------------------------------------------------------------------------------- 3.1 MPL Regression, Benchmark2 3DFunction
 
 def z(x, y):
@@ -321,6 +331,7 @@ def z(x, y):
         float: Output. :math:`0.2 sin(5x) + cos(5y)`
     """
     return 0.2 * np.sin(5 * x) * np.cos(5 * y)
+
 
 def smooth_fuction(x, y, num):
     """Plots smooth 3D Benchmark Function.
@@ -343,6 +354,7 @@ def smooth_fuction(x, y, num):
     plt.title(f"Figure {num}: Function $z(x, y)$ in the interval [-1, 1]")
     plt.show()
 
+
 class MLP3D:
     """Approximation of the 3D benchmark function :func:`z(x,y)` using training data. 
     Approximation precision will be checked by comparing prediction with testing
@@ -351,6 +363,7 @@ class MLP3D:
     Args:
         func (function): 3D Benchmark function.       
     """
+
     def __init__(self, func):
         """Constructor method.
         """
@@ -450,7 +463,7 @@ class MLP3D:
             evs.append(explained_variance_score(y, p))
             r2.append(r2_score(y, p))
         rslt = pd.DataFrame(
-            [mae[i : i + 4] for i in range(0, len(mae), 4)],
+            [mae[i: i + 4] for i in range(0, len(mae), 4)],
             columns=columns,
             index=[i + " Dots" for i in ind],
         )

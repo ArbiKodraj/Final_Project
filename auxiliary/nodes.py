@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+
 class PlotNodes:
     """Class that visualizes *Uniform* and *Chebychev* nodes that have the following form:
 
@@ -23,26 +24,16 @@ class PlotNodes:
         """Constructor method.
         """
         self.n = n
-        self.a = a
-        self.b = b
-
-    def uniform_nodes(self):
-        """Defines Uniform nodes.
-        """
-        self.uni_nodes = np.linspace(self.a, self.b, self.n)
-
-    def chebychev_nodes(self):
-        """Defines Chebychev nodes.
-        """
+        self.uni_nodes = np.linspace(a, b, n)
         self.cheb_nodes = np.cos(
-            (self.n - np.arange(1, self.n + 1) + 0.5) * np.pi / self.n
+            (n - np.arange(1, n + 1) + 0.5) * np.pi / n
         )
 
     def plot_nodes(self, fs=(10, 6)):
         """Plots Uniform and Chebychev nodes.
 
         Args:
-            fs (tuple, optional): Figuresize. Defaults to (10, 6).
+            fs (tuple, optional): Figure size. Defaults to (10, 6).
         """
         i, j = [], []
         [i.append(1) for l in range(len(self.uni_nodes))]

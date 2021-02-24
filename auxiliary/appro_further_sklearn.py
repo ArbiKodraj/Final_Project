@@ -12,6 +12,7 @@ from sklearn.metrics import (
     r2_score,
 )
 
+
 class Regressor:
     """This class approximates a discontinuous function using ML ``KNN Regression``,
     DTR and Linear Regression with various degrees.
@@ -22,6 +23,7 @@ class Regressor:
         nodes (int, optional): Number of interpolation nodes. Defaults to 100.
         ts (float, optional): Size of testing data. Defaults to 0.33.
     """
+
     def __init__(self, a=-1, b=1, nodes=100, ts=0.33):
         """Constructor method.
         """
@@ -95,10 +97,10 @@ class Regressor:
         )
         plt.title(
             f"Figure {num}: Approximation of discontinuous functions via KNN Regressor and DTR"
-            )
+        )
         if fitting == "over":
             plt.title(
-            f"Figure {num}: Over-fitted Approximation of discontinuous functions via KNN Regressor and DTR"
+                f"Figure {num}: Over-fitted Approximation of discontinuous functions via KNN Regressor and DTR"
             )
         plt.grid()
         plt.show()
@@ -129,7 +131,7 @@ class Regressor:
                 ],
                 index=["DTR", "KNN Regressor"]
             )
-        if fitting=="over":
+        if fitting == "over":
             return df.style.set_caption(
                 f"Table {num}: Approximation Accuracy ML Methods"
             )

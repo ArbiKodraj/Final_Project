@@ -2,14 +2,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from numpy.polynomial import Polynomial as P 
-from numpy.polynomial import Chebyshev as C  
+from numpy.polynomial import Polynomial as P
+from numpy.polynomial import Chebyshev as C
 
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import explained_variance_score
 from sklearn.metrics import r2_score
 from matplotlib import gridspec
+
 
 def k(x):
     """``Benchmark function``.
@@ -20,7 +21,8 @@ def k(x):
     Returns:
         float: Output. :math:`-sin(x\\pi)`
     """
-    return np.exp(-np.sin(x * np.pi))   
+    return np.exp(-np.sin(x * np.pi))
+
 
 # -------------------------------------------------------------------------------- 3.1.1 Benchmark : evenly spaced interpolation
 
@@ -38,6 +40,7 @@ class PMethod:
         degree (int): Degree of Approximation.
         func (function): Benchmark function.
     """
+
     def __init__(self, a, b, n, degree, func):
         """Constructor method.
         """
@@ -53,7 +56,7 @@ class PMethod:
         x = np.linspace(self.a, self.b, self.n)
         self.poly = P.fit(x, self.func(x), self.degree)
 
-    def simple_plot_appro(self, N, fs):  
+    def simple_plot_appro(self, N, fs):
         """Plots benchmark function, approximation as well as approximation error.
 
         Args:
@@ -243,6 +246,7 @@ class PMethod:
         )
         return rslt
 
+
 # -------------------------------------------------------------------------------- 3.1.2 Benchmark : chebychev interpolation
 
 class CMethod:
@@ -256,6 +260,7 @@ class CMethod:
         degree (int): Degree of approximation.
         func (function): Unknown function.
     """
+
     def __init__(self, a, b, n, degree, func):
         """Constructor method. It uses the exact same arguments as the :class:`PMethod`
         constructor method. This could also be achieved by ``inheritance``.

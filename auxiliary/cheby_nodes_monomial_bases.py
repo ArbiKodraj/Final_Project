@@ -16,14 +16,13 @@ from auxiliary.scipy_implementation import eight_interp
 from auxiliary.scipy_implementation import nine_interp
 from auxiliary.scipy_implementation import ten_interp
 
+
 # ---------------------------- Attempt Chebychev approximation via Chebychev interpolation, fails with curve fit method of scipy
 
-def cheb_nodes(a, b, n):
+def cheb_nodes(n):
     """Returns Chebychev nodes.
 
     Args:
-        a (int): Lower bound of interpolation interval.
-        b (int): Upper bound of interpolation interval.
         n (int): Number of interpolation nodes.
 
     Returns:
@@ -31,6 +30,7 @@ def cheb_nodes(a, b, n):
     """
     ccn = np.cos((n - np.arange(1, n + 1) + 0.5) * np.pi / n)
     return ccn
+
 
 def poly(a, b, n, x):
     """Returns Chebychev Polynomials.
@@ -50,6 +50,7 @@ def poly(a, b, n, x):
     )
     return T
 
+
 def ccaproximation(x, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9):
     """Returns Chebychev approximation.
 
@@ -63,6 +64,7 @@ def ccaproximation(x, c0, c1, c2, c3, c4, c5, c6, c7, c8, c9):
     T = poly(-1, 1, 10, x)
     weights = np.array([c0, c1, c2, c3, c4, c5, c6, c7, c8, c9])
     return sum(T * weights)
+
 
 # ------------------------------------------------------------------------------------ Chebychev Interpolations
 
@@ -92,6 +94,7 @@ def show_cheb_polyn(a, b, n):
     plt.grid()
     plt.show()
 
+
 # ----------------------------------------------------- 3.3.1 Benchmark: Monomial Interpolation with Chebychev Nodes
 
 class ChebyNodeInterpolation:
@@ -104,6 +107,7 @@ class ChebyNodeInterpolation:
         func (function): [description]
         degree (int): [description]
     """
+
     def __init__(self, n, func, degree):
         """Constructor method.
         """

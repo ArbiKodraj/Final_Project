@@ -4,6 +4,7 @@ import pandas as pd
 
 from sklearn.metrics import mean_absolute_error
 
+
 def f(x):
     """``Benchmark function.``
 
@@ -15,10 +16,11 @@ def f(x):
     """
     return x * np.sin(x)
 
+
 # -----------------------------------------------------------------------------
 
 class CCMethod:
-    """This class implements the Chebychev Approximation using Chebychev nodes. This 
+    """This class implements the Chebyshev Approximation using Chebyshev nodes. This
     object was not created by me. 
 
     Args:
@@ -27,6 +29,7 @@ class CCMethod:
         n (int): Number of interpolation nodes.
         func (function): Benchmark function.
     """
+
     def __init__(self, a, b, n, func):
         """Constructor method.
         """
@@ -37,10 +40,10 @@ class CCMethod:
 
         bma = 0.5 * (b - a)
         bpa = 0.5 * (b + a)
-        
+
         cheb_nodes = [
             np.cos(np.pi * (k + 0.5) / n) * bma + bpa for k in range(n)
-        ] # Formula of nodes
+        ]  # Formula of nodes
 
         f = list(map(func, cheb_nodes))  # y values of nodes
         self.c = [
@@ -59,11 +62,11 @@ class CCMethod:
             float: Approximation point benchmark function at evaluation point.
         """
         assert (
-            self.a <= x <= self.b
+                self.a <= x <= self.b
         ), "x is not in defined interval, choose x between a and b"  # x picked from interval
 
         z = (
-            2.0 * (x - self.a) / (self.b - self.a) - 1
+                2.0 * (x - self.a) / (self.b - self.a) - 1
         )  # define z to normalize domain to [-1, 1]
         z2 = 2.0 * z
 
@@ -71,6 +74,7 @@ class CCMethod:
         for cj in self.c[-2:0:-1]:  # Clenshaw's recurrence
             (d, dd) = (z2 * d - dd + cj, d)
         return z * d - dd + 0.5 * self.c[0]  # Last step is different
+
 
 def approximation_error(func, approx, figure, degree):
     """Plots approximation error of the :class:`CCMethod` class.
@@ -105,11 +109,12 @@ def approximation_error(func, approx, figure, degree):
     plt.show()
 
     print(
-        f"The maximal error of the Chebyshev interplation equals: {max(error_term):.5f}"
+        f"The maximal error of the Chebyshev interpolation equals: {max(error_term):.5f}"
     )
 
+
 def data_frame_rslt(cheb_approx, x, function):
-    """Creates approximation accuracy as dataframe using the :class:`CCMethod` class.
+    """Creates approximation accuracy as data frame using the :class:`CCMethod` class.
 
     Args:
         cheb_approx (function): Chebychev approximation value.
@@ -130,6 +135,7 @@ def data_frame_rslt(cheb_approx, x, function):
     return result.rename_axis("$Y$-Values / $X$-Values").style.set_caption(
         "Table 6: Absolut Error of Interpolation for different values"
     )  # Style DataFrame
+
 
 def error_for_diff_orders(orders, func, r, figure):
     """Plots approximation error using the :class:`CCMethod` class for various 

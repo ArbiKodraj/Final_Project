@@ -16,6 +16,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import PolynomialFeatures
 from sklearn.pipeline import make_pipeline
 
+
 # -------------------------------------------------------------------------------- 5.1 Approximation Demand and Supply
 
 # ---------- Demand and Supply Functions ----------
@@ -33,19 +34,20 @@ def demand(p):
     Returns:
         np.array: Returns demand quantity.
     """
-    if not isinstance(p, (np.ndarray)):
+    if not isinstance(p, np.ndarray):
         raise TypeError("Price vector has to be an array!")
     r = np.random.rand() * 2
     n = abs(np.random.randn()) * 2
     q = (
-        40 / (p + n)
-        + 1 / (1 + np.exp(p - 75 + r))
-        + 2 / (1 + np.exp(p - 50 + r))
-        + 3 / (1 + np.exp(p - 25 + r))
+            40 / (p + n)
+            + 1 / (1 + np.exp(p - 75 + r))
+            + 2 / (1 + np.exp(p - 50 + r))
+            + 3 / (1 + np.exp(p - 25 + r))
     )
     q[q > 20] = np.nan
     assert type(q) == type(p), "Type of output does not equal type of input!"
     return q
+
 
 def supply(p):
     """Vectorized Function to determine *supply.*
@@ -89,7 +91,14 @@ def supply(p):
     assert type(q) == type(p), "Type of output does not equals type of input!"
     return q
 
+
 # ---------- Approximation using scipy ----------
+
+def __name__():
+    """Returns the name of the object.
+    """
+    return "Demand and Supply Interpolator"
+
 
 class PolynomialDS:
     """Object that approximates supply and demand functions using sicpy
@@ -106,6 +115,7 @@ class PolynomialDS:
         AssertionError: Price must be non-negative.
         AssertionError: By Assumption: price cannot exceed 100.
     """
+
     def __init__(self, a, b, nodes, demand, supply):
         """Constructor method.
         """
@@ -151,7 +161,8 @@ class PolynomialDS:
 
         return f"-- Real value -- at price {p}: \n\nDemand = {self.demand(p)} \nSupply = {self.supply(p)} \n\n-- Approximated value -- at price {p}: \n\nDemand = {self.apprx_qd(p)} \nSupply = {self.apprx_qs(p)}"
 
-    def __name__(self):
+    @staticmethod
+    def __name__():
         """Returns the name of the object.
         """
         return "Demand and Supply Interpolator"
@@ -247,6 +258,7 @@ class PolynomialDS:
             f"Equilibrium Approximation (Quantity, Price) \n*** *** *** *** \nDemand: {(aqe_demand[0], np.around(pea, decimals=3))} \nSupply: {(aqe_supply[0], np.around(pea, decimals=3))}"
         )
 
+
 # ---------- Approximation using ML ----------
 
 class AISupplyDemandApprox:
@@ -266,11 +278,12 @@ class AISupplyDemandApprox:
         AssertionError: Training data includes nan values.
         AssertionError: Testing data includes nan values.
     """
+
     def __init__(self, nodes, supply, demand, a=0, b=100, ts=0.4, rs=42):
         """Constructor method.
         """
         assert a >= 0, "Price must be Non Negative!"
-        
+
         p = np.linspace(a, b, nodes)
         q = supply(p)
         qd = demand(p)
@@ -282,13 +295,13 @@ class AISupplyDemandApprox:
             p, qd, test_size=ts, random_state=rs
         )
 
-        self.p_train = p_train.reshape(-1, 1)       # reshape data
-        self.p_test = p_test.reshape(-1, 1)         # reshape data
-        self.q_train = q_train.reshape(-1, 1)       # reshape data
-        self.q_test = q_test.reshape(-1, 1)         # reshape data
+        self.p_train = p_train.reshape(-1, 1)  # reshape data
+        self.p_test = p_test.reshape(-1, 1)  # reshape data
+        self.q_train = q_train.reshape(-1, 1)  # reshape data
+        self.q_test = q_test.reshape(-1, 1)  # reshape data
 
-        nan_ind = np.argwhere(np.isnan(qd_train))   # select index of nan values
-        qd_train_mod = np.delete(qd_train, nan_ind) # delete nan index value
+        nan_ind = np.argwhere(np.isnan(qd_train))  # select index of nan values
+        qd_train_mod = np.delete(qd_train, nan_ind)  # delete nan index value
         pd_train_mod = np.delete(pd_train, nan_ind)
 
         self.pd_train = pd_train_mod.reshape(-1, 1)
@@ -299,25 +312,26 @@ class AISupplyDemandApprox:
         assert np.isnan(self.pd_train).all() == False, "There are nan Values!"
         assert np.isnan(self.pd_test).all() == False, "There are nan Values!"
 
-    def __name__(self):
+    @staticmethod
+    def __name__():
         """Returns name of AISupplyDemandApprox object.
         """
         return "Modern-ML Demand and Supply Interpolator"
 
     def plots(
-        self,
-        colors=["teal", "yellowgreen", "gold"],
-        label=["Training Values", "Testing Values"] * 2,
-        markers=["x", "*", "v"],
-        n_neighbors=4,
-        degrees=[3, 6],
-        weight="distance",
-        fs=(15, 10),
-        num1=17.1,
-        num2=17.2,
-        num3=17.3,
-        num4=17.4,
-    ):  
+            self,
+            colors=["teal", "yellowgreen", "gold"],
+            label=["Training Values", "Testing Values"] * 2,
+            markers=["x", "*", "v"],
+            n_neighbors=4,
+            degrees=[3, 6],
+            weight="distance",
+            fs=(15, 10),
+            num1=17.1,
+            num2=17.2,
+            num3=17.3,
+            num4=17.4,
+    ):
         """Plots approximation results as well as training and testing data.
 
         Args:
@@ -519,6 +533,3 @@ class AISupplyDemandApprox:
         return data.style.set_caption(
             f"Table {num}: Accuracy Approximation Demand and Supply using Modern ML-Methods"
         )
-
-
-
