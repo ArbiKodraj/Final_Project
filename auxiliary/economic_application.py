@@ -94,11 +94,6 @@ def supply(p):
 
 # ---------- Approximation using scipy ----------
 
-def __name__():
-    """Returns the name of the object.
-    """
-    return "Demand and Supply Interpolator"
-
 
 class PolynomialDS:
     """Object that approximates supply and demand functions using sicpy
@@ -533,3 +528,8 @@ class AISupplyDemandApprox:
         return data.style.set_caption(
             f"Table {num}: Accuracy Approximation Demand and Supply using Modern ML-Methods"
         )
+
+def __name__():
+    """Returns the name of the object.
+    """
+    return "Demand and Supply Interpolator"

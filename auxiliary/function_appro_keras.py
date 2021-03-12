@@ -375,9 +375,7 @@ class MultidimApprox:
         self.prediction = estimator.predict(self.X_test)
 
     def plt_first_rslt(self, num):
-        """Plots accuracy of approximation.
-
-        Plots Mean Absolute Error and Validation Loss by number of iterations to
+        """Plots Mean Absolute Error and Validation Loss by number of iterations to
         demonstrate its convergence. Plot accuracy of prediction.
 
         Args:
