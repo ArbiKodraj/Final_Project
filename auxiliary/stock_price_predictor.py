@@ -428,7 +428,7 @@ class NetworkPricePredictor(StockPricePredictor):
         mlp = self._nn_model(**kwargs)
         mlp.fit(np.array(train).reshape(-1, 1), np.array(test).reshape(-1, 1).ravel())
         prediction = mlp.predict(todays_price)
-        return print(f"Tomorrows Close Price will be : {prediction[0]:.2f}")
+        return print(f"Tomorrows Close Price will be : {prediction[0]:.2f} dollars")
 
 
 @njit
