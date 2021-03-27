@@ -3,8 +3,6 @@ import sys
 import numpy as np
 import pandas as pd
 
-from auxiliary.economic_application import __name__
-
 sys.path.append("../auxiliary/")
 
 from stock_price_predictor import _assign_data, _assignment_for_future_prediction
@@ -25,16 +23,6 @@ class Test_StockPricePredictor(unittest.TestCase):
     def test_construction(self):
         """Tests constructor method."""
         self.assertIsInstance(StockPricePredictor("aapl").ticker, str)
-
-    def test_prep(self):
-        """Tests training and testing data preperation method."""
-        aapl = StockPricePredictor("aapl")
-        aapl.__repr__()
-        for _ in range(4):
-            if _ < 2:
-                self.assertEqual(__name__, "DatetimeIndex")
-            else:
-                self.assertEqual(__name__, "Series")
 
     def test_data_and_mlp(self):
         """Tests data preperation and mlp preperation method."""
@@ -117,7 +105,6 @@ class Test_NetworkPricePredictor(unittest.TestCase):
                 0
             ],  # P_t+1 (testing) => assert reccursive form
         )
-
 
 if __name__ == "__main__":
     unittest.main()
