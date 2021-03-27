@@ -211,51 +211,41 @@ def plt_side_by_side(
         y_test3 (np.array): Testing data y of third benchmark function.
         pred3 (np.array): Predicted data of third benchmark function.
     """
-    train_marker = Line2D(
-        [],
-        [],
-        color="orange",
-        marker="o",
-        linestyle="None",
-        markersize=4,
-        label="Test Data",
-    )
-    test_marker = Line2D(
-        [],
-        [],
-        color="blue",
-        marker="v",
-        linestyle="None",
-        markersize=4,
-        label="Train Data",
-    )
-    approx_marker = Line2D(
-        [],
-        [],
-        color="red",
-        marker="*",
-        linestyle="None",
-        markersize=4,
-        label="Keras Output",
-    )
+    color = ["b", "y", "r"]
+    marker = ["o", "v", "*"]
+    labels = ["Testing Data", "Testing Data", "Keras Output"]
+    handles = []
+    for i in range(len(color)):
+        handles.append(
+            Line2D(
+                [],
+                [],
+                color=color[i],
+                marker=marker[i],
+                linestyle="None",
+                markersize=4,
+                label=labels[i],
+            )
+        )
+
     figure, (ax1, ax2, ax3) = plt.subplots(1, 3, figsize=(15, 5))
-    ax1.plot(x_train1, y_train1, "o", ms=3, color="b")
-    ax1.plot(x_test1, y_test1, "v", ms=3, color="y")
-    ax1.plot(x_test1, pred1, "*", ms=3, color="r")
-    ax1.set_title(f"Figure {num1}: Approximation of " + "$e^{-x}$")
-    ax1.grid()
-    ax2.plot(x_train2, y_train2, "o", ms=3, color="b")
-    ax2.plot(x_test2, y_test2, "v", ms=3, color="y")
-    ax2.plot(x_test2, pred2, "*", ms=3, color="r")
-    ax2.set_title(f"Figure {num2}: Approximation of $|x|$")
-    ax2.grid()
-    ax3.plot(x_train3, y_train3, "o", ms=3, color="b")
-    ax3.plot(x_test3, y_test3, "v", ms=3, color="y")
-    ax3.plot(x_test3, pred3, "*", ms=3, color="r")
-    ax3.set_title(f"Figure {num3}: Approximation of $x sin(\pi x)$")
-    ax3.grid()
+    zips = [
+        zip([x_train1, x_test1, x_test1], [y_train1, y_test1, pred1]),
+        zip([x_train2, x_test2, x_test2], [y_train2, y_test2, pred2]),
+        zip([x_train3, x_test3, x_test3], [y_train3, y_test3, pred3]),
+    ]
+    titles = [
+        f"Figure {num1}: Approximation of " + "$e^{-x}$",
+        f"Figure {num2}: Approximation of $|x|$",
+        f"Figure {num3}: Approximation of $x sin(\pi x)$",
+    ]
+    for j, ax in enumerate([ax1, ax2, ax3]):
+        for i, (x, y) in enumerate(zips[j]):
+            ax.plot(x, y, marker[i], ms=3, color=color[i])
+        ax.set_title(titles[j])
+        ax.grid()
     ax3.legend(
-        handles=[train_marker, test_marker, approx_marker],
+        handles=handles,
         bbox_to_anchor=(1.05, 1),
         loc="upper left",
         title="Data",
@@ -381,36 +371,38 @@ class MultidimApprox:
         Args:
             num (int, float): Number of figures.
         """
+
+        titles = ["Loss", "Data"]
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(15, 5))
-        ax1.plot(self.hist.history["loss"], label="Mean Absolute Error")
-        ax1.plot(self.hist.history["val_loss"], label="Validation Loss")
-        ax1.set_ylim([0, 2.5])
-        ax1.set_xlabel("Epoch")
-        ax1.set_ylabel("Error")
+        axs_dict = {
+            "ax1": zip(
+                [self.hist.history["loss"], self.hist.history["val_loss"]],
+                ["Mean Absolute Error", "Validation Loss"],
+            ),
+            "ax2": zip([self.y_test, self.prediction], ["True Values", "Prediction"]),
+        }
+        for e, (key, ax) in enumerate(zip(axs_dict.keys(), [ax1, ax2])):
+            for i, j in axs_dict[key]:
+                ax.plot(i, label=j, alpha=0.9)
+            if e == 0:
+                ax.set_ylim([0, 2.5])
+                ax.set_xlabel("Epoch")
+                ax.set_ylabel("Error")
+            if e == 1:
+                ax2.plot(self.y_test, "o", ms=3, color="blue")
+                ax2.plot(self.prediction, "x", ms=3, color="orange")
+            ax.legend(
+                title=titles[e],
+                loc="upper center",
+                bbox_to_anchor=(0.5, 1.1),
+                ncol=3,
+                title_fontsize=12,
+                fancybox=True,
+                shadow=True,
+            )
+            ax.grid(True)
         ax1.set_title(f"Figure {num}: Epoch-Loss Trade off", y=1.105)
-        ax1.legend(
-            title="Loss",
-            loc="upper center",
-            bbox_to_anchor=(0.5, 1.1),
-            ncol=3,
-            title_fontsize=12,
-            fancybox=True,
-            shadow=True,
-        )
-        ax1.grid()
-        ax2.plot(self.y_test, "o", label="True Values")
-        ax2.plot(self.prediction, "x", label="Prediction")
         ax2.set_title(f"Figure {num + 0.1}: Prediciton", y=1.105)
-        ax2.legend(
-            title="Data",
-            loc="upper center",
-            bbox_to_anchor=(0.5, 1.1),
-            ncol=3,
-            fancybox=True,
-            shadow=True,
-            title_fontsize=12,
-        )
-        ax2.grid()
         plt.show()
 
     def plt_second_rslt(self, num1, num2):

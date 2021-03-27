@@ -2,6 +2,7 @@
 
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
+from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
 
@@ -105,7 +106,7 @@ def change_data(method, x1, x2, y1, y2):
 
 
 def plot_train_test(
-        x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
+    x_train, x_test, y_train, y_test, prediction, xlabel, ylabel, num, method
 ):
     """Plots testing and training data as well as MLP prediction.
 
@@ -114,48 +115,37 @@ def plot_train_test(
         x_test (np.array): Testing data x.
         y_train (np.array): Training data y.
         y_test (np.array): Testing data y.
-        prediction (np.array): Prediction of testing data using 
+        prediction (np.array): Prediction of testing data using
             :func:`mlp_approximation` function.
         xlabel (str): Name of x label.
         ylabel (str): Name of y label.
         num (int, float): Figure number.
         method (str): Data transformation method, use '' if no method was used.
     """
-    train_marker = mlines.Line2D(
-        [],
-        [],
-        color="orange",
-        marker="x",
-        linestyle="None",
-        markersize=4,
-        label="Test Data",
-    )
-    test_marker = mlines.Line2D(
-        [],
-        [],
-        color="blue",
-        marker="o",
-        linestyle="None",
-        markersize=4,
-        label="Train Data",
-    )
-    approx_marker = mlines.Line2D(
-        [],
-        [],
-        color="red",
-        marker="*",
-        linestyle="None",
-        markersize=4,
-        label="MLP Output",
-    )
+    color = ["b", "y", "r"]
+    marker = ["o", "x", "*"]
+    labels = ["Training Data", "Testing Data", "MLP Output"]
+    handles = []
+    for i in range(len(color)):
+        handles.append(
+            Line2D(
+                [],
+                [],
+                color=color[i],
+                marker=marker[i],
+                linestyle="None",
+                markersize=4,
+                label=labels[i],
+            )
+        )
     plt.figure(figsize=(12, 5))
     if isinstance(prediction, np.ndarray) == False:
-        plt.plot(x_train, y_train, "o", ms=3)
-        plt.plot(x_test, y_test, "x", ms=3)
+        plt.plot(x_train, y_train, marker[0], ms=3)
+        plt.plot(x_test, y_test, marker[1], ms=3)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.legend(
-            handles=[train_marker, test_marker],
+            handles=handles,
             title="Data",
             bbox_to_anchor=(1.04, 0.5),
             loc="center left",
@@ -167,13 +157,13 @@ def plot_train_test(
         plt.title(f"Figure {num}: {method} Training and Testing Data of $h(x)$")
 
     else:
-        plt.plot(x_train, y_train, "o", ms=3)
-        plt.plot(x_test, y_test, "x", ms=3)
-        plt.plot(x_test, prediction, "*", ms=3, color="r")
+        plt.plot(x_train, y_train, marker[0], ms=3)
+        plt.plot(x_test, y_test, marker[1], ms=3)
+        plt.plot(x_test, prediction, marker[2], ms=3, color=color[2])
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.legend(
-            handles=[train_marker, test_marker, approx_marker],
+            handles=handles,
             title="Data",
             bbox_to_anchor=(1.04, 0.5),
             loc="center left",
