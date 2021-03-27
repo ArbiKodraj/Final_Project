@@ -81,26 +81,3 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - <b>Virtanen, P., Gommers, R., Oliphant, T.E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, W., Bright, J. and van der Walt, S.J., 2020.</b> SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature methods,* 17(3), pp.261-272.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project/blob/master/LICENSE)
-
----
-
-## TO DO LIST:
-
-**Important:**
-
-- [x] Improve Code Documentation (EPP as reference) - use Sphinx 
-- [x] Countercheck text several times 
-- [x] Look for alternative displaying possibilities for the notebook from private repo (did not find any)
-- [x] Invite remaining collaborators
-- [x] Use Grammerly to check the text
-- [x] Add additional Keras part
-- [ ] Notebook's structure
-- [x] Think about additional to do's
-
-**Optional:**
-
-- [x] Speed up code even more using numba (may have a look on PyPy for object oriented programming?)
-- [x] Finish last section (optimal policy for cake problem) - if not: remove => removed
-- [x] If possible, i.e., code's outcome kind of known : write tests - use pytest or unittest
-
-
