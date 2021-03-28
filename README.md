@@ -92,3 +92,4 @@ In order to ensure full reproducibility, I have set up a continous integration e
 - <b>Virtanen, P., Gommers, R., Oliphant, T.E., Haberland, M., Reddy, T., Cournapeau, D., Burovski, E., Peterson, P., Weckesser, W., Bright, J. and van der Walt, S.J., 2020.</b> SciPy 1.0: fundamental algorithms for scientific computing in Python. *Nature methods,* 17(3), pp.261-272.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/ArbiKodraj/Final_Project/blob/master/LICENSE)
+
