@@ -36,7 +36,7 @@ Furthermore, I have prepared tests for the last section using the <a href="https
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a continous integration environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project) and [here](https://github.com/ArbiKodraj/Final_Project/blob/master/material/travis-ci.png)
+In order to ensure full reproducibility, I have set up a [continous integration](https://github.com/ArbiKodraj/Final_Project/blob/master/material/travis-ci.png) environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
 
 
 ## Notebook's Structure
