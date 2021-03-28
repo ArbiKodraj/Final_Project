@@ -3,11 +3,13 @@
 
 # Function Approximation via Machine Learning Methods
 
+<p align="justify">
 The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for EPP and Scientific Computing. It deals with different approximation methods for functions that vary in their complexity. The core methods originate from Machine Learning. This project aims to convince the audience that modern Machine Learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better). Therefore, the audience should consider using them for approximation-related problems.  
+</p>
 
-<p style="text-align: justify">
+<p align="justify">
 At this point, I would like to mention that I use both object-oriented and functional programming. This is because it was only in the context of this work that I acquired project-oriented coding on my own and was able to improve it through the book "Fluent Python" written by Ramalho (2015). Also, I apply the acquired knowledge from the Effective Programming Practices and Scientific Computing courses to some extent, which is why I think there is a significant difference in my coding quality. To show my learning effect, I still decided to include the worse implementations from the code point of view. This should only serve as an explanation for the different coding styles. 
-<p>
+</p>
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub.  
 
