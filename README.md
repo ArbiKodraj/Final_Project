@@ -3,8 +3,10 @@
 
 # Function Approximation via Machine Learning Methods
 
+[![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 <p align="justify">
-The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for EPP and Scientific Computing. It deals with different approximation methods for functions that vary in their complexity. The core methods originate from Machine Learning. This project aims to convince the audience that modern Machine Learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better). Therefore, the audience should consider using them for approximation-related problems.  
+The notebook FunctionApproximation.ipynb contains my work for the final project for EPP and Scientific Computing. It deals with different approximation methods for functions that vary in their complexity. The core methods originate from Machine Learning. This project aims to convince the audience that modern Machine Learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better). Therefore, the audience should consider using them for approximation-related problems.  
 </p>
 
 <p align="justify">
