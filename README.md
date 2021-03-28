@@ -1,9 +1,13 @@
 ---
-<font face="ITC Berkeley Oldstyle" size="3">Final Project for the courses Effective Programming Practices and Scientific Computing | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
+<font face="ITC Berkeley Oldstyle" size="3">Final Project for the courses <i>Effective Programming Practices</i> and <i>Scientific Computing</i> | Winter 20/21, M.Sc. Economics, Bonn University | [Arbi Kodraj](https://github.com/ArbiKodraj) </font><br/>
 
 # Function Approximation via Machine Learning Methods
 
-The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for EPP and Scientific Computing. It deals with different approximation methods for functions that vary in their complexity. The core methods originate from Machine Learning. This project aims to convince the audience that modern Machine Learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better. Therefore, the audience should consider using them for approximation-related problems.  
+The notebook FunctionApproximation.ipynb [![Code Style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) contains my work for the final project for EPP and Scientific Computing. It deals with different approximation methods for functions that vary in their complexity. The core methods originate from Machine Learning. This project aims to convince the audience that modern Machine Learning methods are as good as conventional methods for approximating mathematical functions (for some functions even better). Therefore, the audience should consider using them for approximation-related problems.  
+
+<p style="text-align: justify">
+At this point, I would like to mention that I use both object-oriented and functional programming. This is because it was only in the context of this work that I acquired project-oriented coding on my own and was able to improve it through the book "Fluent Python" written by Ramalho (2015). Also, I apply the acquired knowledge from the Effective Programming Practices and Scientific Computing courses to some extent, which is why I think there is a significant difference in my coding quality. To show my learning effect, I still decided to include the worse implementations from the code point of view. This should only serve as an explanation for the different coding styles. 
+<p>
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub.  
 
@@ -15,7 +19,7 @@ For the documentation of my code, I use <a href="https://sphinxcontrib-napoleon.
 
 After the project's release, I will set up a <a href="https://readthedocs.com/dashboard/">readthedocs</a> website and make the code documentation available here.
 
-Furthermore, I prepared tests for the last section using the <a href="https://docs.python.org/3/library/unittest.html#unittest
+Furthermore, I have prepared tests for the last section using the <a href="https://docs.python.org/3/library/unittest.html#unittest
 ">Unittest library</a> involved in Python. I decided to use Unittest because it seems to be very usable for object-oriented programming. The tests can be found in the test folder. For the execution of the tests, I recommend using Pycharm or Visual Studio Code.
 
 > **Course Instructor Effective Programming Practices** : [Hans-Martin Gaudecker](https://github.com/hmgaudecker)
@@ -30,10 +34,10 @@ In order to ensure full reproducibility, I have set up a continous integration e
 ## Notebook's Structure
 
 - **1. Introduction:** Introduces the paper's objective and structure
-- **2. Theory of Interpolation:** Briefly motivates the use of approximation/interpolation
+- **2. Motivation of Interpolation:** Briefly motivates the use of approximation/interpolation
 - **3. Application of Interpolation:** Demonstrates two approximation strategies as convential interpolation tool
 - **4. Neural Networks as Modern Machine Learning Method:** Illustrates the use of Neural Networks as an alternative tool for approximating functions
-- **5. Further Machine Learning Methods:** Presents additional Machine Learning Methods and their usefulness in approximating functions
+- **5. Further Machine Learning Methods:** Presents additional Machine Learning methods and their usefulness in approximating functions
 - **6. Economical Application:** Uses discussed approximation tools to solve economical problems related to function approximation
 - **7. Conclusion:** Summarizes the key insights and contrasts the illustrated approximation tools
 

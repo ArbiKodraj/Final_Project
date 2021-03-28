@@ -145,7 +145,7 @@ def plot_train_test(
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
         plt.legend(
-            handles=handles,
+            handles=handles[:-1],
             title="Data",
             bbox_to_anchor=(1.04, 0.5),
             loc="center left",
