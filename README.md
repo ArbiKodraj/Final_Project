@@ -11,11 +11,15 @@ At this point, I would like to mention that I use both object-oriented and funct
 
 The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub.  
 
-For the documentation of my code, I use <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a>, because of their clarity. I also use Sphinx to create a HTML file for my code's documentation, which requires the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a> for the Google docstrings style. Since the repo is private, I could neither access <a href="https://pages.github.com">GitHub pages</a> nor <a href="https://readthedocs.com/dashboard/">readthedocs</a> for hosting the HTML file. Therefore, the documentation has to be opened locally. For this, I recommend copying the repo after the git initialization. As soon as the repo has been localized, the corresponding file can be found in the following directory:
+For my code's documentation, I used <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and created a HTML file via Sphinx, which requires the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repository is private, I could neither access <a href="https://pages.github.com">GitHub pages</a> nor <a href="https://readthedocs.com/dashboard/">readthedocs</a> for hosting the HTML file. Therefore, the documentation has to be opened locally. For this and for replication purposes, I recommend cloning the repository after the git initialization as follows:
 
+```
+$ git clone https://github.com/ArbiKodraj/Final_Project.git
+```
+
+As soon as the repository has been localized, the corresponding file can be found in the following directory:
 
 > <mark>./docs/build/html/index.html</mark>
-
 
 After the project's release, I will set up a <a href="https://readthedocs.com/dashboard/">readthedocs</a> website and make the code documentation available here.
 
