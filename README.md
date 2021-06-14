@@ -25,8 +25,6 @@ As soon as the repository has been localized, the corresponding file can be foun
 
 > <mark>./docs/build/html/index.html</mark>
 
-After the project's release, I will set up a <a href="https://readthedocs.com/dashboard/">readthedocs</a> website and make the code documentation available here.
-
 Furthermore, I have prepared tests for the last section using the <a href="https://docs.python.org/3/library/unittest.html#unittest
 ">Unittest library</a> involved in Python. I decided to use Unittest because it seems to be very usable for object-oriented programming. The tests can be found in the test folder. For the execution of the tests, I recommend using Pycharm or Visual Studio Code.
 
