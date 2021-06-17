@@ -13,7 +13,7 @@ The notebook FunctionApproximation.ipynb contains my work for the final project 
 At this point, I would like to mention that I use both object-oriented and functional programming. This is because it was only in the context of this work that I acquired project-oriented coding on my own and was able to improve it through the book "Fluent Python" written by Ramalho (2015). Also, I apply the acquired knowledge from the Effective Programming Practices and Scientific Computing courses to some extent, which is why I think there is a significant difference in my coding quality. To show my learning effect, I still decided to include the worse implementations from the code point of view. This should only serve as an explanation for the different coding styles. 
 </p>
 
-The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/Final_Project) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/Final_Project/blob/master/FunctionApproximation.ipynb), online on GitHub.  
+The best way to access this notebook is by downloading it [here](https://github.com/ArbiKodraj/ML-Approximation) and open it locally via jupyter notebook. Alternatively, it can be viewed [here](https://github.com/ArbiKodraj/ML-Approximation/blob/master/FunctionApproximation.ipynb), online on GitHub.  
 
 For my code's documentation, I used <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and created a HTML file via Sphinx, which requires the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repository is private, I could neither access <a href="https://pages.github.com">GitHub pages</a> nor <a href="https://readthedocs.com/dashboard/">readthedocs</a> for hosting the HTML file. Therefore, the documentation has to be opened locally. For this and for replication purposes, I recommend cloning the repository after the git initialization as follows:
 
@@ -34,7 +34,7 @@ Furthermore, I have prepared tests for the last section using the <a href="https
 
 ## Reproducibility
 
-In order to ensure full reproducibility, I have set up a [continous integration](https://github.com/ArbiKodraj/Final_Project/blob/master/material/travis-ci.png) environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/Final_Project.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/Final_Project)
+In order to ensure full reproducibility, I have set up a [continous integration](https://github.com/ArbiKodraj/Final_Project/blob/master/material/travis-ci.png) environment using [Travis Ci](https://travis-ci.com) which can be checked here: [![Build Status](https://travis-ci.com/ArbiKodraj/ML-Approximation.svg?token=FjHb3G3wqwrNzub1KhJT&branch=master)](https://travis-ci.com/ArbiKodraj/ML-Approximation)
 
 
 ## Notebook's Structure
@@ -47,7 +47,7 @@ In order to ensure full reproducibility, I have set up a [continous integration]
 - **6. Economical Application:** Uses discussed approximation tools to solve economical problems related to function approximation
 - **7. Conclusion:** Summarizes the key insights and contrasts the illustrated approximation tools
 
-[![Continuous Integration](https://github.com/ArbiKodraj/Final_Project_EPP/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/Final_Project/actions)
+[![Continuous Integration](https://github.com/ArbiKodraj/ML-Approximation/workflows/Continuous%20Integration/badge.svg)](https://github.com/ArbiKodraj/ML-Approximation/actions)
 
 ## References
 
