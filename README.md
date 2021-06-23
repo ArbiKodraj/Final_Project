@@ -18,7 +18,7 @@ The best way to access this notebook is by downloading it [here](https://github.
 For my code's documentation, I used <a href="https://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">Google-style docstrings</a> and created a HTML file via Sphinx, which requires the <a href="https://www.sphinx-doc.org/en/master/usage/extensions/napoleon.html">napoleon extension</a>. Since the repository is private, I could neither access <a href="https://pages.github.com">GitHub pages</a> nor <a href="https://readthedocs.com/dashboard/">readthedocs</a> for hosting the HTML file. Therefore, the documentation has to be opened locally. For this and for replication purposes, I recommend cloning the repository after the git initialization as follows:
 
 ```
-$ git clone https://github.com/ArbiKodraj/Final_Project.git
+$ git clone https://github.com/ArbiKodraj/ML-Approximation.git
 ```
 
 As soon as the repository has been localized, the corresponding file can be found in the following directory:
