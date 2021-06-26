@@ -23,7 +23,7 @@ $ cd ML-Approximation
 $ conda env create --file environment.yml
 ```
 
-Make sure that the environment *Project_ArbiKodraj* is know listed:
+Make sure that the environment *Project_ArbiKodraj* is listed now:
 
 ```
 $ conda env list
